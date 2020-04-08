@@ -22,9 +22,21 @@ namespace ZmLabsBusiness.tests.objects
             _testobject = p_testobject;
         }
 
+        public virtual void Start() {  }
+
         public void SetMsgLeido(Guid id)
         {
             Mensajes.Where(idx => idx.id == id).First().leido = true;
+        }
+
+        public void SetMsg(string Msg)
+        {
+            this.Mensajes.Add(new test_types.mensajes()
+            {
+                id = Guid.NewGuid(),
+                mensaje = Msg,
+                leido = false
+            });
         }
     }
 }

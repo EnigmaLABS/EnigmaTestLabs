@@ -15,7 +15,7 @@ namespace ZmLabsBusiness.tests
 
         public test1_multithreading_vs_singlethreading(test_functions p_testobject) : base(p_testobject) { }
 
-        public test_object Start()
+        public override void Start()
         {
             this.Estado = test_types.enumEstadoProceso.Ejecutando;
 
@@ -55,7 +55,8 @@ namespace ZmLabsBusiness.tests
 
 
             this.Estado = test_types.enumEstadoProceso.Finalizado;
-            return _testobject;
+
+            //return _testobject;
         }
 
         #region Cases
@@ -247,16 +248,6 @@ namespace ZmLabsBusiness.tests
         }
 
         #endregion
-
-        private void SetMsg(string Msg)
-        {
-            this.Mensajes.Add(new test_types.mensajes()
-            {
-                id = Guid.NewGuid(),
-                mensaje = Msg,
-                leido = false
-            });
-        }
 
     }
 }

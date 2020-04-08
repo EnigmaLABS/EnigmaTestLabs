@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using ZmLabsBusiness;
 using ZmLabsBusiness.tests;
+using ZmLabsBusiness.tests.objects;
 
 namespace ZmLabsBusiness
 {
@@ -22,7 +23,7 @@ namespace ZmLabsBusiness
 
         public static Object GetObject(test_functions _functions, ZmLabsObjects.enumTestTypes _type)
         {
-            Object res = new Object();
+            test_exec res = new test_exec(_functions);
 
             switch (_type)
             {

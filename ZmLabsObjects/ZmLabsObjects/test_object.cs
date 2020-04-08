@@ -41,8 +41,6 @@ namespace ZmLabsObjects
 
         public List<string> log;
 
-        //public GenericTest Test = new GenericTest();
-
         public string ClassName;
         public enumTestTypes TestType;
         public Object OBJ;
@@ -57,13 +55,5 @@ namespace ZmLabsObjects
         public DateTime dtEnd;
     }
 
-    public class GenericTest : BusinessObject
-    {
-        public string ClassName;
-    }
 
-    public class BusinessObject
-    {
-        public Object OBJ;
-    }
 }

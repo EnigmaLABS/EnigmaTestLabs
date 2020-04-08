@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 using ZmLabsObjects;
 using ZmLabsBusiness;
+using ZmLabsBusiness.tests.objects;
 using ZmLabsBusiness.tests;
 
 namespace ZmLabsMonitor.controls
@@ -47,24 +48,37 @@ namespace ZmLabsMonitor.controls
         {
             List<test_types.mensajes> lstMensajes = new List<test_types.mensajes>();
 
-            switch (_testobject.execution.TestType)
+            test_exec execObject = (test_exec)_testobject.execution.OBJ;
+
+            _estadoProceso = execObject.Estado;
+
+            lstMensajes = execObject.Mensajes.Where(msg => msg.leido == false).ToList();
+
+            foreach (var msg in lstMensajes)
             {
-                case enumTestTypes.test1_multithreading_vs_singlethreading:
-
-                    var obj2 = (test1_multithreading_vs_singlethreading)_testobject.execution.OBJ;
-
-                    _estadoProceso = obj2.Estado;
-                    lstMensajes = obj2.Mensajes.Where(msg => msg.leido == false).ToList();
-
-                    foreach (var msg in lstMensajes)
-                    {
-                        obj2.SetMsgLeido(msg.id);
-                    }
-
-                    _testobject.execution.OBJ = (test1_multithreading_vs_singlethreading)obj2;
-
-                    break;
+                execObject.SetMsgLeido(msg.id);
             }
+
+            //_testobject.execution.OBJ = execObject;
+
+            //switch (_testobject.execution.TestType)
+            //{
+            //    case enumTestTypes.test1_multithreading_vs_singlethreading:
+
+            //        var obj2 = (test1_multithreading_vs_singlethreading)_testobject.execution.OBJ;
+
+            //        _estadoProceso = obj2.Estado;
+            //        lstMensajes = obj2.Mensajes.Where(msg => msg.leido == false).ToList();
+
+            //        foreach (var msg in lstMensajes)
+            //        {
+            //            obj2.SetMsgLeido(msg.id);
+            //        }
+
+            //        _testobject.execution.OBJ = (test1_multithreading_vs_singlethreading)obj2;
+
+            //        break;
+            //}
 
             Application.DoEvents();
 
@@ -100,15 +114,18 @@ namespace ZmLabsMonitor.controls
 
         public static void HiloNegocio()
         {
-            switch (_testobject.execution.TestType)
-            {
-                case enumTestTypes.test1_multithreading_vs_singlethreading:
+            var negobject = (test_exec)_testobject.execution.OBJ;
+            negobject.Start();
 
-                    var obj2 = (test1_multithreading_vs_singlethreading)_testobject.execution.OBJ;
-                    obj2.Start();
+            //switch (_testobject.execution.TestType)
+            //{
+            //    case enumTestTypes.test1_multithreading_vs_singlethreading:
 
-                    break;
-            }
+            //        var obj2 = (test1_multithreading_vs_singlethreading)_testobject.execution.OBJ;
+            //        obj2.Start();
+
+            //        break;
+            //}
         }
     }
 }

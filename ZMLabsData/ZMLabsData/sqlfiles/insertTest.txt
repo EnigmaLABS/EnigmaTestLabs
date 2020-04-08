@@ -1,0 +1,16 @@
+﻿create procedure [dbo].[insertTest]
+@Test				nvarchar(55),
+@ClassName			varchar(155),	
+@Description		nvarchar(1000),
+@idCategorie		int
+as
+declare
+@idTest				bigint
+begin
+	select @idTest = ISNULL(MAX(idTest),0)+1 from Tests
+
+	insert into Tests
+	(idTest, Test, ClassName, [Description], idCategorie)
+	values
+	(@idTest, @Test, @ClassName, @Description, @idCategorie)
+end

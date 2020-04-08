@@ -1,0 +1,10 @@
+﻿CREATE procedure [dbo].[getTestCases]
+@idTest		bigint
+as
+begin
+	select idTestCase, FunctionName, isnull([Description], '') as Description
+	from
+	[dbo].[TestCases]
+	where
+	idTest = @idTest
+end

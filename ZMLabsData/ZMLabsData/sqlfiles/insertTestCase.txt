@@ -1,0 +1,17 @@
+﻿create procedure [dbo].[insertTestCase]
+@FunctionName		varchar(155),
+@Description		nvarchar(666),
+@idTest				bigint
+as
+declare
+@idTestCase			bigint
+begin
+	select @idTestCase = isnull(MAX(idTestCase),0) + 1 from [dbo].[TestCases]
+
+	insert into [dbo].[TestCases]
+	(idTestCase, [FunctionName], [idTest], [Description])
+	values
+	(@idTestCase, @FunctionName, @idTest, @Description)
+
+	select @idTestCase as idTestCse
+end

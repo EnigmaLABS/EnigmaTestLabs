@@ -1,0 +1,11 @@
+﻿CREATE procedure [dbo].[insertExecution]
+@dtStart			datetime,
+@dtEnd				datetime,
+@idTestCase			bigint
+as
+begin
+	insert into [dbo].[Executions]
+	([dtStart], [dtEnd], [idTestCase])
+	values
+	(@dtStart, @dtEnd, @idTestCase)
+end

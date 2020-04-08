@@ -1,0 +1,105 @@
+﻿create procedure InitializeTables
+as
+begin
+	-->> 
+	CREATE TABLE [dbo].[Categories](
+		[idCategorie] [int] NOT NULL,
+		[Categorie] [varchar](255) NULL,
+		[idCategorieNode] [int] NULL,
+	 CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED 
+	(
+		[idCategorie] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	-->>
+	CREATE TABLE [dbo].[Executions](
+	[idExecition] [bigint] IDENTITY(1,1) NOT NULL,
+	[dtStart] [datetime] NULL,
+	[dtEnd] [datetime] NULL,
+	[idTestCase] [bigint] NULL,
+	 CONSTRAINT [PK_Executions] PRIMARY KEY CLUSTERED 
+	(
+		[idExecition] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	-->>
+	CREATE TABLE [dbo].[TestCases](
+	[idTestCase] [bigint] NOT NULL,
+	[FunctionName] [varchar](155) NULL,
+	[idTest] [bigint] NULL,
+	[Description] [nvarchar](666) NULL,
+	 CONSTRAINT [PK_TestCases] PRIMARY KEY CLUSTERED 
+	(
+		[idTestCase] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	-->>
+	CREATE TABLE [dbo].[Tests](
+	[idTest] [bigint] NOT NULL,
+	[Test] [nvarchar](55) NULL,
+	[ClassName] [varchar](155) NULL,
+	[Description] [nvarchar](1000) NULL,
+	[UrlBlog] [nvarchar](222) NULL,
+	[UrlGIT] [nvarchar](222) NULL,
+	[UrlStackoverflow] [nvarchar](222) NULL,
+	[idCategorie] [int] NULL,
+	CONSTRAINT [PK_Tests] PRIMARY KEY CLUSTERED 
+	(
+		[idTest] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	-->>
+	ALTER TABLE [dbo].[Categories]  WITH NOCHECK ADD  CONSTRAINT [FK_Categories_Categories] FOREIGN KEY([idCategorieNode])
+	REFERENCES [dbo].[Categories] ([idCategorie])
+
+
+	ALTER TABLE [dbo].[Categories] NOCHECK CONSTRAINT [FK_Categories_Categories]
+
+
+	ALTER TABLE [dbo].[Executions]  WITH CHECK ADD  CONSTRAINT [FK_Executions_TestCases] FOREIGN KEY([idTestCase])
+	REFERENCES [dbo].[TestCases] ([idTestCase])
+
+
+	ALTER TABLE [dbo].[Executions] CHECK CONSTRAINT [FK_Executions_TestCases]
+
+
+	ALTER TABLE [dbo].[TestCases]  WITH CHECK ADD  CONSTRAINT [FK_TestCases_Tests] FOREIGN KEY([idTest])
+	REFERENCES [dbo].[Tests] ([idTest])
+
+
+	ALTER TABLE [dbo].[TestCases] CHECK CONSTRAINT [FK_TestCases_Tests]
+
+
+	ALTER TABLE [dbo].[Tests]  WITH CHECK ADD  CONSTRAINT [FK_Tests_Categories] FOREIGN KEY([idCategorie])
+	REFERENCES [dbo].[Categories] ([idCategorie])
+
+
+	ALTER TABLE [dbo].[Tests] CHECK CONSTRAINT [FK_Tests_Categories]
+
+	-->>
+	declare @sql varchar(2000)
+
+	set @sql = '
+	insert into Categories (idCategorie, Categorie, idCategorieNode) values (1, ''SQL Server Tips'', null)
+	insert into Categories (idCategorie, Categorie, idCategorieNode) values (2, ''C# Code'', null)
+	insert into Categories (idCategorie, Categorie, idCategorieNode) values (3, ''Multithreading Tests'', 2)'
+
+	exec(@sql)
+
+	set @sql = '
+	insert into Tests (idTest, Test, ClassName, [Description], UrlBlog, UrlGIT, UrlStackoverflow, idCategorie) values (1, ''Multithreading vs Singlethreading'', ''test1_multithreading_vs_singlethreading'', ''Calcula 500 veces 200 elementos de la serie fibonacci'', null, null, null, 3)'
+
+	exec(@sql)
+
+	set @sql = '
+	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (1, ''MultithreadingCase'', 1, ''Cálculo simultáneo de la serie fibo (500 hilos, 200 elementos por hilo)'')
+	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (2, ''SinglethreadingCase'', 1, ''Cálculo secuencial de la serie fibo (500 iteraciones, 200 elementos por iteración)'')
+	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (3, ''HybridCase'', 1, ''20 hilos calculan 25 veces cada uno la serie fibo'')'
+
+	exec(@sql)
+end 
+

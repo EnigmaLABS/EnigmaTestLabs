@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C5C8BD01-15B7-4D45-92E3-E2019964C9AD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ZmLabsMonitor</RootNamespace>
+    <AssemblyName>ZmLabsMonitor</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="controls\usrctrl_monitorlist.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\usrctrl_monitorlist.Designer.cs">
+      <DependentUpon>usrctrl_monitorlist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\usrctrl_testinfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\usrctrl_testinfo.Designer.cs">
+      <DependentUpon>usrctrl_testinfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\usrctrl_testinfo_detalles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\usrctrl_testinfo_detalles.Designer.cs">
+      <DependentUpon>usrctrl_testinfo_detalles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMonitor.Designer.cs">
+      <DependentUpon>frmMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStart.Designer.cs">
+      <DependentUpon>frmStart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="objects\treeElemenyt.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="subforms\frm_newcase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="subforms\frm_newcase.Designer.cs">
+      <DependentUpon>frm_newcase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="subforms\frm_newtest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="subforms\frm_newtest.Designer.cs">
+      <DependentUpon>frm_newtest.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="controls\usrctrl_monitorlist.resx">
+      <DependentUpon>usrctrl_monitorlist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\usrctrl_testinfo.resx">
+      <DependentUpon>usrctrl_testinfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\usrctrl_testinfo_detalles.resx">
+      <DependentUpon>usrctrl_testinfo_detalles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMonitor.resx">
+      <DependentUpon>frmMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStart.resx">
+      <DependentUpon>frmStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="subforms\frm_newcase.resx">
+      <DependentUpon>frm_newcase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="subforms\frm_newtest.resx">
+      <DependentUpon>frm_newtest.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ZmLabsBusiness\ZmLabsBusiness\ZmLabsBusiness.csproj">
+      <Project>{ab776b5a-0ccd-4738-b1ca-ef9862831e3c}</Project>
+      <Name>ZmLabsBusiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ZmLabsObjects\ZmLabsObjects\ZmLabsObjects.csproj">
+      <Project>{012c8f0f-9053-4f80-bb3b-166510b95329}</Project>
+      <Name>ZmLabsObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="imgs\e26f33f35d71a5c5c23b8291d7a2b212.png" />
+    <Content Include="imgs\ico\Account.contrast-white.ico" />
+    <Content Include="imgs\ico\alarmclock.ico" />
+    <Content Include="imgs\ico\DatabaseProject.ico" />
+    <Content Include="imgs\ico\File.ico" />
+    <Content Include="imgs\ico\folder.ico" />
+    <Content Include="imgs\ico\i4j_extf_13_1im7gi7_107nfax.ico" />
+    <Content Include="imgs\ico\i4j_extf_14_1im7gi7_192egzc.ico" />
+    <Content Include="imgs\ico\icons8-ios7-editing-collapse.ico" />
+    <Content Include="imgs\ico\icons8-ios7-editing-expand.ico" />
+    <Content Include="imgs\ico\Package.ico" />
+    <Content Include="imgs\ico\pictures.ico" />
+    <Content Include="imgs\ico\ProgressError.ico" />
+    <Content Include="imgs\ico\ProgressSkip.ico" />
+    <Content Include="imgs\ico\Provider.ico" />
+    <Content Include="imgs\ico\ReportProject.ico" />
+    <Content Include="imgs\ico\Resources.ico" />
+    <Content Include="imgs\ico\sync.ico" />
+    <Content Include="imgs\ico\TextFile.ico" />
+    <Content Include="imgs\ico\__TemplateIcon.ico" />
+    <Content Include="imgs\save.png" />
+    <Content Include="imgs\svg-save-icon.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

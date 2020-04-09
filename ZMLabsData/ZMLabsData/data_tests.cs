@@ -11,8 +11,6 @@ namespace ZMLabsData
 {
     public class data_tests
     {
-        //private static string str_cnx = ConfigurationManager.ConnectionStrings["cnxLABS_DB_STR"].ConnectionString;
-
         private string str_cnx;
 
         public data_tests(string p_str_cnx)

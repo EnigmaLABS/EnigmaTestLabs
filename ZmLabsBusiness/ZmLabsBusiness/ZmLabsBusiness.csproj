@@ -44,10 +44,12 @@
   <ItemGroup>
     <Compile Include="data\data_functions.cs" />
     <Compile Include="functions\fibo.cs" />
+    <Compile Include="functions\quijote.cs" />
     <Compile Include="registry\registry_functions.cs" />
     <Compile Include="tests\objects\process_control.cs" />
     <Compile Include="tests\objects\test_exec.cs" />
     <Compile Include="tests\test1_multithreading_vs_singlethreading.cs" />
+    <Compile Include="tests\test2_basicos_concatstrings.cs" />
     <Compile Include="test_functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test_types.cs" />

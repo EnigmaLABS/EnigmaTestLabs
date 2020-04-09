@@ -32,6 +32,11 @@ namespace ZmLabsBusiness
                     res = new test1_multithreading_vs_singlethreading(_functions);
                     break;
 
+                case ZmLabsObjects.enumTestTypes.test2_basicos_concatstrings:
+
+                    res = new test2_basicos_concatstrings(_functions);
+                    break;
+
             }
 
             return res;

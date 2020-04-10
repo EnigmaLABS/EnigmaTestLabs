@@ -1,8 +1,7 @@
 ﻿create procedure [dbo].[getCategories]
 as
 begin
-	select idCategorie, Categorie, idCategorieNode 
+	select id as idCategorie, Categorie, categorie_dad_id as idCategorieNode 
 	from
 	[dbo].[Categories]
-
 end

@@ -25,8 +25,8 @@ namespace ZmLabsMonitor.controls
 
         private void usrctrl_testinfo_Load(object sender, EventArgs e)
         {
-            txtTest.Text = _testobject.test;
-            txtClassName.Text = _testobject.classname;
+            txtTest.Text = _testobject.Test;
+            txtClassName.Text = _testobject.Classname;
 
             _ctrl_test_info_details = new usrctrl_testinfo_detalles(_testobject);
             _ctrl_test_exec_info = new usrctrl_monitorlist(this);

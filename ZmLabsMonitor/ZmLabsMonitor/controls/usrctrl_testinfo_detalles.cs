@@ -25,7 +25,7 @@ namespace ZmLabsMonitor.controls
 
         private void usrctrl_testinfo_detalles_Load(object sender, EventArgs e)
         {
-            txtDesc2.Text = _testobject.description;
+            txtDesc2.Text = _testobject.Description;
 
             ShowTestCases();
         }
@@ -48,7 +48,7 @@ namespace ZmLabsMonitor.controls
         {
             lstCases.Items.Clear();
 
-            foreach (TestCases _tc in _testobject.execution.testcases)
+            foreach (TestCases _tc in _testobject.Execution.testcases)
             {
                 ListViewItem lstIt = new ListViewItem(_tc.Function);
                 lstIt.Tag = _tc;
@@ -59,7 +59,7 @@ namespace ZmLabsMonitor.controls
 
         public void AddTestCase(TestCases _testcase)
         {
-            _testobject.execution.testcases.Add(_testcase);
+            _testobject.Execution.testcases.Add(_testcase);
             ShowTestCases();
         }
 

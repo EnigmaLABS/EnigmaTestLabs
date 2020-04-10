@@ -87,11 +87,13 @@ begin
 	insert into Categories (idCategorie, Categorie, idCategorieNode) values (1, ''SQL Server Tips'', null)
 	insert into Categories (idCategorie, Categorie, idCategorieNode) values (2, ''C# Code'', null)
 	insert into Categories (idCategorie, Categorie, idCategorieNode) values (3, ''Multithreading Tests'', 2)'
+	insert into Categories (idCategorie, Categorie, idCategorieNode) values (4, ''Basics Tips'', 2)'
 
 	exec(@sql)
 
 	set @sql = '
 	insert into Tests (idTest, Test, ClassName, [Description], UrlBlog, UrlGIT, UrlStackoverflow, idCategorie) values (1, ''Multithreading vs Singlethreading'', ''test1_multithreading_vs_singlethreading'', ''Calcula 500 veces 200 elementos de la serie fibonacci'', null, null, null, 3)'
+	insert into Tests (idTest, Test, ClassName, [Description], UrlBlog, UrlGIT, UrlStackoverflow, idCategorie) values (2, ''Concatenate Strings'', ''test2_basicos_concatstrings'', ''+ Operator Vs StringBuilder'', null, null, null, 4)'
 
 	exec(@sql)
 
@@ -99,6 +101,9 @@ begin
 	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (1, ''MultithreadingCase'', 1, ''Cálculo simultáneo de la serie fibo (500 hilos, 200 elementos por hilo)'')
 	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (2, ''SinglethreadingCase'', 1, ''Cálculo secuencial de la serie fibo (500 iteraciones, 200 elementos por iteración)'')
 	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (3, ''HybridCase'', 1, ''20 hilos calculan 25 veces cada uno la serie fibo'')'
+
+	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (4, ''Concat_PlusOperator'', 2, ''Concatenación con operador + Concatena 100 veces 26 variables string con el operador'')'
+	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (5, ''Concat_StringBuilder'', 2, ''Concatenación con StringBuilder: Concatena 100 veces 26 variables string con un StringBuilder'')'
 
 	exec(@sql)
 end 

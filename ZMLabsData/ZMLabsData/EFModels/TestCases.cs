@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 namespace ZMLabsData.EFModels
 {
-    public class Categories
+    public class TestCases
     {
-        public int id { get; set; }
+        public Int64 id { get; set; }
 
         [Required]
         [StringLength(255)]
-        public string Categorie { get; set; }
+        public string Function { get; set; }
 
-        public Categories Categorie_dad { get; set; }
+        [StringLength(555)]
+        public string Description { get; set; }
+
+        [Required]
+        public EFModels.Tests Test { get; set; }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ZmLabsObjects;
@@ -48,7 +45,7 @@ namespace ZmLabsMonitor.controls
         {
             List<test_types.mensajes> lstMensajes = new List<test_types.mensajes>();
 
-            test_exec execObject = (test_exec)_testobject.execution.OBJ;
+            test_exec execObject = (test_exec)_testobject.Execution.OBJ;
 
             _estadoProceso = execObject.Estado;
 
@@ -58,27 +55,6 @@ namespace ZmLabsMonitor.controls
             {
                 execObject.SetMsgLeido(msg.id);
             }
-
-            //_testobject.execution.OBJ = execObject;
-
-            //switch (_testobject.execution.TestType)
-            //{
-            //    case enumTestTypes.test1_multithreading_vs_singlethreading:
-
-            //        var obj2 = (test1_multithreading_vs_singlethreading)_testobject.execution.OBJ;
-
-            //        _estadoProceso = obj2.Estado;
-            //        lstMensajes = obj2.Mensajes.Where(msg => msg.leido == false).ToList();
-
-            //        foreach (var msg in lstMensajes)
-            //        {
-            //            obj2.SetMsgLeido(msg.id);
-            //        }
-
-            //        _testobject.execution.OBJ = (test1_multithreading_vs_singlethreading)obj2;
-
-            //        break;
-            //}
 
             Application.DoEvents();
 
@@ -114,18 +90,8 @@ namespace ZmLabsMonitor.controls
 
         public static void HiloNegocio()
         {
-            var negobject = (test_exec)_testobject.execution.OBJ;
+            var negobject = (test_exec)_testobject.Execution.OBJ;
             negobject.Start();
-
-            //switch (_testobject.execution.TestType)
-            //{
-            //    case enumTestTypes.test1_multithreading_vs_singlethreading:
-
-            //        var obj2 = (test1_multithreading_vs_singlethreading)_testobject.execution.OBJ;
-            //        obj2.Start();
-
-            //        break;
-            //}
         }
     }
 }

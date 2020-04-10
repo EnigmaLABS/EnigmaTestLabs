@@ -14,6 +14,8 @@ namespace ZmLabsMonitor
     public partial class frmStart : Form
     {
         private frmMonitor _container;
+        private enum enumMetodoCreacion { Scrpts, EF}
+        private enumMetodoCreacion MetodoCreacionBBDD = enumMetodoCreacion.EF;
 
         public frmStart(frmMonitor p_container)
         {
@@ -33,6 +35,66 @@ namespace ZmLabsMonitor
 
             this.Cursor = Cursors.WaitCursor;
 
+            switch (MetodoCreacionBBDD)
+            {
+                case enumMetodoCreacion.Scrpts:
+
+                    CrearMedianteScripts();
+                    break;
+
+                case enumMetodoCreacion.EF:
+
+                    CrearMedianteEF();
+                    break;
+            }
+
+            cmdCancelar.Enabled = true;
+            cmdEmpezar.Enabled = true;
+
+            this.Cursor = Cursors.Default;
+        }
+
+        private void CrearMedianteEF()
+        {
+            if (txtServer.Text.Trim().Length > 2)
+            {
+                data_functions _df = new data_functions();
+
+                if (_df.TestMasterDB(txtServer.Text.Trim()))
+                {
+                    if (_df.CreateDatabaseEF(txtServer.Text.Trim()))
+                    {
+                        registry_functions _reg = new registry_functions();
+
+                        if (_reg.SetBBDDCreada(txtServer.Text.Trim()))
+                        {
+                            _container.GetCategories();
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error al registrar");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al crear la base de datos");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("El servidor no responde");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Introduzca el nombre del servidor SQL Server");
+            }
+        }
+
+        //EN DESUSO
+        private void CrearMedianteScripts()
+        {
             if (txtServer.Text.Trim().Length > 2)
             {
                 data_functions _df = new data_functions();
@@ -70,23 +132,18 @@ namespace ZmLabsMonitor
                 else
                 {
                     MessageBox.Show("Error");
-                } 
+                }
             }
             else
             {
                 MessageBox.Show("Introduzca el nombre del servidor SQL Server");
             }
-
-            cmdCancelar.Enabled = true;
-            cmdEmpezar.Enabled = true;
-
-            this.Cursor = Cursors.Default;
         }
+
 
         private void cmdCancelar_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
     }
 }

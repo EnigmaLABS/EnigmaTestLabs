@@ -32,11 +32,11 @@ namespace ZmLabsMonitor.subforms
 
             test_functions _test = new test_functions()
             {
-                test = txtTest.Text,
-                classname = txtClassName.Text,
-                description = txtDesc.Text,
+                Test = txtTest.Text,
+                Classname = txtClassName.Text,
+                Description = txtDesc.Text,
 
-                categorie = new Categories()
+                Categorie = new Categories()
                 {
                     id = _cat.id
                 }

@@ -40,12 +40,12 @@ namespace ZMLabsData
                     Categories _cat = new Categories()
                     {
                         id = int.Parse(reader["idCategorie"].ToString()),
-                        categorie = reader["Categorie"].ToString()
+                        Categorie = reader["Categorie"].ToString()
                     };
 
                     if (reader["idCategorieNode"] != DBNull.Value)
                     {
-                        _cat.categorie_dad = new Categories()
+                        _cat.Categorie_dad = new Categories()
                         {
                             id = int.Parse(reader["idCategorieNode"].ToString()) 
                         };
@@ -86,16 +86,16 @@ namespace ZMLabsData
                     test_object _test = new test_object()
                     {
                         id = int.Parse(reader["idTest"].ToString()),
-                        test = reader["Test"].ToString(),
-                        classname = reader["ClassName"].ToString(),
-                        description = reader["Description"].ToString(),
-                        url_blog = reader["UrlBlog"].ToString(),
-                        url_git = reader["UrlGIT"].ToString(),
+                        Test = reader["Test"].ToString(),
+                        Classname = reader["ClassName"].ToString(),
+                        Description = reader["Description"].ToString(),
+                        Url_blog = reader["Url_Blog"].ToString(),
+                        Url_git = reader["Url_GIT"].ToString(),
 
-                        categorie = new Categories()
+                        Categorie = new Categories()
                         {
                             id = int.Parse(reader["idCategorie"].ToString()),
-                            categorie = reader["Categorie"].ToString()
+                            Categorie = reader["Categorie"].ToString()
                         }
                    };
 
@@ -106,7 +106,7 @@ namespace ZMLabsData
 
                 foreach (test_object _test in res)
                 {
-                    _test.execution.testcases = getTestCases(_test.id);
+                    _test.Execution.testcases = getTestCases(_test.id);
                 }
             }
             catch (Exception ex)

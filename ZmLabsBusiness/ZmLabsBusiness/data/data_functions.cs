@@ -19,23 +19,15 @@ namespace ZmLabsBusiness.data
             DBLabs = ConfigurationManager.AppSettings["DBLABS"].ToString();
         }
 
-        private List<string> lstFicheros = new List<string>() { "getCategories",
-                                                                "getExecutions",
-                                                                "getTestCases",
-                                                                "getTests",
-                                                                "insertExecution",
-                                                                "insertTest",
-                                                                "insertTestCase" };
+        //private List<string> lstFicheros = new List<string>() { "getCategories",
+        //                                                        "getExecutions",
+        //                                                        "getTestCases",
+        //                                                        "getTests",
+        //                                                        "insertExecution",
+        //                                                        "insertTest",
+        //                                                        "insertTestCase" };
 
-        public string GetLabsCnx()
-        {
-            registry.registry_functions _regfunc = new registry.registry_functions();
-
-            string server = _regfunc.GetRegisteredServer();
-            string res = GetCnx(server, DBLabs);
-
-            return res;
-        }
+        private List<string> lstFicheros = new List<string>() { "getCategories", "getTests", "getTestCases" };
 
         public bool TestMasterDB(string Server)
         {
@@ -116,6 +108,40 @@ namespace ZmLabsBusiness.data
             return res;
         }
 
+        public bool CreateDatabaseEF(string Server)
+        {
+            bool res = true;
+
+            try
+            {
+                ZMLabsData.Migrations.Configuration _confDB = new ZMLabsData.Migrations.Configuration();
+                _confDB.CreateDataBase(false, GetCnxEF(Server));
+
+                //Crea los procedimientos almacenados
+                bool resProcedimientos;
+
+                foreach (string _file in lstFicheros)
+                {
+                    TextReader txtProcedure = new StreamReader(@"sqlfiles\" + _file + ".txt");
+                    string scriptProcedure = txtProcedure.ReadToEnd();
+
+                    resProcedimientos = data_labs.ExecScript(scriptProcedure, GetCnxEF(Server));
+
+                    if (!resProcedimientos)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                res = false;
+            }
+
+            return res;
+        }
+
         //-->> Privados
 
         private bool InitializeTables(string Server)
@@ -145,6 +171,19 @@ namespace ZmLabsBusiness.data
             return res;
         }
 
+        //-->>
+        #region Get Connections
+
+        public string GetLabsCnx()
+        {
+            registry.registry_functions _regfunc = new registry.registry_functions();
+
+            string server = _regfunc.GetRegisteredServer();
+            string res = GetCnx(server, DBLabs);
+
+            return res;
+        }
+
         private string GetCnx(string Server, string DB)
         {
             string cnx = ConfigurationManager.ConnectionStrings["cnxLABS_DB_STR"].ConnectionString;
@@ -153,7 +192,18 @@ namespace ZmLabsBusiness.data
 
             return cnx;
         }
-    }
 
+        private string GetCnxEF(string Server)
+        {
+            string cnx = ConfigurationManager.ConnectionStrings["cnxLABS_DB_STR_EF"].ConnectionString;
+
+            cnx = cnx.Replace("##SERVER##", Server);
+
+            return cnx;
+        }
+
+        #endregion
+
+    }
 }
 

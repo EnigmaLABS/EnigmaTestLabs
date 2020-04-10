@@ -1,8 +1,8 @@
-﻿CREATE procedure [dbo].[getTests]
+﻿create procedure [dbo].[getTests]
 as
 begin
-	select t.idTest, t.Test, t.ClassName, t.[Description], t.UrlBlog, t.UrlGIT, t.idCategorie, c.Categorie
+	select t.id as idTest, t.Test, t.ClassName, t.[Description], t.Url_Blog, t.Url_GIT, t.Categorie_id as idCategorie, c.Categorie
 	from 
 	[dbo].[Tests] t
-	inner join Categories c on t.idCategorie = c.idCategorie
+	inner join Categories c on t.Categorie_id = c.id
 end

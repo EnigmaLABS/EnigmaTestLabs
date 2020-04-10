@@ -59,19 +59,17 @@ namespace ZmLabsMonitor
 
                 if (_treeelem.ElemType == objects.enumElemType.Test)
                 {
-                    //_pantalla_actual = enumPantalla.TestInfo;
-
                     _test_functions.SetTestObject(_treeelem.TestObject);
 
                     try
                     {
                         enumTestTypes _type = (enumTestTypes)Enum.Parse(typeof(enumTestTypes),
-                                                                        _treeelem.TestObject.classname);
+                                                                        _treeelem.TestObject.Classname);
                          
-                        _treeelem.TestObject.execution.ClassName = _treeelem.TestObject.classname;
-                        _treeelem.TestObject.execution.TestType = _type;
+                        _treeelem.TestObject.Execution.ClassName = _treeelem.TestObject.Classname;
+                        _treeelem.TestObject.Execution.TestType = _type;
 
-                        _treeelem.TestObject.execution.OBJ = test_types.GetObject(_test_functions, _type);
+                        _treeelem.TestObject.Execution.OBJ = test_types.GetObject(_test_functions, _type);
 
                         _ctrl_test_info = new controls.usrctrl_testinfo(_treeelem.TestObject);
 
@@ -96,7 +94,7 @@ namespace ZmLabsMonitor
             {
                 objects.treeElement _treeelem = (objects.treeElement)treeCatalogo.SelectedNode.Tag;
 
-                if (_treeelem.ElemType == objects.enumElemType.Categorie && _treeelem.Categorie.categorie_dad != null)
+                if (_treeelem.ElemType == objects.enumElemType.Categorie && _treeelem.Categorie.Categorie_dad != null)
                 {
                     e.Cancel = false;
                 }
@@ -129,12 +127,12 @@ namespace ZmLabsMonitor
             List<Categories> _lstcat = _test_functions.getCategories();
 
             //rellenamos el tree view
-            foreach (Categories _cat in _lstcat.Where(ct => ct.categorie_dad == null))
+            foreach (Categories _cat in _lstcat.Where(ct => ct.Categorie_dad == null))
             {
-                TreeNode _trprincipal = new TreeNode(_cat.categorie);
+                TreeNode _trprincipal = new TreeNode(_cat.Categorie);
 
                 //cargamos los hijos
-                foreach (Categories _catsub in _lstcat.Where(c => c.categorie_dad != null && c.categorie_dad.id == _cat.id))
+                foreach (Categories _catsub in _lstcat.Where(c => c.Categorie_dad != null && c.Categorie_dad.id == _cat.id))
                 {
                     GetCategorieChildrensAndTests(ref _trprincipal, _catsub, _lstcat);
                 }
@@ -157,7 +155,7 @@ namespace ZmLabsMonitor
 
         public void GetCategorieChildrensAndTests(ref TreeNode _trprincipal, Categories _catsub, List<Categories> _lstcat)
         {
-            TreeNode _hijo = new TreeNode(_catsub.categorie);
+            TreeNode _hijo = new TreeNode(_catsub.Categorie);
 
             objects.treeElement _treeElem = new objects.treeElement()
             {
@@ -168,13 +166,13 @@ namespace ZmLabsMonitor
             _hijo.Tag = _treeElem;
 
             //cargamos los hijos
-            foreach (Categories _catsubsub in _lstcat.Where(c => c.categorie_dad != null && c.categorie_dad.id == _catsub.id))
+            foreach (Categories _catsubsub in _lstcat.Where(c => c.Categorie_dad != null && c.Categorie_dad.id == _catsub.id))
             {
                 GetCategorieChildrensAndTests(ref _hijo, _catsubsub, _lstcat);
             }
 
             //cargamos los test de la categoría actual
-            foreach (test_object _test in _lst_tests.Where(ct => ct.categorie.id == _catsub.id))
+            foreach (test_object _test in _lst_tests.Where(ct => ct.Categorie.id == _catsub.id))
             {
                 objects.treeElement _treeTestElem = new objects.treeElement()
                 {
@@ -182,7 +180,7 @@ namespace ZmLabsMonitor
                     TestObject = _test
                 };
 
-                TreeNode _treetest = new TreeNode(_test.test);
+                TreeNode _treetest = new TreeNode(_test.Test);
                 _treetest.Tag = _treeTestElem;
                 _hijo.Nodes.Add(_treetest);
             }

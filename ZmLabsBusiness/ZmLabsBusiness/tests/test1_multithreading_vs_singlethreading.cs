@@ -24,25 +24,25 @@ namespace ZmLabsBusiness.tests
 
             int cont = 0;
 
-            while (cont < _testobject.execution.testcases.Count)
+            while (cont < _testobject.Execution.testcases.Count)
             {
-                TestCases _test = _testobject.execution.testcases[cont];
+                TestCases _test = _testobject.Execution.testcases[cont];
 
                 switch (_test.Function)
                 {
                     case "MultithreadingCase":
 
-                        _testobject.execution.testcases[cont] = MultithreadingCase(_test);
+                        _testobject.Execution.testcases[cont] = MultithreadingCase(_test);
                         break;
 
                     case "SinglethreadingCase":
 
-                        _testobject.execution.testcases[cont] = SinglethreadingCase(_test);
+                        _testobject.Execution.testcases[cont] = SinglethreadingCase(_test);
                         break;
 
                     case "HybridCase":
 
-                        _testobject.execution.testcases[cont] = HybridCase(_test);
+                        _testobject.Execution.testcases[cont] = HybridCase(_test);
                         break;
                 }
 

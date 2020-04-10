@@ -15,22 +15,22 @@ namespace ZmLabsObjects
     public class test_object
     {
         public Int64 id;
-        public string test;
-        public string description;
-        public string classname;
-        public string url_blog;
-        public string url_git;
+        public string Test;
+        public string Description;
+        public string Classname;
+        public string Url_blog;
+        public string Url_git;
 
-        public Categories categorie = new Categories();
-        public ExecutionProperties execution = new ExecutionProperties();
+        public Categories Categorie = new Categories();
+        public ExecutionProperties Execution = new ExecutionProperties();
     }
 
     public class Categories
     {
         public int id;
-        public string categorie;
+        public string Categorie;
 
-        public Categories categorie_dad;
+        public Categories Categorie_dad;
     }
 
     public class ExecutionProperties

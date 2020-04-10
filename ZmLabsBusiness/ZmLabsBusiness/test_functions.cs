@@ -74,7 +74,7 @@ namespace ZmLabsBusiness
 
             try
             {
-                res = _datatestobj.insertTest(this.test, this.classname, this.description, this.categorie.id);
+                res = _datatestobj.insertTest(this.Test, this.Classname, this.Description, this.Categorie.id);
             }
             catch (Exception)
             {
@@ -112,15 +112,15 @@ namespace ZmLabsBusiness
         public void SetTestObject(test_object _testobject)
         {
             this.id = _testobject.id;
-            this.description = _testobject.description;
-            this.classname = _testobject.classname;
+            this.Description = _testobject.Description;
+            this.Classname = _testobject.Classname;
 
-            this.url_blog = _testobject.url_blog;
-            this.url_git = _testobject.url_git;
+            this.Url_blog = _testobject.Url_blog;
+            this.Url_git = _testobject.Url_git;
 
-            this.categorie = _testobject.categorie;
-            this.execution = _testobject.execution;
-            this.test = _testobject.test;
+            this.Categorie = _testobject.Categorie;
+            this.Execution = _testobject.Execution;
+            this.Test = _testobject.Test;
         }
 
         #endregion

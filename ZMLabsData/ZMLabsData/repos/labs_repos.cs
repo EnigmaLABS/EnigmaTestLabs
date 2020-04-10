@@ -8,9 +8,9 @@ namespace ZMLabsData.repos
 {
     public class labs_repos
     {
-        public List<EFModels.Categories> getCategories()
+        public List<EFModels.Categories> getCategories(string cnx_str)
         {
-            using (var db = new context.LabsContext())
+            using (var db = new context.LabsContext(cnx_str))
             {
                 return db.Categories.ToList();
             }

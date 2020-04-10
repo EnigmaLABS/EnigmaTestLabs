@@ -11,9 +11,11 @@ namespace ZMLabsData.context
 {
     public class LabsContext : DbContext
     {
-        public LabsContext() : base("cnxLABS_DB_STR_EF") {  }
+        public LabsContext(string cnx_str) : base(cnx_str)  {  }
 
         public DbSet<EFModels.Categories> Categories { get; set; }
+        public DbSet<EFModels.Tests> Test { get; set; }
+        public DbSet<EFModels.TestCases> TestCases { get; set; }
 
     }
 }

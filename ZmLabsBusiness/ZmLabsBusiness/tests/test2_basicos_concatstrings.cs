@@ -17,20 +17,20 @@ namespace ZmLabsBusiness.tests
 
             int cont = 0;
 
-            while (cont < _testobject.execution.testcases.Count)
+            while (cont < _testobject.Execution.testcases.Count)
             {
-                TestCases _test = _testobject.execution.testcases[cont];
+                TestCases _test = _testobject.Execution.testcases[cont];
 
                 switch (_test.Function)
                 {
                     case "Concat_PlusOperator":
 
-                        _testobject.execution.testcases[cont] = Concat_PlusOperator(_test);
+                        _testobject.Execution.testcases[cont] = Concat_PlusOperator(_test);
                         break;
 
                     case "Concat_StringBuilder":
 
-                        _testobject.execution.testcases[cont] = Concat_StringBuilder(_test);
+                        _testobject.Execution.testcases[cont] = Concat_StringBuilder(_test);
                         break;
                 }
 

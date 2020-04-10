@@ -1,10 +1,10 @@
-﻿CREATE procedure [dbo].[getTestCases]
+﻿create procedure [dbo].[getTestCases]
 @idTest		bigint
 as
 begin
-	select idTestCase, FunctionName, isnull([Description], '') as Description
+	select id as idTestCase, [Function] as FunctionName, isnull([Description], '') as Description
 	from
 	[dbo].[TestCases]
 	where
-	idTest = @idTest
+	Test_id = @idTest
 end

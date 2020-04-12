@@ -6,18 +6,23 @@ using System.Threading.Tasks;
 
 using ZmLabsObjects;
 using ZMLabsData;
+using ZMLabsData.repos;
+
+//using AutoMapper;
 
 namespace ZmLabsBusiness
 {
     public class test_functions : test_object 
     {
         private data_tests _datatestobj;
+        private labs_repos _datatestrepository;
 
         public test_functions()
         {
             data.data_functions _df = new data.data_functions();
-
+            
             _datatestobj = new data_tests(_df.GetLabsCnx());
+            _datatestrepository = new labs_repos(_df.GetLabsCnx());            
         }
 
         public List<Categories> getCategories()
@@ -25,28 +30,12 @@ namespace ZmLabsBusiness
             List<Categories> res = new List<Categories>();
 
             try
-            {
-                res = _datatestobj.getCategories();
+            {               
+                res = _datatestrepository.getCategories();
             }
             catch (Exception ex)
             {
 
-            }
-
-            return res;
-        }
-
-        public bool TestRecord(TestCases _testcase)
-        {
-            bool res;
-
-            try
-            {
-                res = _datatestobj.InsertExecution(_testcase);
-            }
-            catch (Exception ex)
-            {
-                return false;
             }
 
             return res;
@@ -58,7 +47,8 @@ namespace ZmLabsBusiness
 
             try
             {
-                res = _datatestobj.getTests(); 
+                //res = _datatestobj.getTests();
+                res = _datatestrepository.getTests();
             }
             catch (Exception ex)
             {
@@ -74,9 +64,26 @@ namespace ZmLabsBusiness
 
             try
             {
-                res = _datatestobj.insertTest(this.Test, this.Classname, this.Description, this.Categorie.id);
+                //res = _datatestobj.insertTest(this.Test, this.Classname, this.Description, this.Categorie.id);
+                res = _datatestrepository.insertTest(this);
             }
             catch (Exception)
+            {
+                return false;
+            }
+
+            return res;
+        }
+
+        public bool TestRecord(TestCases _testcase)
+        {
+            bool res;
+
+            try
+            {
+                res = _datatestobj.InsertExecution(_testcase);
+            }
+            catch (Exception ex)
             {
                 return false;
             }
@@ -107,6 +114,7 @@ namespace ZmLabsBusiness
             return res;
         }
 
+        //-->>
         #region TestObject
 
         public void SetTestObject(test_object _testobject)

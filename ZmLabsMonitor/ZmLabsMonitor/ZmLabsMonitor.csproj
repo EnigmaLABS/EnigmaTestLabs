@@ -143,6 +143,10 @@
       <Project>{ab776b5a-0ccd-4738-b1ca-ef9862831e3c}</Project>
       <Name>ZmLabsBusiness</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ZMLabsData\ZMLabsData\ZMLabsData.csproj">
+      <Project>{bd59fe04-3408-40b8-b12c-a6587cf3631d}</Project>
+      <Name>ZMLabsData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ZmLabsObjects\ZmLabsObjects\ZmLabsObjects.csproj">
       <Project>{012c8f0f-9053-4f80-bb3b-166510b95329}</Project>
       <Name>ZmLabsObjects</Name>

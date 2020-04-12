@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace ZMLabsData.EFModels
@@ -24,7 +26,12 @@ namespace ZMLabsData.EFModels
         [StringLength(555)]
         public string Url_Git { get; set; }
 
-        [Required]
         public Categories Categorie { get; set; }
+
+        [Required]
+        [ForeignKey("Categorie")]
+        public int idCategorie { get; set; }
+
+        public List<TestCases> TestCases { get; set; }
     }
 }

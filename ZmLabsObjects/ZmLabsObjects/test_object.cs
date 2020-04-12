@@ -14,23 +14,24 @@ namespace ZmLabsObjects
 
     public class test_object
     {
-        public Int64 id;
-        public string Test;
-        public string Description;
-        public string Classname;
-        public string Url_blog;
-        public string Url_git;
+        public Int64 id { get; set; }
+        public string Test { get; set; }
+        public string Description { get; set; }
+        public string Classname { get; set; }
+        public string Url_blog { get; set; }
+        public string Url_git { get; set; }
+        public int idCategorie { get; set; }
 
-        public Categories Categorie = new Categories();
-        public ExecutionProperties Execution = new ExecutionProperties();
+        public Categories Categorie { get; set; }
+        public ExecutionProperties Execution { get; set; } = new ExecutionProperties();
     }
 
     public class Categories
     {
-        public int id;
-        public string Categorie;
+        public int id { get; set; }
+        public string Categorie { get; set; } = "";
 
-        public Categories Categorie_dad;
+        public Categories Categorie_dad { get; set; }
     }
 
     public class ExecutionProperties

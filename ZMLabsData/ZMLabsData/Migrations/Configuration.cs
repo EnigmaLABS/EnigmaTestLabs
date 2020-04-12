@@ -72,7 +72,8 @@
                 Url_Blog = @"https://enigmasoftwarelabs.blogspot.com/2020/04/test-1-multithreading-vs-singlethreading.html",
                 Url_Git = "",
 
-                Categorie = _cat_Multithreading
+                Categorie = _cat_Multithreading,
+                idCategorie = _cat_Multithreading.id
             };
 
             EFModels.Tests _test2 = new EFModels.Tests()
@@ -84,7 +85,8 @@
                 Url_Blog = "",
                 Url_Git = "",
 
-                Categorie = _cat_Multithreading
+                Categorie = _cat_Basics,
+                idCategorie = _cat_Basics.id
             };
 
 

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using ZmLabsObjects;
+using ZMLabsData.EFModels;
+
 namespace ZmLabsMonitor
 {
     static class Program

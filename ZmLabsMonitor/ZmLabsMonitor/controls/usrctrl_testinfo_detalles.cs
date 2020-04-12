@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ZmLabsObjects;
@@ -20,6 +16,7 @@ namespace ZmLabsMonitor.controls
         public usrctrl_testinfo_detalles(test_object p_testobject)
         {
             InitializeComponent();
+
             _testobject = p_testobject;
         }
 

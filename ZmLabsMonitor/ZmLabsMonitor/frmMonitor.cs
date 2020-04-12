@@ -20,7 +20,7 @@ namespace ZmLabsMonitor
     {
         private enum enumPantalla { MonitorList, TestInfo }
 
-        private test_functions _test_functions = new test_functions();
+        private test_functions _test_functions;
         private List<test_object> _lst_tests = new List<test_object>(); //-->> para el treeview
 
         private controls.usrctrl_testinfo _ctrl_test_info;
@@ -28,6 +28,8 @@ namespace ZmLabsMonitor
         public frmMonitor()
         {
             InitializeComponent();
+
+            _test_functions = new test_functions();
         }
 
         private void frmMonitor_Load(object sender, EventArgs e)

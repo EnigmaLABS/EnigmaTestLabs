@@ -23,10 +23,9 @@ namespace ZmLabsBusiness.test_info
 
         public virtual bool insertTest() { return false; }
 
-        // TODO: Implementar con EF
-        public virtual bool TestRecord(TestCases _testcase) { return true; }
-
         public virtual TestCases insertTestCase(TestCases testCase) { return new TestCases(); }
+
+        public virtual bool InsertExecution(TestCaseExecutions _testCaseExec) { return true; }
 
 
         //-->>

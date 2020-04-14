@@ -81,7 +81,7 @@
                 id = 2,
                 Test = "Concatenate Strings",
                 Classname = "test2_basicos_concatstrings",
-                Description = "+ Operator Vs StringBuilder",
+                Description = "Plus Operator Vs StringBuilder",
                 Url_Blog = "",
                 Url_Git = "",
 

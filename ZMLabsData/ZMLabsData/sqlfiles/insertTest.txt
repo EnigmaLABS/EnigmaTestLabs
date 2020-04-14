@@ -7,10 +7,8 @@ as
 declare
 @idTest				bigint
 begin
-	select @idTest = ISNULL(MAX(idTest),0)+1 from Tests
-
 	insert into Tests
-	(idTest, Test, ClassName, [Description], idCategorie)
+	(Test, ClassName, [Description], idCategorie)
 	values
-	(@idTest, @Test, @ClassName, @Description, @idCategorie)
+	(@Test, @ClassName, @Description, @idCategorie)
 end

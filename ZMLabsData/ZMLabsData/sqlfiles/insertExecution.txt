@@ -5,7 +5,7 @@
 as
 begin
 	insert into [dbo].[Executions]
-	([dtStart], [dtEnd], [idTestCase])
+	([dtBegin], [dtEnd], [idTestCase])
 	values
 	(@dtStart, @dtEnd, @idTestCase)
 end

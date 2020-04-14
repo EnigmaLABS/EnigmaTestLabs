@@ -23,15 +23,7 @@ namespace ZmLabsBusiness.data
             DBLabs = ConfigurationManager.AppSettings["DBLABS"].ToString();
         }
 
-        private List<string> lstFicherosADO = new List<string>() { "getCategories",
-                                                                "getExecutions",
-                                                                "getTestCases",
-                                                                "getTests",
-                                                                "insertExecution",
-                                                                "insertTest",
-                                                                "insertTestCase" };
-
-        private List<string> lstSPs = new List<string>() { "getCategories", "getTests", "getTestCases", "insertTestCase" };
+        private List<string> lstSPs = new List<string>() { "getCategories", "getTests", "insertTest", "getTestCases", "insertTestCase", "insertExecution", "getExecutions" };
 
         /// <summary>
         /// Comprueba la conexión contra la base de datos master
@@ -93,7 +85,7 @@ namespace ZmLabsBusiness.data
                 string rutaDatos = Files.Where(tp => tp.FileType == data_object.enumFileType.data).First().Path;
                 string rutaLog = Files.Where(tp => tp.FileType == data_object.enumFileType.log).First().Path;
 
-                script = script.Replace("##RUTADATOS##", rutaDatos).Replace("##RUTALOG##", rutaLog);
+                script = script.Replace("##RUTADATOS##", rutaDatos).Replace("##RUTALOG##", rutaLog).Replace("##DATABASENAME##", DBLabs);
 
                 res = data_labs.ExecScript(script, cnx_str_master);
 
@@ -105,7 +97,7 @@ namespace ZmLabsBusiness.data
                     {
                         bool resProcedimientos = true;
 
-                        foreach (string _file in lstFicherosADO)
+                        foreach (string _file in lstSPs)
                         {
                             TextReader txtProcedure = new StreamReader(@"sqlfiles\" + _file + ".txt");
                             string scriptProcedure = txtProcedure.ReadToEnd();

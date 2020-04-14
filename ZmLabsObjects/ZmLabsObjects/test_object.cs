@@ -49,10 +49,25 @@ namespace ZmLabsObjects
         public string Function { get; set; }
         public string Description { get; set; }
 
+        public Int64 idTest { get; set; }
+    }
+
+    public class TestCaseExecutions
+    {
+        public Int64 id { get; set; }
+        public Int64 idTestCase { get; set; } 
+
         public DateTime dtBegin { get; set; }
         public DateTime dtEnd { get; set; }
 
-        public Int64 idTest { get; set; }
+        public double Miliseconds
+        {
+            get
+            {
+                TimeSpan _ts = this.dtEnd - this.dtBegin;
+                return _ts.TotalMilliseconds;
+            }
+        }
     }
 
 }

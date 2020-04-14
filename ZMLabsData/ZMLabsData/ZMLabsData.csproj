@@ -59,6 +59,7 @@
     <Compile Include="data_labs.cs" />
     <Compile Include="data_tests.cs" />
     <Compile Include="EFModels\Categories.cs" />
+    <Compile Include="EFModels\Executions.cs" />
     <Compile Include="EFModels\TestCases.cs" />
     <Compile Include="EFModels\Tests.cs" />
     <Compile Include="Migrations\Configuration.cs" />

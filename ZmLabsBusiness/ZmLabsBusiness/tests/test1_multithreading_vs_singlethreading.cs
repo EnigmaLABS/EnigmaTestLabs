@@ -54,7 +54,6 @@ namespace ZmLabsBusiness.tests
 
 
             this.Estado = test_types.enumEstadoProceso.Finalizado;
-
         }
 
         #region Cases
@@ -66,11 +65,13 @@ namespace ZmLabsBusiness.tests
         /// <returns></returns>
         public TestCases MultithreadingCase(TestCases _test)
         {
+            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+
             //registra inicio
-            _test.dtBegin = DateTime.Now;
+            _testexec.dtBegin = DateTime.Now;
 
             SetMsg("- - - - -");
-            SetMsg("MultithreadingCase iniciado a las " + _test.dtBegin);
+            SetMsg("MultithreadingCase iniciado a las " + _testexec.dtBegin);
 
             //500 hilos calculan la serie fibo
             int cont = 0;
@@ -97,14 +98,12 @@ namespace ZmLabsBusiness.tests
             }
 
             //registra fin
-            _test.dtEnd = DateTime.Now;
+            _testexec.dtEnd = DateTime.Now;
 
-            TimeSpan _ts = _test.dtEnd - _test.dtBegin;
+            SetMsg("MultithreadingCase finalizado a las " + _testexec.dtEnd);
+            SetMsg("MultithreadingCase ejecutado en " + _testexec.Miliseconds + " milisegundos");
 
-            SetMsg("MultithreadingCase finalizado a las " + _test.dtEnd);
-            SetMsg("MultithreadingCase ejecutado en " + _ts.TotalMilliseconds + " milisegundos");
-
-            _testobject.TestRecord(_test);
+            _testobject.InsertExecution(_testexec);
 
             _lst_process_control.Clear();
 
@@ -133,11 +132,13 @@ namespace ZmLabsBusiness.tests
         /// <returns></returns>
         public TestCases SinglethreadingCase(TestCases _test)
         {
+            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+
             //registra inicio
-            _test.dtBegin = DateTime.Now;
+            _testexec.dtBegin = DateTime.Now;
 
             SetMsg("- - - - -");
-            SetMsg("SinglethreadingCase iniciado a las " + _test.dtBegin);
+            SetMsg("SinglethreadingCase iniciado a las " + _testexec.dtBegin);
 
             //500 iteraciones calculando 200 elementos de la serie fibo
             int cont = 0;
@@ -157,25 +158,25 @@ namespace ZmLabsBusiness.tests
             }
 
             //registra fin
-            _test.dtEnd = DateTime.Now;
+            _testexec.dtEnd = DateTime.Now;
 
-            TimeSpan _ts = _test.dtEnd - _test.dtBegin;
+            SetMsg("SinglethreadingCase finalizado a las " + _testexec.dtEnd);
+            SetMsg("SinglethreadingCase ejecutado en " + _testexec.Miliseconds + " milisegundos");
 
-            SetMsg("SinglethreadingCase finalizado a las " + _test.dtEnd);
-            SetMsg("SinglethreadingCase ejecutado en " + _ts.TotalMilliseconds + " milisegundos");
-
-            _testobject.TestRecord(_test);
+            _testobject.InsertExecution(_testexec);
 
             return _test;
         }
 
         public TestCases HybridCase(TestCases _test)
         {
+            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+
             //registra inicio
-            _test.dtBegin = DateTime.Now;
+            _testexec.dtBegin = DateTime.Now;
 
             SetMsg("- - - - -");
-            SetMsg("HybridCase iniciado a las " + _test.dtBegin);
+            SetMsg("HybridCase iniciado a las " + _testexec.dtBegin);
 
             //20 hilos calculan 25 veces cada uno la serie fibo
             int cont = 0;
@@ -202,14 +203,12 @@ namespace ZmLabsBusiness.tests
             }
 
             //registra fin
-            _test.dtEnd = DateTime.Now;
+            _testexec.dtEnd = DateTime.Now;
 
-            TimeSpan _ts = _test.dtEnd - _test.dtBegin;
+            SetMsg("HybridCase finalizado a las " + _testexec.dtEnd);
+            SetMsg("HybridCase ejecutado en " + _testexec.Miliseconds + " milisegundos");
 
-            SetMsg("HybridCase finalizado a las " + _test.dtEnd);
-            SetMsg("HybridCase ejecutado en " + _ts.TotalMilliseconds + " milisegundos");
-
-            _testobject.TestRecord(_test);
+            _testobject.InsertExecution(_testexec);
 
             _lst_process_control.Clear();
 

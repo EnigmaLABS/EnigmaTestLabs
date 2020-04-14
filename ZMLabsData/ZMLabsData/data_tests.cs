@@ -174,7 +174,7 @@ namespace ZMLabsData
             return res;
         }
 
-        public bool InsertExecution(TestCases _TestCase)
+        public bool InsertExecution(TestCaseExecutions _TestCaseExec)
         {
             try
             {
@@ -185,9 +185,9 @@ namespace ZMLabsData
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "insertExecution";
 
-                cmd.Parameters.AddWithValue("@dtStart", _TestCase.dtBegin);
-                cmd.Parameters.AddWithValue("@dtEnd", _TestCase.dtEnd);
-                cmd.Parameters.AddWithValue("@idTestCase", _TestCase.id);
+                cmd.Parameters.AddWithValue("@dtStart", _TestCaseExec.dtBegin);
+                cmd.Parameters.AddWithValue("@dtEnd", _TestCaseExec.dtEnd);
+                cmd.Parameters.AddWithValue("@idTestCase", _TestCaseExec.idTestCase);
 
                 cnx.Open();
                 cmd.ExecuteNonQuery();

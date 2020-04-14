@@ -72,7 +72,6 @@ namespace ZmLabsBusiness.test_info
             return res;
         }
 
-        //TODO: TestRecord e insertTestCase
         public override TestCases insertTestCase(TestCases _testcase)
         {
             bool res;
@@ -87,6 +86,22 @@ namespace ZmLabsBusiness.test_info
             }
 
             return _testcase;
+        }
+
+        public override bool InsertExecution(TestCaseExecutions _testCaseExec)
+        {
+            bool res;
+
+            try
+            {
+                res = _datatestrepository.InsertExecution(_testCaseExec);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return res;
         }
     }
 }

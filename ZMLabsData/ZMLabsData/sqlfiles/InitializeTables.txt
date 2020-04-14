@@ -1,109 +1,104 @@
 ﻿create procedure InitializeTables
 as
 begin
+	
+
 	-->> 
 	CREATE TABLE [dbo].[Categories](
-		[idCategorie] [int] NOT NULL,
-		[Categorie] [varchar](255) NULL,
-		[idCategorieNode] [int] NULL,
-	 CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED 
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[Categorie] [nvarchar](255) NOT NULL,
+		[Categorie_dad_id] [int] NULL,
+	 CONSTRAINT [PK_dbo.Categories] PRIMARY KEY CLUSTERED 
 	(
-		[idCategorie] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-	) ON [PRIMARY]
-
-	-->>
-	CREATE TABLE [dbo].[Executions](
-	[idExecition] [bigint] IDENTITY(1,1) NOT NULL,
-	[dtStart] [datetime] NULL,
-	[dtEnd] [datetime] NULL,
-	[idTestCase] [bigint] NULL,
-	 CONSTRAINT [PK_Executions] PRIMARY KEY CLUSTERED 
-	(
-		[idExecition] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-	) ON [PRIMARY]
-
-	-->>
-	CREATE TABLE [dbo].[TestCases](
-	[idTestCase] [bigint] NOT NULL,
-	[FunctionName] [varchar](155) NULL,
-	[idTest] [bigint] NULL,
-	[Description] [nvarchar](666) NULL,
-	 CONSTRAINT [PK_TestCases] PRIMARY KEY CLUSTERED 
-	(
-		[idTestCase] ASC
+		[id] ASC
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 	) ON [PRIMARY]
 
 	-->>
 	CREATE TABLE [dbo].[Tests](
-	[idTest] [bigint] NOT NULL,
-	[Test] [nvarchar](55) NULL,
-	[ClassName] [varchar](155) NULL,
-	[Description] [nvarchar](1000) NULL,
-	[UrlBlog] [nvarchar](222) NULL,
-	[UrlGIT] [nvarchar](222) NULL,
-	[UrlStackoverflow] [nvarchar](222) NULL,
-	[idCategorie] [int] NULL,
-	CONSTRAINT [PK_Tests] PRIMARY KEY CLUSTERED 
+		[id] [bigint] IDENTITY(1,1) NOT NULL,
+		[Test] [nvarchar](255) NOT NULL,
+		[Description] [nvarchar](555) NULL,
+		[Classname] [nvarchar](255) NULL,
+		[Url_Blog] [nvarchar](555) NULL,
+		[Url_Git] [nvarchar](555) NULL,
+		[idCategorie] [int] NOT NULL,
+	 CONSTRAINT [PK_dbo.Tests] PRIMARY KEY CLUSTERED 
 	(
-		[idTest] ASC
+		[id] ASC
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 	) ON [PRIMARY]
 
 	-->>
-	ALTER TABLE [dbo].[Categories]  WITH NOCHECK ADD  CONSTRAINT [FK_Categories_Categories] FOREIGN KEY([idCategorieNode])
-	REFERENCES [dbo].[Categories] ([idCategorie])
+	CREATE TABLE [dbo].[TestCases](
+		[id] [bigint] IDENTITY(1,1) NOT NULL,
+		[Function] [nvarchar](255) NOT NULL,
+		[Description] [nvarchar](555) NULL,
+		[idTest] [bigint] NOT NULL,
+	 CONSTRAINT [PK_dbo.TestCases] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	-->>
+	CREATE TABLE [dbo].[Executions](
+		[id] [bigint] IDENTITY(1,1) NOT NULL,
+		[dtBegin] [datetime] NOT NULL,
+		[dtEnd] [datetime] NOT NULL,
+		[idTestCase] [bigint] NOT NULL,
+	 CONSTRAINT [PK_dbo.Executions] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
 
 
-	ALTER TABLE [dbo].[Categories] NOCHECK CONSTRAINT [FK_Categories_Categories]
+	-->>
+	ALTER TABLE [dbo].[Categories]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Categories_dbo.Categories_Categorie_dad_id] FOREIGN KEY([Categorie_dad_id])
+	REFERENCES [dbo].[Categories] ([id])
 
+	ALTER TABLE [dbo].[Categories] CHECK CONSTRAINT [FK_dbo.Categories_dbo.Categories_Categorie_dad_id]
 
-	ALTER TABLE [dbo].[Executions]  WITH CHECK ADD  CONSTRAINT [FK_Executions_TestCases] FOREIGN KEY([idTestCase])
-	REFERENCES [dbo].[TestCases] ([idTestCase])
+	ALTER TABLE [dbo].[Tests]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Tests_dbo.Categories_idCategorie] FOREIGN KEY([idCategorie])
+	REFERENCES [dbo].[Categories] ([id])
 
+	ALTER TABLE [dbo].[Tests] CHECK CONSTRAINT [FK_dbo.Tests_dbo.Categories_idCategorie]
 
-	ALTER TABLE [dbo].[Executions] CHECK CONSTRAINT [FK_Executions_TestCases]
+	ALTER TABLE [dbo].[TestCases]  WITH CHECK ADD  CONSTRAINT [FK_dbo.TestCases_dbo.Tests_idTest] FOREIGN KEY([idTest])
+	REFERENCES [dbo].[Tests] ([id])
 
+	ALTER TABLE [dbo].[TestCases] CHECK CONSTRAINT [FK_dbo.TestCases_dbo.Tests_idTest]
 
-	ALTER TABLE [dbo].[TestCases]  WITH CHECK ADD  CONSTRAINT [FK_TestCases_Tests] FOREIGN KEY([idTest])
-	REFERENCES [dbo].[Tests] ([idTest])
+	ALTER TABLE [dbo].[Executions]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Executions_dbo.TestCases_idTestCase] FOREIGN KEY([idTestCase])
+	REFERENCES [dbo].[TestCases] ([id])
 
-
-	ALTER TABLE [dbo].[TestCases] CHECK CONSTRAINT [FK_TestCases_Tests]
-
-
-	ALTER TABLE [dbo].[Tests]  WITH CHECK ADD  CONSTRAINT [FK_Tests_Categories] FOREIGN KEY([idCategorie])
-	REFERENCES [dbo].[Categories] ([idCategorie])
-
-
-	ALTER TABLE [dbo].[Tests] CHECK CONSTRAINT [FK_Tests_Categories]
+	ALTER TABLE [dbo].[Executions] CHECK CONSTRAINT [FK_dbo.Executions_dbo.TestCases_idTestCase]
 
 	-->>
 	declare @sql varchar(2000)
 
 	set @sql = '
-	insert into Categories (idCategorie, Categorie, idCategorieNode) values (1, ''SQL Server Tips'', null)
-	insert into Categories (idCategorie, Categorie, idCategorieNode) values (2, ''C# Code'', null)
-	insert into Categories (idCategorie, Categorie, idCategorieNode) values (3, ''Multithreading Tests'', 2)'
-	insert into Categories (idCategorie, Categorie, idCategorieNode) values (4, ''Basics Tips'', 2)'
+	insert into Categories (Categorie, Categorie_dad_id) values (''SQL Server Tips'', null)
+	insert into Categories (Categorie, Categorie_dad_id) values (''C# Code'', null)
+	insert into Categories (Categorie, Categorie_dad_id) values (''Multithreading Tests'', 2)
+	insert into Categories (Categorie, Categorie_dad_id) values (''Basics Tips'', 2)'
 
 	exec(@sql)
 
 	set @sql = '
-	insert into Tests (idTest, Test, ClassName, [Description], UrlBlog, UrlGIT, UrlStackoverflow, idCategorie) values (1, ''Multithreading vs Singlethreading'', ''test1_multithreading_vs_singlethreading'', ''Calcula 500 veces 200 elementos de la serie fibonacci'', null, null, null, 3)'
-	insert into Tests (idTest, Test, ClassName, [Description], UrlBlog, UrlGIT, UrlStackoverflow, idCategorie) values (2, ''Concatenate Strings'', ''test2_basicos_concatstrings'', ''+ Operator Vs StringBuilder'', null, null, null, 4)'
+	insert into Tests (Test, Classname, [Description], Url_Blog, Url_Git, idCategorie) values (''Multithreading vs Singlethreading'', ''test1_multithreading_vs_singlethreading'', ''Calcula 500 veces 200 elementos de la serie fibonacci'', null, null, 3)
+	insert into Tests (Test, Classname, [Description], Url_Blog, Url_Git, idCategorie) values (''Concatenate Strings'', ''test2_basicos_concatstrings'', ''Plus Operator Vs StringBuilder'', null, null, 4)'
 
 	exec(@sql)
 
 	set @sql = '
-	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (1, ''MultithreadingCase'', 1, ''Cálculo simultáneo de la serie fibo (500 hilos, 200 elementos por hilo)'')
-	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (2, ''SinglethreadingCase'', 1, ''Cálculo secuencial de la serie fibo (500 iteraciones, 200 elementos por iteración)'')
-	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (3, ''HybridCase'', 1, ''20 hilos calculan 25 veces cada uno la serie fibo'')'
+	insert into TestCases ([Function], [idTest], [Description]) values (''MultithreadingCase'', 1, ''Cálculo simultáneo de la serie fibo (500 hilos, 200 elementos por hilo)'')
+	insert into TestCases ([Function], [idTest], [Description]) values (''SinglethreadingCase'', 1, ''Cálculo secuencial de la serie fibo (500 iteraciones, 200 elementos por iteración)'')
+	insert into TestCases ([Function], [idTest], [Description]) values (''HybridCase'', 1, ''20 hilos calculan 25 veces cada uno la serie fibo'')
 
-	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (4, ''Concat_PlusOperator'', 2, ''Concatenación con operador + Concatena 100 veces 26 variables string con el operador'')'
-	insert into TestCases ([idTestCase], [FunctionName], [idTest], [Description]) values (5, ''Concat_StringBuilder'', 2, ''Concatenación con StringBuilder: Concatena 100 veces 26 variables string con un StringBuilder'')'
+	insert into TestCases ([Function], [idTest], [Description]) values (''Concat_PlusOperator'', 2, ''Concatenación con operador + Concatena 100 veces 26 variables string con el operador'')
+	insert into TestCases ([Function], [idTest], [Description]) values (''Concat_StringBuilder'', 2, ''Concatenación con StringBuilder: Concatena 100 veces 26 variables string con un StringBuilder'')'
 
 	exec(@sql)
 end 

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Configuration;
 
 namespace ZMLabsData.context
 {
@@ -16,6 +11,6 @@ namespace ZMLabsData.context
         public DbSet<EFModels.Categories> Categories { get; set; }
         public DbSet<EFModels.Tests> Test { get; set; }
         public DbSet<EFModels.TestCases> TestCases { get; set; }
-
+        public DbSet<EFModels.Executions> Executions { get; set; }
     }
 }

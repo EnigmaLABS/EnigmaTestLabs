@@ -46,48 +46,48 @@ namespace ZmLabsBusiness.tests
 
         public TestCases Concat_PlusOperator(TestCases _test)
         {
+            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+
             //registra inicio
-            _test.dtBegin = DateTime.Now;
+            _testexec.dtBegin = DateTime.Now;
 
             SetMsg("- - - - -");
-            SetMsg("Concat_PlusOperator Case iniciado a las " + _test.dtBegin);
+            SetMsg("Concat_PlusOperator Case iniciado a las " + _testexec.dtBegin);
 
             functions.quijote quijoteObject = new functions.quijote();
             quijoteObject.ConcatQuijotePlusOperator();
 
             //registra fin
-            _test.dtEnd = DateTime.Now;
+            _testexec.dtEnd = DateTime.Now;
 
-            TimeSpan _ts = _test.dtEnd - _test.dtBegin;
+            SetMsg("Concat_PlusOperator Case finalizado a las " + _testexec.dtEnd);
+            SetMsg("Concat_PlusOperator Case ejecutado en " + _testexec.Miliseconds + " milisegundos");
 
-            SetMsg("Concat_PlusOperator Case finalizado a las " + _test.dtEnd);
-            SetMsg("Concat_PlusOperator Case ejecutado en " + _ts.TotalMilliseconds + " milisegundos");
-
-            _testobject.TestRecord(_test);
+            _testobject.InsertExecution(_testexec);
 
             return _test;
         }
 
         public TestCases Concat_StringBuilder(TestCases _test)
         {
+            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+
             //registra inicio
-            _test.dtBegin = DateTime.Now;
+            _testexec.dtBegin = DateTime.Now;
 
             SetMsg("- - - - -");
-            SetMsg("Concat_StringBuilder Case iniciado a las " + _test.dtBegin);
+            SetMsg("Concat_StringBuilder Case iniciado a las " + _testexec.dtBegin);
 
             functions.quijote quijoteObject = new functions.quijote();
             quijoteObject.ConcatQuijoteStringBuilder();
 
             //registra fin
-            _test.dtEnd = DateTime.Now;
+            _testexec.dtEnd = DateTime.Now;
 
-            TimeSpan _ts = _test.dtEnd - _test.dtBegin;
+            SetMsg("Concat_StringBuilder Case finalizado a las " + _testexec.dtEnd);
+            SetMsg("Concat_StringBuilder Case ejecutado en " + _testexec.Miliseconds + " milisegundos");
 
-            SetMsg("Concat_StringBuilder Case finalizado a las " + _test.dtEnd);
-            SetMsg("Concat_StringBuilder Case ejecutado en " + _ts.TotalMilliseconds + " milisegundos");
-
-            _testobject.TestRecord(_test);
+            _testobject.InsertExecution(_testexec);
 
             return _test;
         }

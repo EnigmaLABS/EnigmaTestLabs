@@ -64,7 +64,7 @@ namespace ZmLabsBusiness.test_info
 
             try
             {
-                res = _datatestobj.insertTest(this.Test, this.Classname, this.Description, this.Categorie.id);
+                res = _datatestobj.insertTest(this.Test, this.Classname, this.Description, this.idCategorie);
             }
             catch (Exception)
             {
@@ -74,16 +74,13 @@ namespace ZmLabsBusiness.test_info
             return res;
         }
 
-
-        //-->> TODO: Implementar en EF
-
-        public override bool TestRecord(TestCases _testcase)
+        public override bool InsertExecution(TestCaseExecutions _testCaseExec)
         {
             bool res;
 
             try
             {
-                res = _datatestobj.InsertExecution(_testcase);
+                res = _datatestobj.InsertExecution(_testCaseExec);
             }
             catch (Exception ex)
             {

@@ -1,6 +1,6 @@
 ﻿create procedure [dbo].[getExecutions]
 as
 begin
-	select [idExecition], [dtStart], [dtEnd], [idTestCase]  , DATEDIFF(MS, [dtStart], [dtEnd]) as miliseconds
+	select id as idExecution, [dtBegin], [dtEnd], [idTestCase]  
 	from [dbo].[Executions]
 end

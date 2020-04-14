@@ -38,6 +38,7 @@ namespace ZmLabsMonitor.subforms
             _testObject.Description = txtDesc.Text;
 
             _testObject.idCategorie = _cat.id;
+            _testObject.Categorie = null;
 
             if (_testObject.insertTest())
             {

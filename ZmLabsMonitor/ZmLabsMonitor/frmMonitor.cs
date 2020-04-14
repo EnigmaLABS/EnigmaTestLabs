@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Reflection;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,13 +7,15 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ZmLabsObjects;
 using ZmLabsBusiness;
+using ZmLabsBusiness.test_info;
+
 using ZmLabsBusiness.registry;
 using ZmLabsBusiness.tests;
+using static ZmLabsObjects.data_object;
 
 namespace ZmLabsMonitor
 {
@@ -20,16 +23,24 @@ namespace ZmLabsMonitor
     {
         private enum enumPantalla { MonitorList, TestInfo }
 
-        private test_functions _test_functions;
+        private test_functions_base _test_functions;
         private List<test_object> _lst_tests = new List<test_object>(); //-->> para el treeview
 
         private controls.usrctrl_testinfo _ctrl_test_info;
+        private enumDataSystem _DataSystem;
 
+        /// <summary>
+        /// Formulario principal que puestra el árbol de categorías y tests de cada categoría
+        /// </summary>
         public frmMonitor()
         {
             InitializeComponent();
 
-            _test_functions = new test_functions();
+            string strDataSystem = ConfigurationManager.AppSettings["DBStrategy"].ToString();
+
+            _DataSystem = (enumDataSystem)Enum.Parse(typeof(enumDataSystem), strDataSystem);
+
+            _test_functions = new test_functions_base(_DataSystem, null);
         }
 
         private void frmMonitor_Load(object sender, EventArgs e)
@@ -50,7 +61,8 @@ namespace ZmLabsMonitor
             }
         }
 
-        //-->>
+        //-->> Acceso a la información de un test
+        //     Acceso a la creación de un nuevo test (colgando de una categoría secundaria)
         #region Menú
 
         private void treeCatalogo_AfterSelect(object sender, TreeViewEventArgs e)
@@ -73,7 +85,7 @@ namespace ZmLabsMonitor
 
                         _treeelem.TestObject.Execution.OBJ = test_types.GetObject(_test_functions, _type);
 
-                        _ctrl_test_info = new controls.usrctrl_testinfo(_treeelem.TestObject);
+                        _ctrl_test_info = new controls.usrctrl_testinfo(_treeelem.TestObject, _DataSystem);
 
                         splitContainer.Panel2.Controls.Clear();
                         splitContainer.Panel2.Controls.Add(_ctrl_test_info);
@@ -111,14 +123,14 @@ namespace ZmLabsMonitor
         {
             objects.treeElement _treeelem = (objects.treeElement)treeCatalogo.SelectedNode.Tag;
 
-            subforms.frm_newtest _frm = new subforms.frm_newtest(_treeelem.Categorie, this);
+            subforms.frm_newtest _frm = new subforms.frm_newtest(_treeelem.Categorie, this, _DataSystem);
             _frm.ShowDialog();
         }
         
         #endregion
 
 
-        //-->>
+        //-->> Carga recursivamente el árbol de categorías y tests
         #region carga info
 
         public void GetCategories()

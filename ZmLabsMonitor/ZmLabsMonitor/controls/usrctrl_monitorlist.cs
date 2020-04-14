@@ -2,24 +2,26 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-using ZmLabsObjects;
 using ZmLabsBusiness;
+using ZmLabsBusiness.test_info;
 using ZmLabsBusiness.tests.objects;
-using ZmLabsBusiness.tests;
 
 namespace ZmLabsMonitor.controls
 {
     public partial class usrctrl_monitorlist : UserControl
     {
-        public static test_functions _testobject;
+        public static test_functions_base _testobject;
         public static test_types.enumEstadoProceso _estadoProceso;
 
         private usrctrl_testinfo _container;
 
+        /// <summary>
+        /// Control de usuario que invoca la ejecución de un Test y va mostrando los resultados de la ejecución en pantalla
+        /// </summary>
+        /// <param name="p_container"></param>
         public usrctrl_monitorlist(usrctrl_testinfo p_container)
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace ZmLabsMonitor.controls
             _container = p_container;
         }
 
-        public void Activate(test_functions p_testobject)
+        public void Activate(test_functions_base p_testobject)
         {
             _testobject = p_testobject;
             _estadoProceso = test_types.enumEstadoProceso.Parado;

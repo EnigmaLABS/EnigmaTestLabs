@@ -14,21 +14,30 @@ namespace ZmLabsBusiness.data
         const string DBMaster = "master";
         private string DBLabs;
 
+        /// <summary>
+        /// Lógica de negocio para el proceso inicial de creación de base de datos del usuario
+        /// A desencadenarse en la primera ejecución de la solución
+        /// </summary>
         public data_functions()
         {
             DBLabs = ConfigurationManager.AppSettings["DBLABS"].ToString();
         }
 
-        //private List<string> lstFicheros = new List<string>() { "getCategories",
-        //                                                        "getExecutions",
-        //                                                        "getTestCases",
-        //                                                        "getTests",
-        //                                                        "insertExecution",
-        //                                                        "insertTest",
-        //                                                        "insertTestCase" };
+        private List<string> lstFicherosADO = new List<string>() { "getCategories",
+                                                                "getExecutions",
+                                                                "getTestCases",
+                                                                "getTests",
+                                                                "insertExecution",
+                                                                "insertTest",
+                                                                "insertTestCase" };
 
-        private List<string> lstFicheros = new List<string>() { "getCategories", "getTests", "getTestCases" };
+        private List<string> lstSPs = new List<string>() { "getCategories", "getTests", "getTestCases" };
 
+        /// <summary>
+        /// Comprueba la conexión contra la base de datos master
+        /// </summary>
+        /// <param name="Server"></param>
+        /// <returns></returns>
         public bool TestMasterDB(string Server)
         {
             string cnxstr = GetCnx(Server, DBMaster);
@@ -38,6 +47,11 @@ namespace ZmLabsBusiness.data
             return res;
         }
 
+        /// <summary>
+        /// Obtiene los ficheros mdf y ldf del servidor SQL Server especificado por parámetro
+        /// </summary>
+        /// <param name="Server"></param>
+        /// <returns></returns>
         public List<data_object> GetFilesPath(string Server)
         {
             string cnx_str = GetCnx(Server, "master");
@@ -57,6 +71,13 @@ namespace ZmLabsBusiness.data
             return _files;
         }
 
+        /// <summary>
+        /// Crea la base de datos en el servidor dado, crea tablas con datos y procedimientos almacenados
+        /// Todo ello mediante Scripts SQL
+        /// </summary>
+        /// <param name="Server"></param>
+        /// <param name="Files"></param>
+        /// <returns></returns>
         public bool CreateDatabase(string Server, List<data_object> Files)
         {
             bool res = true;
@@ -84,7 +105,7 @@ namespace ZmLabsBusiness.data
                     {
                         bool resProcedimientos = true;
 
-                        foreach (string _file in lstFicheros)
+                        foreach (string _file in lstFicherosADO)
                         {
                             TextReader txtProcedure = new StreamReader(@"sqlfiles\" + _file + ".txt");
                             string scriptProcedure = txtProcedure.ReadToEnd();
@@ -108,6 +129,12 @@ namespace ZmLabsBusiness.data
             return res;
         }
 
+        /// <summary>
+        /// Crea la base de datos en el servidor dado, crea tablas con datos y procedimientos almacenados
+        /// Todo ello mediante Entity Framewok Code First
+        /// </summary>
+        /// <param name="Server"></param>
+        /// <returns></returns>
         public bool CreateDatabaseEF(string Server)
         {
             bool res = true;
@@ -120,7 +147,7 @@ namespace ZmLabsBusiness.data
                 //Crea los procedimientos almacenados
                 bool resProcedimientos;
 
-                foreach (string _file in lstFicheros)
+                foreach (string _file in lstSPs)
                 {
                     TextReader txtProcedure = new StreamReader(@"sqlfiles\" + _file + ".txt");
                     string scriptProcedure = txtProcedure.ReadToEnd();
@@ -144,6 +171,12 @@ namespace ZmLabsBusiness.data
 
         //-->> Privados
 
+        /// <summary>
+        /// Ejecuta el script SQL InitializeTables que crea la estructura de tablas y las alimenta de datos
+        /// Enmarcado en la estrategia de creación mediante Scripts
+        /// </summary>
+        /// <param name="Server"></param>
+        /// <returns></returns>
         private bool InitializeTables(string Server)
         {
             bool res = true;
@@ -174,6 +207,7 @@ namespace ZmLabsBusiness.data
         //-->>
         #region Get Connections
 
+        
         public string GetLabsCnx()
         {
             registry.registry_functions _regfunc = new registry.registry_functions();

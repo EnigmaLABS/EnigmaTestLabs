@@ -6,7 +6,7 @@ namespace ZmLabsBusiness.tests
 {
     public class test2_basicos_concatstrings : objects.test_exec
     {
-        public test2_basicos_concatstrings(test_functions p_testobject) : base(p_testobject) { }
+        public test2_basicos_concatstrings(test_info.test_functions_base p_testobject) : base(p_testobject) { }
 
         public override void Start()
         {

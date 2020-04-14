@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +12,7 @@ namespace ZmLabsBusiness.tests
     {
         public static List<objects.process_control> _lst_process_control = new List<objects.process_control>();
 
-        public test1_multithreading_vs_singlethreading(test_functions p_testobject) : base(p_testobject) { }
+        public test1_multithreading_vs_singlethreading(test_info.test_functions_base p_testfunctions) : base(p_testfunctions) { }
 
         public override void Start()
         {

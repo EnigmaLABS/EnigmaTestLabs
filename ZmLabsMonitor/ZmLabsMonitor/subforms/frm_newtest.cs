@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 using ZmLabsObjects;
-using ZmLabsBusiness;
+using ZmLabsBusiness.test_info;
+using static ZmLabsObjects.data_object;
 
 namespace ZmLabsMonitor.subforms
 {
@@ -12,20 +11,28 @@ namespace ZmLabsMonitor.subforms
     {
         private Categories _cat;
         private frmMonitor _container;
+        private enumDataSystem _DataSystem;
 
-        public frm_newtest(Categories p_cat, frmMonitor p_container)
+        /// <summary>
+        /// Formulario para la creación de un nuevo Test en BBDD
+        /// </summary>
+        /// <param name="p_cat"></param>
+        /// <param name="p_container"></param>
+        /// <param name="p_DataSystem"></param>
+        public frm_newtest(Categories p_cat, frmMonitor p_container, enumDataSystem p_DataSystem)
         {
             InitializeComponent();
 
             _cat = p_cat;
             _container = p_container;
+            _DataSystem = p_DataSystem;
         }
 
         private void picSave_Click(object sender, EventArgs e)
         {
             picSave.Enabled = false;
 
-            test_functions _test = new test_functions()
+            test_functions_base _test = new test_functions_base(_DataSystem, null)
             {
                 Test = txtTest.Text,
                 Classname = txtClassName.Text,

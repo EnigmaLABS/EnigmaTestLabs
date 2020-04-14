@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using ZmLabsBusiness.registry;
@@ -14,13 +11,14 @@ namespace ZmLabsMonitor
     public partial class frmStart : Form
     {
         private frmMonitor _container;
-        private enum enumMetodoCreacion { Scrpts, EF}
-        private enumMetodoCreacion MetodoCreacionBBDD = enumMetodoCreacion.EF;
+        private data_object.enumDataSystem _DataSystem;
 
-        public frmStart(frmMonitor p_container)
+        public frmStart(frmMonitor p_container, data_object.enumDataSystem p_DataSystem)
         {
             InitializeComponent();
+
             _container = p_container;
+            _DataSystem = p_DataSystem;
         }
 
         private void frmStart_Load(object sender, EventArgs e)
@@ -35,14 +33,14 @@ namespace ZmLabsMonitor
 
             this.Cursor = Cursors.WaitCursor;
 
-            switch (MetodoCreacionBBDD)
+            switch (_DataSystem)
             {
-                case enumMetodoCreacion.Scrpts:
+                case data_object.enumDataSystem.ADO:
 
                     CrearMedianteScripts();
                     break;
 
-                case enumMetodoCreacion.EF:
+                case data_object.enumDataSystem.EntityFramework:
 
                     CrearMedianteEF();
                     break;
@@ -92,7 +90,6 @@ namespace ZmLabsMonitor
             }
         }
 
-        //EN DESUSO
         private void CrearMedianteScripts()
         {
             if (txtServer.Text.Trim().Length > 2)
@@ -139,7 +136,6 @@ namespace ZmLabsMonitor
                 MessageBox.Show("Introduzca el nombre del servidor SQL Server");
             }
         }
-
 
         private void cmdCancelar_Click(object sender, EventArgs e)
         {

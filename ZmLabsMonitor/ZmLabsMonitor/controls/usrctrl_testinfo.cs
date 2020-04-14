@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using ZmLabsBusiness;
+using ZmLabsBusiness.test_info;
 using ZmLabsObjects;
+using static ZmLabsObjects.data_object;
 
 namespace ZmLabsMonitor.controls
 {
@@ -15,12 +12,21 @@ namespace ZmLabsMonitor.controls
         private test_object _testobject;
         private usrctrl_testinfo_detalles _ctrl_test_info_details;
         private usrctrl_monitorlist _ctrl_test_exec_info;
+        private enumDataSystem _DataSystem;
 
-        public usrctrl_testinfo(test_object p_testobject)
+        /// <summary>
+        /// Formulario que muestra la información de un test seleccionado en el árbol del formulario principal
+        /// Da acceso al historial de ejecuciones del test (pendiente desarrollo)
+        /// ... y a la ejecución del mismo, que se desarrollaría en el control de usuario usrctrl_monitorlist
+        /// </summary>
+        /// <param name="p_testobject"></param>
+        /// <param name="p_DataSystem"></param>
+        public usrctrl_testinfo(test_object p_testobject, enumDataSystem p_DataSystem)
         {
             InitializeComponent();
 
             _testobject = p_testobject;
+            _DataSystem = p_DataSystem;
         }
 
         private void usrctrl_testinfo_Load(object sender, EventArgs e)
@@ -28,7 +34,7 @@ namespace ZmLabsMonitor.controls
             txtTest.Text = _testobject.Test;
             txtClassName.Text = _testobject.Classname;
 
-            _ctrl_test_info_details = new usrctrl_testinfo_detalles(_testobject);
+            _ctrl_test_info_details = new usrctrl_testinfo_detalles(_testobject, _DataSystem);
             _ctrl_test_exec_info = new usrctrl_monitorlist(this);
 
             panelDetalle.Controls.Add(_ctrl_test_exec_info);
@@ -39,6 +45,7 @@ namespace ZmLabsMonitor.controls
 
         private void cmdPlay_Click(object sender, EventArgs e)
         {
+
             SetButtonsColor((Button)sender);
 
             _ctrl_test_info_details.Visible = false;
@@ -46,7 +53,7 @@ namespace ZmLabsMonitor.controls
 
             this.Cursor = Cursors.WaitCursor;
 
-            test_functions _tf = new test_functions();
+            test_functions_base _tf = new test_functions_base(_DataSystem, _testobject);
             _tf.SetTestObject(_testobject);
 
             _ctrl_test_exec_info.Activate(_tf);

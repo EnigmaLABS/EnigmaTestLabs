@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using ZmLabsBusiness;
+using ZmLabsBusiness.test_info;
 using ZmLabsObjects;
 
 namespace ZmLabsMonitor.subforms
@@ -16,10 +9,15 @@ namespace ZmLabsMonitor.subforms
 
     public partial class frm_newcase : Form
     {
-        private test_functions _test;
+        private test_functions_base _test;
         private controls.usrctrl_testinfo_detalles _container;
 
-        public frm_newcase(test_functions p_test, controls.usrctrl_testinfo_detalles p_container)
+        /// <summary>
+        /// Formulario para la creación de un nuevo TestCase asociado a un Test
+        /// </summary>
+        /// <param name="p_test"></param>
+        /// <param name="p_container"></param>
+        public frm_newcase(test_functions_base p_test, controls.usrctrl_testinfo_detalles p_container)
         {
             InitializeComponent();
 

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-using ZmLabsBusiness;
+//using ZmLabsBusiness;
 using ZmLabsBusiness.tests;
 using ZmLabsBusiness.tests.objects;
 
@@ -21,7 +19,7 @@ namespace ZmLabsBusiness
 
         public enum enumEstadoProceso { Parado, Ejecutando, Finalizado, Erroneo }
 
-        public static Object GetObject(test_functions _functions, ZmLabsObjects.enumTestTypes _type)
+        public static Object GetObject(test_info.test_functions_base _functions, ZmLabsObjects.enumTestTypes _type)
         {
             test_exec res = new test_exec(_functions);
 

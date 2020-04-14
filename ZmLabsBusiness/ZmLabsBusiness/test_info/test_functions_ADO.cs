@@ -8,30 +8,31 @@ using ZmLabsObjects;
 using ZMLabsData;
 using ZMLabsData.repos;
 
-//using AutoMapper;
-
-namespace ZmLabsBusiness
+namespace ZmLabsBusiness.test_info
 {
-    public class test_functions : test_object 
+    public class test_functions_ADO : test_info.test_functions_base
     {
         private data_tests _datatestobj;
-        private labs_repos _datatestrepository;
 
-        public test_functions()
+        /// <summary>
+        /// Enlaza con el acceso a datos mediante ADO.NET
+        /// </summary>
+        /// <param name="TestObject"></param>
+        public test_functions_ADO(test_object TestObject) : base(data_object.enumDataSystem.ADO, TestObject)
         {
             data.data_functions _df = new data.data_functions();
             
-            _datatestobj = new data_tests(_df.GetLabsCnx());
-            _datatestrepository = new labs_repos(_df.GetLabsCnx());            
+            _datatestobj = new data_tests(_df.GetLabsCnx());        
         }
 
-        public List<Categories> getCategories()
+        public override List<Categories> getCategories()
         {
             List<Categories> res = new List<Categories>();
 
             try
-            {               
-                res = _datatestrepository.getCategories();
+            {
+                res = _datatestobj.getCategories();
+
             }
             catch (Exception ex)
             {
@@ -41,14 +42,13 @@ namespace ZmLabsBusiness
             return res;
         }
 
-        public List<test_object> getTests()
+        public override List<test_object> getTests()
         {
             List<test_object> res = new List<test_object>();
 
             try
             {
-                //res = _datatestobj.getTests();
-                res = _datatestrepository.getTests();
+                res = _datatestobj.getTests();
             }
             catch (Exception ex)
             {
@@ -58,14 +58,13 @@ namespace ZmLabsBusiness
             return res;
         }
 
-        public bool insertTest()
+        public override bool insertTest()
         {
             bool res;
 
             try
             {
-                //res = _datatestobj.insertTest(this.Test, this.Classname, this.Description, this.Categorie.id);
-                res = _datatestrepository.insertTest(this);
+                res = _datatestobj.insertTest(this.Test, this.Classname, this.Description, this.Categorie.id);
             }
             catch (Exception)
             {
@@ -75,7 +74,10 @@ namespace ZmLabsBusiness
             return res;
         }
 
-        public bool TestRecord(TestCases _testcase)
+
+        //-->> TODO: Implementar en EF
+
+        public override bool TestRecord(TestCases _testcase)
         {
             bool res;
 
@@ -91,7 +93,7 @@ namespace ZmLabsBusiness
             return res;
         }
 
-        public TestCases insertTestCase(string functionName, string Description)
+        public override TestCases insertTestCase(string functionName, string Description)
         {
             TestCases res = new TestCases();
 
@@ -114,23 +116,6 @@ namespace ZmLabsBusiness
             return res;
         }
 
-        //-->>
-        #region TestObject
 
-        public void SetTestObject(test_object _testobject)
-        {
-            this.id = _testobject.id;
-            this.Description = _testobject.Description;
-            this.Classname = _testobject.Classname;
-
-            this.Url_blog = _testobject.Url_blog;
-            this.Url_git = _testobject.Url_git;
-
-            this.Categorie = _testobject.Categorie;
-            this.Execution = _testobject.Execution;
-            this.Test = _testobject.Test;
-        }
-
-        #endregion
     }
 }

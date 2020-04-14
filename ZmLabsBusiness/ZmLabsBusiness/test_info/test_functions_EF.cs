@@ -16,7 +16,7 @@ namespace ZmLabsBusiness.test_info
         /// Enlaza con el acceso a datos mediante Entity Framework
         /// </summary>
         /// <param name="TestObject"></param>
-        public test_functions_EF(test_object TestObject) : base(data_object.enumDataSystem.EntityFramework, TestObject)
+        public test_functions_EF() 
         {
             data.data_functions _df = new data.data_functions();
 
@@ -73,5 +73,20 @@ namespace ZmLabsBusiness.test_info
         }
 
         //TODO: TestRecord e insertTestCase
+        public override TestCases insertTestCase(TestCases _testcase)
+        {
+            bool res;
+
+            try
+            {
+                res = _datatestrepository.insertTestCase(ref _testcase);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return _testcase;
+        }
     }
 }

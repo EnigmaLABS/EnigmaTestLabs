@@ -6,5 +6,5 @@ begin
 	from
 	[dbo].[TestCases]
 	where
-	Test_id = @idTest
+	idTest = @idTest
 end

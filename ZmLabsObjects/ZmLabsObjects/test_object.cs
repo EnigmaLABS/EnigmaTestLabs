@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZmLabsObjects
 {
@@ -24,6 +22,7 @@ namespace ZmLabsObjects
 
         public Categories Categorie { get; set; }
         public ExecutionProperties Execution { get; set; } = new ExecutionProperties();
+        public List<TestCases> TestCases { get; set; }
     }
 
     public class Categories
@@ -36,26 +35,24 @@ namespace ZmLabsObjects
 
     public class ExecutionProperties
     {
+        public enumTestTypes TestType;
+
         public DateTime dtBegin;
         public DateTime dtEnd;
 
-        public List<TestCases> testcases = new List<TestCases>();
-
-        public List<string> log;
-
-        public string ClassName;
-        public enumTestTypes TestType;
         public Object OBJ;
     }
 
     public class TestCases
     {
-        public Int64 id;
-        public string Function;
-        public string Description;
-        public DateTime dtBegin;
-        public DateTime dtEnd;
-    }
+        public Int64 id { get; set; }
+        public string Function { get; set; }
+        public string Description { get; set; }
 
+        public DateTime dtBegin { get; set; }
+        public DateTime dtEnd { get; set; }
+
+        public Int64 idTest { get; set; }
+    }
 
 }

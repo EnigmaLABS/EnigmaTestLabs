@@ -18,7 +18,7 @@ namespace ZmLabsBusiness.test_info
         /// Enlaza con el acceso a datos mediante ADO.NET
         /// </summary>
         /// <param name="TestObject"></param>
-        public test_functions_ADO(test_object TestObject) : base(data_object.enumDataSystem.ADO, TestObject)
+        public test_functions_ADO() 
         {
             data.data_functions _df = new data.data_functions();
             
@@ -93,19 +93,15 @@ namespace ZmLabsBusiness.test_info
             return res;
         }
 
-        public override TestCases insertTestCase(string functionName, string Description)
+        public override TestCases insertTestCase(TestCases _testcase)
         {
-            TestCases res = new TestCases();
-
             try
             {
-                Int64 idTestCase = _datatestobj.insertTestCase(this.id, functionName, Description);
+                Int64 idTestCase = _datatestobj.insertTestCase(_testcase.idTest, _testcase.Function, _testcase.Description);
 
                 if (idTestCase != 0)
                 {
-                    res.id = idTestCase;
-                    res.Function = functionName;
-                    res.Description = Description;
+                    _testcase.id = idTestCase;
                 }
             }
             catch (Exception)
@@ -113,9 +109,7 @@ namespace ZmLabsBusiness.test_info
 
             }
 
-            return res;
+            return _testcase;
         }
-
-
     }
 }

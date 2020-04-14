@@ -6,12 +6,10 @@ as
 declare
 @idTestCase			bigint
 begin
-	select @idTestCase = isnull(MAX(idTestCase),0) + 1 from [dbo].[TestCases]
-
 	insert into [dbo].[TestCases]
-	(idTestCase, [FunctionName], [idTest], [Description])
+	([Function], [Description], [idTest])
 	values
-	(@idTestCase, @FunctionName, @idTest, @Description)
+	(@FunctionName, @Description, @idTest)
 
 	select @idTestCase as idTestCse
 end

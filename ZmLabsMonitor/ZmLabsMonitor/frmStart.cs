@@ -40,7 +40,7 @@ namespace ZmLabsMonitor
                     CrearMedianteScripts();
                     break;
 
-                case data_object.enumDataSystem.EntityFramework:
+                case data_object.enumDataSystem.EF:
 
                     CrearMedianteEF();
                     break;

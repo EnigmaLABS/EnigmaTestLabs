@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -14,7 +13,6 @@ using ZmLabsBusiness;
 using ZmLabsBusiness.test_info;
 
 using ZmLabsBusiness.registry;
-using ZmLabsBusiness.tests;
 using static ZmLabsObjects.data_object;
 
 namespace ZmLabsMonitor
@@ -37,10 +35,20 @@ namespace ZmLabsMonitor
             InitializeComponent();
 
             string strDataSystem = ConfigurationManager.AppSettings["DBStrategy"].ToString();
-
             _DataSystem = (enumDataSystem)Enum.Parse(typeof(enumDataSystem), strDataSystem);
 
-            _test_functions = new test_functions_base(_DataSystem, null);
+            switch (_DataSystem)
+            {
+                case enumDataSystem.ADO:
+
+                    _test_functions = new test_functions_ADO();
+                    break;
+
+                case enumDataSystem.EF:
+
+                    _test_functions = new test_functions_EF();
+                    break;
+            }
         }
 
         private void frmMonitor_Load(object sender, EventArgs e)
@@ -52,7 +60,7 @@ namespace ZmLabsMonitor
             //primero comprobamos si existe la BBDD
             if (!existeBBDD)
             {
-                frmStart _frm = new frmStart(this);
+                frmStart _frm = new frmStart(this, _DataSystem);
                 _frm.ShowDialog();
             }
             else
@@ -80,12 +88,13 @@ namespace ZmLabsMonitor
                         enumTestTypes _type = (enumTestTypes)Enum.Parse(typeof(enumTestTypes),
                                                                         _treeelem.TestObject.Classname);
                          
-                        _treeelem.TestObject.Execution.ClassName = _treeelem.TestObject.Classname;
                         _treeelem.TestObject.Execution.TestType = _type;
 
                         _treeelem.TestObject.Execution.OBJ = test_types.GetObject(_test_functions, _type);
 
-                        _ctrl_test_info = new controls.usrctrl_testinfo(_treeelem.TestObject, _DataSystem);
+                        _test_functions.SetTestObject(_treeelem.TestObject);
+
+                        _ctrl_test_info = new controls.usrctrl_testinfo(_test_functions);
 
                         splitContainer.Panel2.Controls.Clear();
                         splitContainer.Panel2.Controls.Add(_ctrl_test_info);
@@ -123,7 +132,7 @@ namespace ZmLabsMonitor
         {
             objects.treeElement _treeelem = (objects.treeElement)treeCatalogo.SelectedNode.Tag;
 
-            subforms.frm_newtest _frm = new subforms.frm_newtest(_treeelem.Categorie, this, _DataSystem);
+            subforms.frm_newtest _frm = new subforms.frm_newtest(_treeelem.Categorie, this, _test_functions);
             _frm.ShowDialog();
         }
         

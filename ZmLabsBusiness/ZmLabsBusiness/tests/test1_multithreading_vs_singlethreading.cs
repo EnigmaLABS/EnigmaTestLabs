@@ -23,25 +23,25 @@ namespace ZmLabsBusiness.tests
 
             int cont = 0;
 
-            while (cont < _testobject.Execution.testcases.Count)
+            while (cont < _testobject.TestCases.Count)
             {
-                TestCases _test = _testobject.Execution.testcases[cont];
+                TestCases _test = _testobject.TestCases[cont];
 
                 switch (_test.Function)
                 {
                     case "MultithreadingCase":
 
-                        _testobject.Execution.testcases[cont] = MultithreadingCase(_test);
+                        _testobject.TestCases[cont] = MultithreadingCase(_test);
                         break;
 
                     case "SinglethreadingCase":
 
-                        _testobject.Execution.testcases[cont] = SinglethreadingCase(_test);
+                        _testobject.TestCases[cont] = SinglethreadingCase(_test);
                         break;
 
                     case "HybridCase":
 
-                        _testobject.Execution.testcases[cont] = HybridCase(_test);
+                        _testobject.TestCases[cont] = HybridCase(_test);
                         break;
                 }
 
@@ -55,7 +55,6 @@ namespace ZmLabsBusiness.tests
 
             this.Estado = test_types.enumEstadoProceso.Finalizado;
 
-            //return _testobject;
         }
 
         #region Cases

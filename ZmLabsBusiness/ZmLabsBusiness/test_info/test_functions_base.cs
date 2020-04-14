@@ -13,50 +13,20 @@ namespace ZmLabsBusiness.test_info
     /// </summary>
     public class test_functions_base : test_object
     {
-        private test_functions_base neg_object;
+        //private test_functions_base neg_object;
 
-        public test_functions_base(data_object.enumDataSystem DataSystem, test_object TestObject)
-        {
-            switch (DataSystem)
-            {
-                case data_object.enumDataSystem.ADO:
+        public test_functions_base()  {  }
 
-                    neg_object = new test_functions_ADO(TestObject); 
-                    break;
+        public virtual List<Categories> getCategories() { return new List<Categories>(); }
 
-                case data_object.enumDataSystem.EntityFramework:
+        public virtual List<test_object> getTests() { return new List<test_object>(); }
 
-                    neg_object = new test_functions_EF(TestObject);
-                    break;
-            }        
-        }
-
-        public virtual List<Categories> getCategories()
-        {
-            return neg_object.getCategories();
-        }
-
-        public virtual List<test_object> getTests()
-        {
-            return neg_object.getTests();
-        }
-
-        public virtual bool insertTest()
-        {
-            return neg_object.insertTest();
-        }
+        public virtual bool insertTest() { return false; }
 
         // TODO: Implementar con EF
-        public virtual bool TestRecord(TestCases _testcase)
-        {
-            return true;
-        }
+        public virtual bool TestRecord(TestCases _testcase) { return true; }
 
-        public virtual TestCases insertTestCase(string functionName, string Description)
-        {
-            TestCases res = new TestCases();
-            return res;
-        }
+        public virtual TestCases insertTestCase(TestCases testCase) { return new TestCases(); }
 
 
         //-->>
@@ -73,7 +43,29 @@ namespace ZmLabsBusiness.test_info
 
             this.Categorie = _testobject.Categorie;
             this.Execution = _testobject.Execution;
+            this.TestCases = _testobject.TestCases;
             this.Test = _testobject.Test;
+        }
+
+        public test_object GetTestObject()
+        {
+            test_object res = new test_object()
+            {
+                id = this.id,
+                Description = this.Description,
+                Classname = this.Classname,
+
+                Url_blog = this.Url_blog,
+                Url_git = this.Url_git,
+
+                Categorie = this.Categorie,
+                Execution = this.Execution,
+                Test = this.Test,
+
+                TestCases = this.TestCases
+            };
+
+            return res;
         }
 
         #endregion

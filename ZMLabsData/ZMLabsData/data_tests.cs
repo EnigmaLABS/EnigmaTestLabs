@@ -40,7 +40,7 @@ namespace ZMLabsData
                     Categories _cat = new Categories()
                     {
                         id = int.Parse(reader["idCategorie"].ToString()),
-                        Categorie = reader["Categorie"].ToString()
+                        Categorie = reader["Categorie"].ToString(),
                     };
 
                     if (reader["idCategorieNode"] != DBNull.Value)
@@ -106,7 +106,7 @@ namespace ZMLabsData
 
                 foreach (test_object _test in res)
                 {
-                    _test.Execution.testcases = getTestCases(_test.id);
+                    _test.TestCases = getTestCases(_test.id);
                 }
             }
             catch (Exception ex)

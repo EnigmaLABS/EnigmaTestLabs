@@ -11,7 +11,7 @@ namespace ZmLabsMonitor.subforms
     {
         private Categories _cat;
         private frmMonitor _container;
-        private enumDataSystem _DataSystem;
+        private test_functions_base _testObject;
 
         /// <summary>
         /// Formulario para la creación de un nuevo Test en BBDD
@@ -19,29 +19,27 @@ namespace ZmLabsMonitor.subforms
         /// <param name="p_cat"></param>
         /// <param name="p_container"></param>
         /// <param name="p_DataSystem"></param>
-        public frm_newtest(Categories p_cat, frmMonitor p_container, enumDataSystem p_DataSystem)
+        public frm_newtest(Categories p_cat, frmMonitor p_container, test_functions_base p_testObject)
         {
             InitializeComponent();
 
             _cat = p_cat;
             _container = p_container;
-            _DataSystem = p_DataSystem;
+
+            _testObject = p_testObject;
         }
 
         private void picSave_Click(object sender, EventArgs e)
         {
             picSave.Enabled = false;
 
-            test_functions_base _test = new test_functions_base(_DataSystem, null)
-            {
-                Test = txtTest.Text,
-                Classname = txtClassName.Text,
-                Description = txtDesc.Text,
+            _testObject.Test = txtTest.Text;
+            _testObject.Classname = txtClassName.Text;
+            _testObject.Description = txtDesc.Text;
 
-                idCategorie = _cat.id
-            };
+            _testObject.idCategorie = _cat.id;
 
-            if (_test.insertTest())
+            if (_testObject.insertTest())
             {
                 _container.GetCategories();
                 this.Close();

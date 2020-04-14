@@ -31,7 +31,7 @@ namespace ZmLabsBusiness.data
                                                                 "insertTest",
                                                                 "insertTestCase" };
 
-        private List<string> lstSPs = new List<string>() { "getCategories", "getTests", "getTestCases" };
+        private List<string> lstSPs = new List<string>() { "getCategories", "getTests", "getTestCases", "insertTestCase" };
 
         /// <summary>
         /// Comprueba la conexión contra la base de datos master
@@ -207,7 +207,6 @@ namespace ZmLabsBusiness.data
         //-->>
         #region Get Connections
 
-        
         public string GetLabsCnx()
         {
             registry.registry_functions _regfunc = new registry.registry_functions();

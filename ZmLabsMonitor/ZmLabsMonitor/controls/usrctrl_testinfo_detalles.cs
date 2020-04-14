@@ -12,15 +12,13 @@ namespace ZmLabsMonitor.controls
 {
     public partial class usrctrl_testinfo_detalles : UserControl
     {
-        private test_object _testobject;
-        private enumDataSystem _DataSystem;
+        private test_functions_base _testobject;
 
-        public usrctrl_testinfo_detalles(test_object p_testobject, enumDataSystem p_DataSystem)
+        public usrctrl_testinfo_detalles(test_functions_base p_testobject)
         {
             InitializeComponent();
 
             _testobject = p_testobject;
-            _DataSystem = p_DataSystem;
         }
 
         private void usrctrl_testinfo_detalles_Load(object sender, EventArgs e)
@@ -48,7 +46,7 @@ namespace ZmLabsMonitor.controls
         {
             lstCases.Items.Clear();
 
-            foreach (TestCases _tc in _testobject.Execution.testcases)
+            foreach (TestCases _tc in _testobject.TestCases)
             {
                 ListViewItem lstIt = new ListViewItem(_tc.Function);
                 lstIt.Tag = _tc;
@@ -59,16 +57,13 @@ namespace ZmLabsMonitor.controls
 
         public void AddTestCase(TestCases _testcase)
         {
-            _testobject.Execution.testcases.Add(_testcase);
+            _testobject.TestCases.Add(_testcase);
             ShowTestCases();
         }
 
         private void picNewTestCase_Click(object sender, EventArgs e)
         {
-            test_functions_base _functions = new test_functions_base(_DataSystem, _testobject);
-            _functions.SetTestObject(_testobject);
-
-            subforms.frm_newcase _frm = new subforms.frm_newcase(_functions, this);
+            subforms.frm_newcase _frm = new subforms.frm_newcase(_testobject, this);
             _frm.ShowDialog();
         }
     }

@@ -9,7 +9,7 @@ namespace ZmLabsObjects
     public class data_object
     {
         public enum enumFileType { data, log }
-        public enum enumDataSystem { ADO, EntityFramework }
+        public enum enumDataSystem { ADO, EF }
 
         public enumFileType FileType;
         public string Path;

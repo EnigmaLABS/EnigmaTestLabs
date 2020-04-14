@@ -9,10 +9,9 @@ namespace ZmLabsMonitor.controls
 {
     public partial class usrctrl_testinfo : UserControl
     {
-        private test_object _testobject;
+        private test_functions_base _testobject;
         private usrctrl_testinfo_detalles _ctrl_test_info_details;
         private usrctrl_monitorlist _ctrl_test_exec_info;
-        private enumDataSystem _DataSystem;
 
         /// <summary>
         /// Formulario que muestra la información de un test seleccionado en el árbol del formulario principal
@@ -21,12 +20,11 @@ namespace ZmLabsMonitor.controls
         /// </summary>
         /// <param name="p_testobject"></param>
         /// <param name="p_DataSystem"></param>
-        public usrctrl_testinfo(test_object p_testobject, enumDataSystem p_DataSystem)
+        public usrctrl_testinfo(test_functions_base p_testobject)
         {
             InitializeComponent();
 
             _testobject = p_testobject;
-            _DataSystem = p_DataSystem;
         }
 
         private void usrctrl_testinfo_Load(object sender, EventArgs e)
@@ -34,7 +32,7 @@ namespace ZmLabsMonitor.controls
             txtTest.Text = _testobject.Test;
             txtClassName.Text = _testobject.Classname;
 
-            _ctrl_test_info_details = new usrctrl_testinfo_detalles(_testobject, _DataSystem);
+            _ctrl_test_info_details = new usrctrl_testinfo_detalles(_testobject);
             _ctrl_test_exec_info = new usrctrl_monitorlist(this);
 
             panelDetalle.Controls.Add(_ctrl_test_exec_info);
@@ -45,7 +43,6 @@ namespace ZmLabsMonitor.controls
 
         private void cmdPlay_Click(object sender, EventArgs e)
         {
-
             SetButtonsColor((Button)sender);
 
             _ctrl_test_info_details.Visible = false;
@@ -53,10 +50,7 @@ namespace ZmLabsMonitor.controls
 
             this.Cursor = Cursors.WaitCursor;
 
-            test_functions_base _tf = new test_functions_base(_DataSystem, _testobject);
-            _tf.SetTestObject(_testobject);
-
-            _ctrl_test_exec_info.Activate(_tf);
+            _ctrl_test_exec_info.Activate(_testobject);
         }
 
         private void cmdInfo_Click(object sender, EventArgs e)

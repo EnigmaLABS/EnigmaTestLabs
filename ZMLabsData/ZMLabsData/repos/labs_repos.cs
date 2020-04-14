@@ -24,6 +24,7 @@ namespace ZMLabsData.repos
             {
                 config_map = new MapperConfiguration(cfg => { cfg.CreateMap<EFModels.Categories, Categories>().ReverseMap();
                                                               cfg.CreateMap<EFModels.Tests, test_object>().ReverseMap();
+                                                              cfg.CreateMap<EFModels.TestCases, TestCases>().ReverseMap();
                                                             });
 
                 
@@ -68,6 +69,26 @@ namespace ZMLabsData.repos
                 using (var db = new context.LabsContext(_str_cnx))
                 {
                     db.Test.Add(_testmodel);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool insertTestCase(ref TestCases TestCase)
+        {
+            try
+            {
+                EFModels.TestCases _testcasemodel = mapper.Map<EFModels.TestCases>(TestCase);
+
+                using (var db = new context.LabsContext(_str_cnx))
+                {
+                    db.TestCases.Add(_testcasemodel);
                     db.SaveChanges();
                 }
             }

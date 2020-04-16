@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[insertTest]
+﻿Create or Alter procedure [dbo].[insertTest]
 @Test				nvarchar(55),
 @ClassName			varchar(155),	
 @Description		nvarchar(1000),

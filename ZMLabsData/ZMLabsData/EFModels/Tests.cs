@@ -26,6 +26,9 @@ namespace ZMLabsData.EFModels
         [StringLength(555)]
         public string Url_Git { get; set; }
 
+        //[StringLength(555)]
+        //public string Url_Stackoverflow { get; set; }
+        
         public Categories Categorie { get; set; }
 
         [Required]

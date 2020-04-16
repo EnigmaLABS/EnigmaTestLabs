@@ -134,7 +134,7 @@ namespace ZmLabsBusiness.data
             try
             {
                 ZMLabsData.Migrations.Configuration _confDB = new ZMLabsData.Migrations.Configuration();
-                _confDB.CreateDataBase(false, GetCnxEF(Server));
+                _confDB.CreateOrUpdateDataBase(false, GetCnxEF(Server));
 
                 //Crea los procedimientos almacenados
                 bool resProcedimientos;
@@ -159,6 +159,21 @@ namespace ZmLabsBusiness.data
             }
 
             return res;
+        }
+
+        public bool UpdateDatabaseEF(string Server)
+        {
+            try
+            {
+                ZMLabsData.Migrations.Configuration _confDB = new ZMLabsData.Migrations.Configuration();
+                _confDB.CreateOrUpdateDataBase(true, GetCnxEF(Server));
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         //-->> Privados

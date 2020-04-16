@@ -13,12 +13,19 @@
             AutomaticMigrationsEnabled = true;
         }
 
-        public void CreateDataBase(bool Recreate, string cnx_str)
+        public void CreateOrUpdateDataBase(bool Recreate, string cnx_str)
         {
             context.LabsContext _myContext = new context.LabsContext(cnx_str);
 
-            _myContext.Database.Create();
-
+            if (!Recreate)
+            {
+                _myContext.Database.Create();
+            }
+            //else
+            //{
+            //    _myContext.Database.Initialize(true);
+            //}
+            
             Seed(_myContext);   
         }
 

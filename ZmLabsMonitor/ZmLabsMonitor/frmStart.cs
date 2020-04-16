@@ -90,6 +90,12 @@ namespace ZmLabsMonitor
             }
         }
 
+        private void UpdateDatabase()
+        {
+            data_functions _df = new data_functions();
+            
+        }
+
         private void CrearMedianteScripts()
         {
             if (txtServer.Text.Trim().Length > 2)

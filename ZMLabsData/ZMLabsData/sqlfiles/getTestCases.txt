@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[getTestCases]
+﻿Create or Alter procedure [dbo].[getTestCases]
 @idTest		bigint
 as
 begin

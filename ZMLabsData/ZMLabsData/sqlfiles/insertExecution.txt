@@ -1,4 +1,4 @@
-﻿CREATE procedure [dbo].[insertExecution]
+﻿Create or Alter procedure [dbo].[insertExecution]
 @dtStart			datetime,
 @dtEnd				datetime,
 @idTestCase			bigint

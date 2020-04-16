@@ -10,11 +10,10 @@ namespace ZmLabsBusiness.tests
 
         public override void Start()
         {
-            this.Estado = test_types.enumEstadoProceso.Ejecutando;
+            //inicia test
+            this.InitTest();
 
-            SetMsg("- - - - -");
-            SetMsg("test2_basicos_concatstrings iniciado a las " + DateTime.Now.ToLongTimeString());
-
+            //recorre y ejecuta testcases
             int cont = 0;
 
             while (cont < _testobject.TestCases.Count)
@@ -37,11 +36,8 @@ namespace ZmLabsBusiness.tests
                 cont++;
             }
 
-            SetMsg("- - - - -");
-            SetMsg("test2_basicos_concatstrings finalizado a las " + DateTime.Now.ToLongTimeString());
-
-
-            this.Estado = test_types.enumEstadoProceso.Finalizado;
+            //finaliza test
+            this.EndTest();
         }
 
         public TestCases Concat_PlusOperator(TestCases _test)
@@ -50,20 +46,15 @@ namespace ZmLabsBusiness.tests
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;
+            InitTestCase(_test.Function, _testexec.dtBegin);
 
-            SetMsg("- - - - -");
-            SetMsg("Concat_PlusOperator Case iniciado a las " + _testexec.dtBegin);
-
+            //ejecuta testcase
             functions.quijote quijoteObject = new functions.quijote();
             quijoteObject.ConcatQuijotePlusOperator();
 
             //registra fin
             _testexec.dtEnd = DateTime.Now;
-
-            SetMsg("Concat_PlusOperator Case finalizado a las " + _testexec.dtEnd);
-            SetMsg("Concat_PlusOperator Case ejecutado en " + _testexec.Miliseconds + " milisegundos");
-
-            _testobject.InsertExecution(_testexec);
+            EndTestCase(_test.Function, _testexec);
 
             return _test;
         }
@@ -74,20 +65,15 @@ namespace ZmLabsBusiness.tests
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;
+            InitTestCase(_test.Function, _testexec.dtBegin);
 
-            SetMsg("- - - - -");
-            SetMsg("Concat_StringBuilder Case iniciado a las " + _testexec.dtBegin);
-
+            //ejecuta testcase
             functions.quijote quijoteObject = new functions.quijote();
             quijoteObject.ConcatQuijoteStringBuilder();
 
             //registra fin
             _testexec.dtEnd = DateTime.Now;
-
-            SetMsg("Concat_StringBuilder Case finalizado a las " + _testexec.dtEnd);
-            SetMsg("Concat_StringBuilder Case ejecutado en " + _testexec.Miliseconds + " milisegundos");
-
-            _testobject.InsertExecution(_testexec);
+            EndTestCase(_test.Function, _testexec);
 
             return _test;
         }

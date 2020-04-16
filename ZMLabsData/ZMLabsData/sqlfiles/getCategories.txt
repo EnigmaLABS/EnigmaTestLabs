@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[getCategories]
+﻿Create or Alter procedure [dbo].[getCategories]
 as
 begin
 	select id as idCategorie, Categorie, categorie_dad_id as idCategorieNode 

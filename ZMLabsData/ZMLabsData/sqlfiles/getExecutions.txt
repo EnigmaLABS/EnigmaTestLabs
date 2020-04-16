@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[getExecutions]
+﻿Create or Alter procedure [dbo].[getExecutions]
 as
 begin
 	select id as idExecution, [dtBegin], [dtEnd], [idTestCase]  

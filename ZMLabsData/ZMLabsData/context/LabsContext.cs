@@ -8,6 +8,12 @@ namespace ZMLabsData.context
     {
         public LabsContext(string cnx_str) : base(cnx_str)  {  }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer<LabsContext>(null);
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<EFModels.Categories> Categories { get; set; }
         public DbSet<EFModels.Tests> Test { get; set; }
         public DbSet<EFModels.TestCases> TestCases { get; set; }

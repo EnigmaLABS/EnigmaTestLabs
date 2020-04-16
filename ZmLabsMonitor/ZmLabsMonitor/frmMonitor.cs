@@ -8,12 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using ZmLabsObjects;
-using ZmLabsBusiness;
-using ZmLabsBusiness.test_info;
-
-using ZmLabsBusiness.registry;
 using static ZmLabsObjects.data_object;
+using ZmLabsObjects;
+
+using ZmLabsBusiness;
+using ZmLabsBusiness.data;
+using ZmLabsBusiness.test_info;
+using ZmLabsBusiness.registry;
+
 
 namespace ZmLabsMonitor
 {
@@ -65,6 +67,9 @@ namespace ZmLabsMonitor
             }
             else
             {
+                //data_functions _df = new data_functions();
+                //_df.UpdateDatabaseEF(_reg.GetRegisteredServer());
+
                 GetCategories();
             }
         }

@@ -1,4 +1,4 @@
-﻿create procedure [dbo].[insertTestCase]
+﻿Create or Alter procedure [dbo].[insertTestCase]
 @FunctionName		varchar(155),
 @Description		nvarchar(666),
 @idTest				bigint

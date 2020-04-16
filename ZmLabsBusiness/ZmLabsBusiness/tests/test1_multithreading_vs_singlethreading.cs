@@ -16,11 +16,10 @@ namespace ZmLabsBusiness.tests
 
         public override void Start()
         {
-            this.Estado = test_types.enumEstadoProceso.Ejecutando;
+            //inicia test
+            this.InitTest();
 
-            SetMsg("- - - - -");
-            SetMsg("test1_multithreading_vs_singlethreading iniciado a las " + DateTime.Now.ToLongTimeString());
-
+            //recorre y ejecuta testcases
             int cont = 0;
 
             while (cont < _testobject.TestCases.Count)
@@ -49,11 +48,8 @@ namespace ZmLabsBusiness.tests
                 Thread.Sleep(1000);
             }
 
-            SetMsg("- - - - -");
-            SetMsg("test1_multithreading_vs_singlethreading finalizado a las " + DateTime.Now.ToLongTimeString());
-
-
-            this.Estado = test_types.enumEstadoProceso.Finalizado;
+            //finaliza test
+            this.EndTest();
         }
 
         #region Cases
@@ -69,9 +65,7 @@ namespace ZmLabsBusiness.tests
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;
-
-            SetMsg("- - - - -");
-            SetMsg("MultithreadingCase iniciado a las " + _testexec.dtBegin);
+            InitTestCase(_test.Function, _testexec.dtBegin);
 
             //500 hilos calculan la serie fibo
             int cont = 0;
@@ -99,11 +93,7 @@ namespace ZmLabsBusiness.tests
 
             //registra fin
             _testexec.dtEnd = DateTime.Now;
-
-            SetMsg("MultithreadingCase finalizado a las " + _testexec.dtEnd);
-            SetMsg("MultithreadingCase ejecutado en " + _testexec.Miliseconds + " milisegundos");
-
-            _testobject.InsertExecution(_testexec);
+            EndTestCase(_test.Function, _testexec);
 
             _lst_process_control.Clear();
 
@@ -136,9 +126,7 @@ namespace ZmLabsBusiness.tests
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;
-
-            SetMsg("- - - - -");
-            SetMsg("SinglethreadingCase iniciado a las " + _testexec.dtBegin);
+            InitTestCase(_test.Function, _testexec.dtBegin);
 
             //500 iteraciones calculando 200 elementos de la serie fibo
             int cont = 0;
@@ -159,11 +147,7 @@ namespace ZmLabsBusiness.tests
 
             //registra fin
             _testexec.dtEnd = DateTime.Now;
-
-            SetMsg("SinglethreadingCase finalizado a las " + _testexec.dtEnd);
-            SetMsg("SinglethreadingCase ejecutado en " + _testexec.Miliseconds + " milisegundos");
-
-            _testobject.InsertExecution(_testexec);
+            EndTestCase(_test.Function, _testexec);
 
             return _test;
         }
@@ -174,9 +158,7 @@ namespace ZmLabsBusiness.tests
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;
-
-            SetMsg("- - - - -");
-            SetMsg("HybridCase iniciado a las " + _testexec.dtBegin);
+            InitTestCase(_test.Function, _testexec.dtBegin);
 
             //20 hilos calculan 25 veces cada uno la serie fibo
             int cont = 0;
@@ -204,11 +186,7 @@ namespace ZmLabsBusiness.tests
 
             //registra fin
             _testexec.dtEnd = DateTime.Now;
-
-            SetMsg("HybridCase finalizado a las " + _testexec.dtEnd);
-            SetMsg("HybridCase ejecutado en " + _testexec.Miliseconds + " milisegundos");
-
-            _testobject.InsertExecution(_testexec);
+            EndTestCase(_test.Function, _testexec);
 
             _lst_process_control.Clear();
 

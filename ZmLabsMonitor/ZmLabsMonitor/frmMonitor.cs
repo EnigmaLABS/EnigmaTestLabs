@@ -67,8 +67,8 @@ namespace ZmLabsMonitor
             }
             else
             {
-                //data_functions _df = new data_functions();
-                //_df.UpdateDatabaseEF(_reg.GetRegisteredServer());
+                data_functions _df = new data_functions();
+                _df.UpdateDatabaseEF(_reg.GetRegisteredServer());
 
                 GetCategories();
             }

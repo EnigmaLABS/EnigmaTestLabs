@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//using ZmLabsObjects;
 using ZmLabsBusiness.test_info;
 using ZmLabsObjects;
-//using ZmLabsBusiness.tests;
 
 namespace ZmLabsBusiness.tests.objects
 {
@@ -33,11 +31,6 @@ namespace ZmLabsBusiness.tests.objects
         /// Sobreescrito en cada una de las clases de los test: test1_x , test2_x etc...
         /// </summary>
         public virtual void Start() {  }
-
-        public void SetMsgLeido(Guid id)
-        {
-            Mensajes.Where(idx => idx.id == id).First().leido = true;
-        }
 
         public void InitTest()
         {
@@ -69,6 +62,10 @@ namespace ZmLabsBusiness.tests.objects
             _testobject.InsertExecution(_testexec);
         }
 
+        public void SetMsgLeido(Guid id)
+        {
+            Mensajes.Where(idx => idx.id == id).First().leido = true;
+        }
 
         private void SetMsg(string Msg)
         {

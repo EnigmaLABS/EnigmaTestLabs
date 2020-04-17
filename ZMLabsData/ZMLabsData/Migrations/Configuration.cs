@@ -6,27 +6,36 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
+
     public sealed class Configuration : DbMigrationsConfiguration<ZMLabsData.context.LabsContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
-        public void CreateOrUpdateDataBase(bool Recreate, string cnx_str)
+        public void CreateOrUpdateDataBase(bool Update, string cnx_str)
         {
             context.LabsContext _myContext = new context.LabsContext(cnx_str);
 
-            if (!Recreate)
+            if (Update)
+            {
+                if (!_myContext.Database.CompatibleWithModel(false))
+                {
+                    Database.SetInitializer(new MigrateDatabaseToLatestVersion<context.LabsContext, Configuration>());
+
+                    using (var ctx = new context.LabsContext(cnx_str))
+                    {
+                        ctx.Database.Initialize(true);
+                    }
+                }
+            }
+            else
             {
                 _myContext.Database.Create();
+                Seed(_myContext);
             }
-            //else
-            //{
-            //    _myContext.Database.Initialize(true);
-            //}
-            
-            Seed(_myContext);   
         }
 
         protected override void Seed(context.LabsContext context)
@@ -78,6 +87,7 @@
                 Description = "Calcula 500 veces 200 elementos de la serie fibonacci",
                 Url_Blog = @"https://enigmasoftwarelabs.blogspot.com/2020/04/test-1-multithreading-vs-singlethreading.html",
                 Url_Git = "",
+                Url_Stackoverflow = @"https://stackoverflow.com/questions/12390468/multithreading-slower-than-singlethreading",
 
                 Categorie = _cat_Multithreading,
                 idCategorie = _cat_Multithreading.id
@@ -110,7 +120,8 @@
                 Function = "MultithreadingCase",
                 Description = "Cálculo simultáneo de la serie fibo (500 hilos, 200 elementos por hilo)",
 
-                Test = _test1
+                Test = _test1,
+                idTest = _test1.id
             };
             EFModels.TestCases _test1_case2 = new EFModels.TestCases()
             {
@@ -118,7 +129,8 @@
                 Function = "SinglethreadingCase",
                 Description = "Cálculo secuencial de la serie fibo (500 iteraciones, 200 elementos por iteración)",
 
-                Test = _test1
+                Test = _test1,
+                idTest = _test1.id
             };
             EFModels.TestCases _test1_case3 = new EFModels.TestCases()
             {
@@ -126,7 +138,8 @@
                 Function = "HybridCase",
                 Description = "20 hilos calculan 25 veces cada uno la serie fibo",
 
-                Test = _test1
+                Test = _test1,
+                idTest = _test1.id
             };
 
             //Test1
@@ -135,8 +148,9 @@
                 id = 4,
                 Function = "Concat_PlusOperator",
                 Description = "Concatenación con operador + Concatena 100 veces 26 variables string con el operador",
-
-                Test = _test2
+                
+                Test = _test2,
+                idTest = _test2.id
             };
             EFModels.TestCases _test2_case2 = new EFModels.TestCases()
             {
@@ -144,7 +158,8 @@
                 Function = "Concat_StringBuilder",
                 Description = "Concatenación con StringBuilder: Concatena 100 veces 26 variables string con un StringBuilder",
 
-                Test = _test2
+                Test = _test2,
+                idTest = _test2.id
             };
 
             context.TestCases.AddOrUpdate(tc => tc.id, _test1_case1);

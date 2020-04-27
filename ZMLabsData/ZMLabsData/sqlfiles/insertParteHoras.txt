@@ -1,0 +1,11 @@
+﻿Create or Alter procedure [test].[insertParteHoras]
+@ParteHoras	test.tblParteHoras readonly
+as
+begin
+	insert into [test].[ParteHoras]
+	([Trabajador], [Fecha], [Horas])
+	select 
+	[Trabajador], [Fecha], [Horas]
+	from
+	@ParteHoras
+end

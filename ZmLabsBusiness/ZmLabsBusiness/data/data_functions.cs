@@ -23,7 +23,12 @@ namespace ZmLabsBusiness.data
             DBLabs = ConfigurationManager.AppSettings["DBLABS"].ToString();
         }
 
-        private List<string> lstSPs = new List<string>() { "getCategories", "getTests", "insertTest", "getTestCases", "insertTestCase", "insertExecution", "getExecutions" };
+        private List<string> lstSPs = new List<string>() { "getCategories",
+                                                           "getTests", "insertTest",
+                                                           "getTestCases", "insertTestCase",
+                                                           "insertExecution", "getExecutions",
+                                                           "insertParteHoras", "GetEstadisticasAbsentismo"
+        };
 
         /// <summary>
         /// Comprueba la conexión contra la base de datos master
@@ -73,6 +78,7 @@ namespace ZmLabsBusiness.data
         public bool CreateDatabase(string Server, List<data_object> Files)
         {
             bool res = true;
+            bool res2 = true;
 
             try
             {
@@ -80,16 +86,20 @@ namespace ZmLabsBusiness.data
                 string cnx_str_labs = GetCnx(Server, DBLabs);
 
                 TextReader tr = new StreamReader(@"sqlfiles\createdatabase.txt");
-                string script = tr.ReadToEnd();
+                TextReader tr2 = new StreamReader(@"sqlfiles\createschema_test.txt");
+
+                string scriptCreateDatabase = tr.ReadToEnd();
+                string scriptCreateSchemaTest = tr2.ReadToEnd();
 
                 string rutaDatos = Files.Where(tp => tp.FileType == data_object.enumFileType.data).First().Path;
                 string rutaLog = Files.Where(tp => tp.FileType == data_object.enumFileType.log).First().Path;
 
-                script = script.Replace("##RUTADATOS##", rutaDatos).Replace("##RUTALOG##", rutaLog).Replace("##DATABASENAME##", DBLabs);
+                scriptCreateDatabase = scriptCreateDatabase.Replace("##RUTADATOS##", rutaDatos).Replace("##RUTALOG##", rutaLog).Replace("##DATABASENAME##", DBLabs);
 
-                res = data_labs.ExecScript(script, cnx_str_master);
+                res = data_labs.ExecScript(scriptCreateDatabase, cnx_str_master);
+                res2 = data_labs.ExecScript(scriptCreateSchemaTest, cnx_str_labs);
 
-                if (res)
+                if (res && res2)
                 {
                     res = InitializeTables(Server);
 
@@ -136,20 +146,33 @@ namespace ZmLabsBusiness.data
                 ZMLabsData.Migrations.Configuration _confDB = new ZMLabsData.Migrations.Configuration();
                 _confDB.CreateOrUpdateDataBase(false, GetCnxEF(Server));
 
-                //Crea los procedimientos almacenados
-                bool resProcedimientos;
+                //Crea el tipo -tipo tabla- definido por el usuario
+                TextReader txtType = new StreamReader(@"sqlfiles\tblParteHoras.txt");
+                string scriptType = txtType.ReadToEnd();
 
-                foreach (string _file in lstSPs)
+                bool resType = data_labs.ExecScript(scriptType, GetCnxEF(Server));
+
+                if (resType)
                 {
-                    TextReader txtProcedure = new StreamReader(@"sqlfiles\" + _file + ".txt");
-                    string scriptProcedure = txtProcedure.ReadToEnd();
+                    //Crea los procedimientos almacenados
+                    bool resProcedimientos;
 
-                    resProcedimientos = data_labs.ExecScript(scriptProcedure, GetCnxEF(Server));
-
-                    if (!resProcedimientos)
+                    foreach (string _file in lstSPs)
                     {
-                        return false;
+                        TextReader txtProcedure = new StreamReader(@"sqlfiles\" + _file + ".txt");
+                        string scriptProcedure = txtProcedure.ReadToEnd();
+
+                        resProcedimientos = data_labs.ExecScript(scriptProcedure, GetCnxEF(Server));
+
+                        if (!resProcedimientos)
+                        {
+                            return false;
+                        }
                     }
+                }
+                else
+                {
+                    return false;
                 }
             }
 

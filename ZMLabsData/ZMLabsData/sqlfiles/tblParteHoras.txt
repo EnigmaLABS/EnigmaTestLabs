@@ -1,0 +1,5 @@
+﻿CREATE TYPE [test].[tblParteHoras] AS TABLE(
+		[Trabajador] [uniqueidentifier] NOT NULL,
+		[Fecha] [datetime] NOT NULL,
+		[Horas] [smallint] NOT NULL
+)

@@ -55,7 +55,7 @@
             this.splitContainer.Panel1.Controls.Add(this.treeCatalogo);
             this.splitContainer.Panel1.Controls.Add(this.label1);
             this.splitContainer.Size = new System.Drawing.Size(1442, 900);
-            this.splitContainer.SplitterDistance = 400;
+            this.splitContainer.SplitterDistance = 440;
             this.splitContainer.TabIndex = 1;
             // 
             // treeCatalogo
@@ -67,7 +67,7 @@
             this.treeCatalogo.ContextMenuStrip = this.contextMenuArbol;
             this.treeCatalogo.Location = new System.Drawing.Point(10, 37);
             this.treeCatalogo.Name = "treeCatalogo";
-            this.treeCatalogo.Size = new System.Drawing.Size(387, 727);
+            this.treeCatalogo.Size = new System.Drawing.Size(427, 727);
             this.treeCatalogo.TabIndex = 2;
             this.treeCatalogo.TabStop = false;
             this.treeCatalogo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeCatalogo_AfterSelect);
@@ -77,13 +77,13 @@
             this.contextMenuArbol.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nnuevoTestToolStripMenuItem});
             this.contextMenuArbol.Name = "contextMenuArbol";
-            this.contextMenuArbol.Size = new System.Drawing.Size(181, 48);
+            this.contextMenuArbol.Size = new System.Drawing.Size(141, 26);
             this.contextMenuArbol.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuArbol_Opening);
             // 
             // nnuevoTestToolStripMenuItem
             // 
             this.nnuevoTestToolStripMenuItem.Name = "nnuevoTestToolStripMenuItem";
-            this.nnuevoTestToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nnuevoTestToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.nnuevoTestToolStripMenuItem.Text = "Nuevo test...";
             this.nnuevoTestToolStripMenuItem.Click += new System.EventHandler(this.nnuevoTestToolStripMenuItem_Click);
             // 

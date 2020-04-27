@@ -35,6 +35,11 @@ namespace ZmLabsBusiness
                     res = new test2_basicos_concatstrings(_functions);
                     break;
 
+                case ZmLabsObjects.enumTestTypes.test3_sql_loaddata:
+
+                    res = new test3_sql_loaddata(_functions);
+                    break;
+
             }
 
             return res;

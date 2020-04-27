@@ -17,6 +17,5 @@ namespace ZMLabsData.EFModels
         public string Categorie { get; set; }
 
         public Categories Categorie_dad { get; set; }
-
     }
 }

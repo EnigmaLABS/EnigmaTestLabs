@@ -49,10 +49,10 @@
             // txtCaseDesc
             // 
             this.txtCaseDesc.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtCaseDesc.Location = new System.Drawing.Point(600, 383);
+            this.txtCaseDesc.Location = new System.Drawing.Point(499, 383);
             this.txtCaseDesc.Multiline = true;
             this.txtCaseDesc.Name = "txtCaseDesc";
-            this.txtCaseDesc.Size = new System.Drawing.Size(643, 126);
+            this.txtCaseDesc.Size = new System.Drawing.Size(472, 126);
             this.txtCaseDesc.TabIndex = 24;
             // 
             // label6
@@ -60,7 +60,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label6.Location = new System.Drawing.Point(596, 357);
+            this.label6.Location = new System.Drawing.Point(495, 357);
             this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(181, 23);
@@ -70,7 +70,7 @@
             // lnkGIT
             // 
             this.lnkGIT.AutoSize = true;
-            this.lnkGIT.Location = new System.Drawing.Point(596, 612);
+            this.lnkGIT.Location = new System.Drawing.Point(495, 612);
             this.lnkGIT.Name = "lnkGIT";
             this.lnkGIT.Size = new System.Drawing.Size(233, 23);
             this.lnkGIT.TabIndex = 22;
@@ -80,7 +80,7 @@
             // lnkBLOG
             // 
             this.lnkBLOG.AutoSize = true;
-            this.lnkBLOG.Location = new System.Drawing.Point(596, 565);
+            this.lnkBLOG.Location = new System.Drawing.Point(495, 565);
             this.lnkBLOG.Name = "lnkBLOG";
             this.lnkBLOG.Size = new System.Drawing.Size(144, 23);
             this.lnkBLOG.TabIndex = 21;
@@ -92,7 +92,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label5.Location = new System.Drawing.Point(596, 527);
+            this.label5.Location = new System.Drawing.Point(495, 527);
             this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(129, 23);
@@ -109,7 +109,7 @@
             this.lstCases.HideSelection = false;
             this.lstCases.Location = new System.Drawing.Point(25, 383);
             this.lstCases.Name = "lstCases";
-            this.lstCases.Size = new System.Drawing.Size(460, 567);
+            this.lstCases.Size = new System.Drawing.Size(375, 561);
             this.lstCases.TabIndex = 19;
             this.lstCases.UseCompatibleStateImageBehavior = false;
             this.lstCases.View = System.Windows.Forms.View.List;
@@ -145,14 +145,14 @@
             this.txtDesc2.Location = new System.Drawing.Point(25, 41);
             this.txtDesc2.Multiline = true;
             this.txtDesc2.Name = "txtDesc2";
-            this.txtDesc2.Size = new System.Drawing.Size(1218, 298);
+            this.txtDesc2.Size = new System.Drawing.Size(946, 298);
             this.txtDesc2.TabIndex = 16;
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(1249, 41);
+            this.pictureBox1.Location = new System.Drawing.Point(977, 41);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(55, 55);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -163,7 +163,7 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(1249, 383);
+            this.pictureBox2.Location = new System.Drawing.Point(977, 383);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(55, 55);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -174,7 +174,7 @@
             // 
             this.picNewTestCase.BackColor = System.Drawing.Color.Transparent;
             this.picNewTestCase.Image = ((System.Drawing.Image)(resources.GetObject("picNewTestCase.Image")));
-            this.picNewTestCase.Location = new System.Drawing.Point(491, 383);
+            this.picNewTestCase.Location = new System.Drawing.Point(406, 383);
             this.picNewTestCase.Name = "picNewTestCase";
             this.picNewTestCase.Size = new System.Drawing.Size(55, 55);
             this.picNewTestCase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -201,7 +201,7 @@
             this.Font = new System.Drawing.Font("Verdana", 14.25F);
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "usrctrl_testinfo_detalles";
-            this.Size = new System.Drawing.Size(1307, 953);
+            this.Size = new System.Drawing.Size(1035, 947);
             this.Load += new System.EventHandler(this.usrctrl_testinfo_detalles_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

@@ -102,6 +102,8 @@ namespace ZmLabsMonitor
                         _ctrl_test_info = new controls.usrctrl_testinfo(_test_functions);
 
                         splitContainer.Panel2.Controls.Clear();
+
+                        _ctrl_test_info.Dock = DockStyle.Fill;
                         splitContainer.Panel2.Controls.Add(_ctrl_test_info);
                     }
                     catch (Exception ex)

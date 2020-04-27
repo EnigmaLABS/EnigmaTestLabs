@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using ZmLabsBusiness.test_info;
 using ZmLabsObjects;
+using ZMLabsData.repos;
 
 namespace ZmLabsBusiness.tests.objects
 {
@@ -67,7 +68,7 @@ namespace ZmLabsBusiness.tests.objects
             Mensajes.Where(idx => idx.id == id).First().leido = true;
         }
 
-        private void SetMsg(string Msg)
+        public void SetMsg(string Msg)
         {
             this.Mensajes.Add(new test_types.mensajes()
             {

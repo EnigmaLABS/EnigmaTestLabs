@@ -26,9 +26,7 @@ namespace ZMLabsData.repos
                                                               cfg.CreateMap<EFModels.Tests, test_object>().ReverseMap();
                                                               cfg.CreateMap<EFModels.TestCases, TestCases>().ReverseMap();
                                                               cfg.CreateMap<EFModels.Executions, TestCaseExecutions>().ReverseMap();
-                });
-
-                
+                });               
             }
 
             mapper = new Mapper(config_map);

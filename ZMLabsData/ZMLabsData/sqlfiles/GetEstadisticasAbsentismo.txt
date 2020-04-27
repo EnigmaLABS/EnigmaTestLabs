@@ -1,0 +1,22 @@
+﻿Create or Alter PROCEDURE [test].[GetEstadisticasAbsentismo]
+@anho		int
+as
+begin
+	--select * from [test].[ParteHoras]
+	--truncate table [test].[ParteHoras]
+
+	--select * from [test].[ParteHoras] where Trabajador = '0FB5C1AC-2A39-4123-A183-C2775E38EC4C' order by Fecha
+
+	select 
+	Trabajador,  
+	COUNT(1) * 8									as total_horas_laborales, 
+	COUNT(1)										as total_dias_registrados, 
+	SUM(Horas)										as horas_trabajadas, 
+	COUNT(1)*8 - SUM(Horas)							as horas_no_trabajadas, 
+	(COUNT(1)*8 - SUM(Horas))/8						as dias_no_trabajados,
+	(COUNT(1)*8 - SUM(Horas))*100 / (COUNT(1) * 8)	as pct_absentismo
+	from [test].[ParteHoras] 
+	group by 
+	Trabajador
+	order by horas_no_trabajadas
+end

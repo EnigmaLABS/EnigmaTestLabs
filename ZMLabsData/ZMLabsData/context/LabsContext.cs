@@ -23,6 +23,9 @@ namespace ZMLabsData.context
         public DbSet<EFModels.Tests> Test { get; set; }
         public DbSet<EFModels.TestCases> TestCases { get; set; }
         public DbSet<EFModels.Executions> Executions { get; set; }
+
+        //Modelos de test
+        public DbSet<EFModels.testModels.ParteHoras> ParteHoras { get; set; }
     }
 
     public static class MyCnxBuilder

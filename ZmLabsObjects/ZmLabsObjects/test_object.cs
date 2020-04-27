@@ -7,7 +7,8 @@ namespace ZmLabsObjects
     public enum enumTestTypes
     {
         test1_multithreading_vs_singlethreading,
-        test2_basicos_concatstrings
+        test2_basicos_concatstrings,
+        test3_sql_loaddata
     }
 
     public class test_object

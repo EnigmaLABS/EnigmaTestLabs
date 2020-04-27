@@ -120,7 +120,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelDetalle.Location = new System.Drawing.Point(25, 166);
             this.panelDetalle.Name = "panelDetalle";
-            this.panelDetalle.Size = new System.Drawing.Size(1446, 778);
+            this.panelDetalle.Size = new System.Drawing.Size(1007, 778);
             this.panelDetalle.TabIndex = 19;
             // 
             // picSave
@@ -152,7 +152,7 @@
             this.Font = new System.Drawing.Font("Verdana", 14.25F);
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "usrctrl_testinfo";
-            this.Size = new System.Drawing.Size(1474, 947);
+            this.Size = new System.Drawing.Size(1035, 947);
             this.Load += new System.EventHandler(this.usrctrl_testinfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picSave)).EndInit();
             this.ResumeLayout(false);

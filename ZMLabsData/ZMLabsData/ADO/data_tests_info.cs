@@ -9,11 +9,11 @@ using ZmLabsObjects;
 
 namespace ZMLabsData
 {
-    public class data_tests
+    public class data_tests_info
     {
         private string str_cnx;
 
-        public data_tests(string p_str_cnx)
+        public data_tests_info(string p_str_cnx)
         {
             str_cnx = p_str_cnx;
         }

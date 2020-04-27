@@ -73,8 +73,16 @@
                 Categorie_dad = _cat_csharpr
             };
 
+            EFModels.Categories _cat_DataLayer = new EFModels.Categories()
+            {
+                id = 5,
+                Categorie = "Data Layer",
+                Categorie_dad = _cat_sqlserver
+            };
+
             context.Categories.AddOrUpdate(x => x.id, _cat_Multithreading);
             context.Categories.AddOrUpdate(x => x.id, _cat_Basics);
+            context.Categories.AddOrUpdate(x => x.id, _cat_DataLayer);
 
             context.SaveChanges();
 
@@ -99,21 +107,33 @@
                 Test = "Concatenate Strings",
                 Classname = "test2_basicos_concatstrings",
                 Description = "Plus Operator Vs StringBuilder",
-                Url_Blog = "",
+                Url_Blog = @"",
                 Url_Git = "",
 
                 Categorie = _cat_Basics,
                 idCategorie = _cat_Basics.id
             };
 
+            EFModels.Tests _test3 = new EFModels.Tests()
+            {
+                id = 3,
+                Test = "Bulk Data - Store Procedure vs Entity Framework",
+                Classname = "test3_sql_loaddata",
+                Description = "Generación de 26.200 registros de información para posteriormente, consolidarla en base de datos mediante distintas técnicas ",
+                Url_Blog = @"https://enigmasoftwarelabs.blogspot.com/2020/04/test-2-concatenacion-de-strings.html",
+                Url_Git = "",
+
+                Categorie = _cat_DataLayer,
+                idCategorie = _cat_DataLayer.id
+            };
 
             context.Test.AddOrUpdate(t => t.id, _test1);
             context.Test.AddOrUpdate(t => t.id, _test2);
+            context.Test.AddOrUpdate(t => t.id, _test3);
 
             context.SaveChanges();
 
-            //TestCases
-            //Test1
+            //TestCases - Test1
             EFModels.TestCases _test1_case1 = new EFModels.TestCases()
             {
                 id = 1,
@@ -142,7 +162,7 @@
                 idTest = _test1.id
             };
 
-            //Test1
+            //TestCases - Test2
             EFModels.TestCases _test2_case1 = new EFModels.TestCases()
             {
                 id = 4,
@@ -162,6 +182,27 @@
                 idTest = _test2.id
             };
 
+            //TestCases - Test3
+            EFModels.TestCases _test3_case1 = new EFModels.TestCases()
+            {
+                id = 6,
+                Function = "EFBulkData",
+                Description = "Grabación de parte de horas anual para 100 trabajadores con Entity Framework",
+
+                Test = _test3,
+                idTest = _test3.id
+            };
+            EFModels.TestCases _test3_case2 = new EFModels.TestCases()
+            {
+                id = 7,
+                Function = "ADOBulkData_Datatable",
+                Description = @"Grabación de parte de horas anual para 100 trabajadores con ADO.NET convirtiendo con reflection la clase Parte_Horas en un DataTable que recibe un procedimiento almacenado como parámetro",
+
+                Test = _test3,
+                idTest = _test3.id
+            };
+
+
             context.TestCases.AddOrUpdate(tc => tc.id, _test1_case1);
             context.TestCases.AddOrUpdate(tc => tc.id, _test1_case2);
             context.TestCases.AddOrUpdate(tc => tc.id, _test1_case3);
@@ -169,8 +210,10 @@
             context.TestCases.AddOrUpdate(tc => tc.id, _test2_case1);
             context.TestCases.AddOrUpdate(tc => tc.id, _test2_case2);
 
-            context.SaveChanges();
+            context.TestCases.AddOrUpdate(tc => tc.id, _test3_case1);
+            context.TestCases.AddOrUpdate(tc => tc.id, _test3_case2);
 
+            context.SaveChanges();
         }
     }
 }

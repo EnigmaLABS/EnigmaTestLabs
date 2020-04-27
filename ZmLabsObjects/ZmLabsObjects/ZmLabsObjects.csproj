@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="data_object.cs" />
+    <Compile Include="sqltests\parte_horas.cs" />
     <Compile Include="test_object.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

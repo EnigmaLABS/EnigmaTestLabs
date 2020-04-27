@@ -12,7 +12,7 @@ namespace ZmLabsBusiness.test_info
 {
     public class test_functions_ADO : test_info.test_functions_base
     {
-        private data_tests _datatestobj;
+        private data_tests_info _datatestobj;
 
         /// <summary>
         /// Enlaza con el acceso a datos mediante ADO.NET
@@ -22,7 +22,7 @@ namespace ZmLabsBusiness.test_info
         {
             data.data_functions _df = new data.data_functions();
             
-            _datatestobj = new data_tests(_df.GetLabsCnx());        
+            _datatestobj = new data_tests_info(_df.GetLabsCnx());        
         }
 
         public override List<Categories> getCategories()

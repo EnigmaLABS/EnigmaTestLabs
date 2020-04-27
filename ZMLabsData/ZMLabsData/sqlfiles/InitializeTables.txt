@@ -1,8 +1,6 @@
 ﻿create procedure InitializeTables
 as
 begin
-	
-
 	-->> 
 	CREATE TABLE [dbo].[Categories](
 		[id] [int] IDENTITY(1,1) NOT NULL,
@@ -82,13 +80,15 @@ begin
 	insert into Categories (Categorie, Categorie_dad_id) values (''SQL Server Tips'', null)
 	insert into Categories (Categorie, Categorie_dad_id) values (''C# Code'', null)
 	insert into Categories (Categorie, Categorie_dad_id) values (''Multithreading Tests'', 2)
-	insert into Categories (Categorie, Categorie_dad_id) values (''Basics Tips'', 2)'
+	insert into Categories (Categorie, Categorie_dad_id) values (''Basics Tips'', 2)
+	insert into Categories (Categorie, Categorie_dad_id) values (''Data Layer'', 1)'
 
 	exec(@sql)
 
 	set @sql = '
 	insert into Tests (Test, Classname, [Description], Url_Blog, Url_Git, idCategorie) values (''Multithreading vs Singlethreading'', ''test1_multithreading_vs_singlethreading'', ''Calcula 500 veces 200 elementos de la serie fibonacci'', null, null, 3)
-	insert into Tests (Test, Classname, [Description], Url_Blog, Url_Git, idCategorie) values (''Concatenate Strings'', ''test2_basicos_concatstrings'', ''Plus Operator Vs StringBuilder'', null, null, 4)'
+	insert into Tests (Test, Classname, [Description], Url_Blog, Url_Git, idCategorie) values (''Concatenate Strings'', ''test2_basicos_concatstrings'', ''Plus Operator Vs StringBuilder'', null, null, 4)
+	insert into Tests (Test, Classname, [Description], Url_Blog, Url_Git, idCategorie) values (''Bulk Data - Store Procedure vs Entity Framework'', ''test3_sql_loaddata'', ''Generación de 26.200 registros de información para posteriormente, consolidarla en base de datos mediante distintas técnicas'', null, null, 5)'
 
 	exec(@sql)
 
@@ -98,8 +98,35 @@ begin
 	insert into TestCases ([Function], [idTest], [Description]) values (''HybridCase'', 1, ''20 hilos calculan 25 veces cada uno la serie fibo'')
 
 	insert into TestCases ([Function], [idTest], [Description]) values (''Concat_PlusOperator'', 2, ''Concatenación con operador + Concatena 100 veces 26 variables string con el operador'')
-	insert into TestCases ([Function], [idTest], [Description]) values (''Concat_StringBuilder'', 2, ''Concatenación con StringBuilder: Concatena 100 veces 26 variables string con un StringBuilder'')'
+	insert into TestCases ([Function], [idTest], [Description]) values (''Concat_StringBuilder'', 2, ''Concatenación con StringBuilder: Concatena 100 veces 26 variables string con un StringBuilder'')
+
+	insert into TestCases ([Function], [idTest], [Description]) values (''EFBulkData'', 3, ''Grabación de parte de horas anual para 100 trabajadores con Entity Framework'')
+	insert into TestCases ([Function], [idTest], [Description]) values (''ADOBulkData_Datatable'', 3, ''Grabación de parte de horas anual para 100 trabajadores con ADO.NET convirtiendo con reflection la clase Parte_Horas en un DataTable que recibe un procedimiento almacenado como parámetro'')'
 
 	exec(@sql)
+
+	-->>
+	-->> 27/04 ESTRUCTURA PARA TEST ADO VS EF
+	--CREATE SCHEMA [test]
+
+	CREATE TABLE [test].[ParteHoras](
+	[id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Trabajador] [uniqueidentifier] NOT NULL,
+	[Fecha] [datetime] NOT NULL,
+	[Horas] [smallint] NOT NULL,
+	 CONSTRAINT [PK_test.ParteHoras] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	CREATE TYPE [test].[tblParteHoras] AS TABLE(
+		[Trabajador] [uniqueidentifier] NOT NULL,
+		[Fecha] [datetime] NOT NULL,
+		[Horas] [smallint] NOT NULL
+	)
+
+
+
 end 
 

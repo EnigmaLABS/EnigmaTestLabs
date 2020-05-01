@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZmLabsObjects.sqltests
 {
-    public class parte_horas
+    public class ParteHoras : IParteHoras
     {
         public enum enumTipoJornada { Normal, Baja, Incidencia };
 
@@ -37,5 +37,17 @@ namespace ZmLabsObjects.sqltests
         }
 
         public enumTipoJornada TipoJornada { get; set; }
+
+        //Métodos
+        public virtual List<IParteHoras> Generate(int numTrabajadores, int Anho)
+        {
+            return new List<IParteHoras>();
+        }
+
+        public virtual void Clear() {  }
+
+
+
+
     }
 }

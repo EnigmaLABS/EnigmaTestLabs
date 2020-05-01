@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace ZmLabsBusiness.functions
 {
-    public static class fibo
+    public class fibo : contracts.IFibo
     {
-        public static void CalcFibo(int numelements)
+        public List<ulong> CalcFibo(int numelements)
         {
-            Dictionary<int, Int64> lstelements = new Dictionary<int, Int64>();
+            List<ulong> lstelements = new List<ulong>();
 
             int cont = 0;
 
-            Int64 anterior = 0;
-            Int64 anterioranterior = 0;
+            ulong anterior = 0;
+            ulong anterioranterior = 0;
 
             while (cont < numelements)
             {
@@ -31,7 +31,7 @@ namespace ZmLabsBusiness.functions
                 }
                 else
                 {
-                    Int64 newelem = anterioranterior + anterior;
+                    ulong newelem = anterioranterior + anterior;
 
                     anterioranterior = anterior;
                     anterior = newelem;
@@ -41,6 +41,8 @@ namespace ZmLabsBusiness.functions
 
                 cont++;
             }
+
+            return lstelements;
         }
     }
 }

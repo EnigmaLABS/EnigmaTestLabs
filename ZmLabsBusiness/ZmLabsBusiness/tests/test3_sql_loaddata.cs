@@ -15,7 +15,12 @@ namespace ZmLabsBusiness.tests
     {
         data.data_functions _df = new data.data_functions();
 
-        public test3_sql_loaddata(test_info.test_functions_base p_testfunctions) : base(p_testfunctions) { }
+        private IParteHoras ParteHorasFunctions;
+
+        public test3_sql_loaddata(test_info.test_functions_base p_testfunctions, IParteHoras p_ParteHorasFunctions) : base(p_testfunctions)
+        {
+            ParteHorasFunctions = p_ParteHorasFunctions;
+        }
 
         public override void Start()
         {
@@ -23,13 +28,14 @@ namespace ZmLabsBusiness.tests
             this.InitTest();
 
             //limpia la tabla antes de iniciar la ejecución
-            functions.parte_horas _partehoras = new functions.parte_horas();
+            //functions.parte_horas _partehoras = new functions.parte_horas();
+
             bool resTruncate = data_labs.ExecScript("truncate table [test].[ParteHoras]", _df.GetLabsCnx());
 
             //genera el parte de horas (fuera del cálculo de cada uno de los testcases)
             DateTime dtInicioCalculo = DateTime.Now;
 
-            var listahoras = _partehoras.Generate(100, 2020);
+            var listahoras = ParteHorasFunctions.Generate(100, 2020);
 
             DateTime dtFinCalculo = DateTime.Now;
 
@@ -69,10 +75,10 @@ namespace ZmLabsBusiness.tests
            
             //finaliza test
             this.EndTest();
-            _partehoras.Clear();
+            ParteHorasFunctions.Clear();
         }
 
-        private TestCases EFBulkData(List<parte_horas> _ParteAnual, TestCases _test)
+        private TestCases EFBulkData(List<IParteHoras> _ParteAnual, TestCases _test)
         {
             TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
 
@@ -92,7 +98,7 @@ namespace ZmLabsBusiness.tests
             return _test;
         }
 
-        private TestCases ADOBulkData_Datatable(List<parte_horas> _ParteAnual, TestCases _test)
+        private TestCases ADOBulkData_Datatable(List<IParteHoras> _ParteAnual, TestCases _test)
         {
             TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
 
@@ -107,7 +113,7 @@ namespace ZmLabsBusiness.tests
             DateTime dtInicioConversion = DateTime.Now;
             SetMsg("Inicia conversión con reflection => parte_horas class to DataTable");
 
-            DataTable _dtParteHoras = functions.reflections.CreateDataTable<parte_horas>(_ParteAnual, new List<string>() { "TipoJornada" });
+            DataTable _dtParteHoras = functions.reflections.CreateDataTable<IParteHoras>(_ParteAnual, new List<string>() { "TipoJornada" });
 
             //fin conversión
             DateTime dtFinConversion = DateTime.Now;

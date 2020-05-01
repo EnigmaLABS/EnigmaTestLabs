@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ZmLabsObjects.sqltests;
-
 namespace ZMLabsData.ADO
 {
     public class data_test_sql

@@ -1,12 +1,18 @@
 ﻿using System;
 
 using ZmLabsObjects;
+using ZmLabsBusiness.functions.contracts;
 
 namespace ZmLabsBusiness.tests
 {
     public class test2_basicos_concatstrings : objects.test_exec
     {
-        public test2_basicos_concatstrings(test_info.test_functions_base p_testobject) : base(p_testobject) { }
+        private IQuijote QuijoteFunctions;
+
+        public test2_basicos_concatstrings(test_info.test_functions_base p_testobject, IQuijote p_QuijoteFunctions) : base(p_testobject)
+        {
+            QuijoteFunctions = p_QuijoteFunctions;
+        }
 
         public override void Start()
         {
@@ -49,8 +55,7 @@ namespace ZmLabsBusiness.tests
             InitTestCase(_test.Function, _testexec.dtBegin);
 
             //ejecuta testcase
-            functions.quijote quijoteObject = new functions.quijote();
-            quijoteObject.ConcatQuijotePlusOperator();
+            QuijoteFunctions.ConcatQuijotePlusOperator();
 
             //registra fin
             _testexec.dtEnd = DateTime.Now;
@@ -68,8 +73,7 @@ namespace ZmLabsBusiness.tests
             InitTestCase(_test.Function, _testexec.dtBegin);
 
             //ejecuta testcase
-            functions.quijote quijoteObject = new functions.quijote();
-            quijoteObject.ConcatQuijoteStringBuilder();
+            QuijoteFunctions.ConcatQuijoteStringBuilder();
 
             //registra fin
             _testexec.dtEnd = DateTime.Now;

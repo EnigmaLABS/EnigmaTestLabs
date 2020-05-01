@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using ZmLabsBusiness.functions.contracts;
+
 using ZmLabsObjects;
 
 namespace ZmLabsBusiness.tests
@@ -12,7 +14,12 @@ namespace ZmLabsBusiness.tests
     {
         public static List<objects.process_control> _lst_process_control = new List<objects.process_control>();
 
-        public test1_multithreading_vs_singlethreading(test_info.test_functions_base p_testfunctions) : base(p_testfunctions) { }
+        private static IFibo FiboCalc;
+
+        public test1_multithreading_vs_singlethreading(test_info.test_functions_base p_testfunctions, IFibo p_FiboCalc) : base(p_testfunctions)
+        {
+            FiboCalc = p_FiboCalc;
+        }
 
         public override void Start()
         {
@@ -104,8 +111,8 @@ namespace ZmLabsBusiness.tests
         {
             try
             {
-                //Console.WriteLine("CalcFibo1 - Index " + index.ToString());
-                functions.fibo.CalcFibo(200);
+                //functions.fibo.CalcFibo(200);
+                FiboCalc.CalcFibo(200);
 
                 _lst_process_control[index].Estado = objects.process_control.enumEstadoProceso.Finalizado;
             }
@@ -135,7 +142,9 @@ namespace ZmLabsBusiness.tests
             {
                 try
                 {
-                    functions.fibo.CalcFibo(200);
+                    //functions.fibo.CalcFibo(200);
+                    FiboCalc.CalcFibo(200);
+
                     cont++;
                     Thread.Sleep(55);
                 }
@@ -197,14 +206,15 @@ namespace ZmLabsBusiness.tests
         {
             try
             {
-                //Console.WriteLine("CalcFibo1 - Index " + index.ToString());
                 int cont = 0;
 
                 while (cont < 25)
                 {
                     try
                     {
-                        functions.fibo.CalcFibo(200);
+                        //functions.fibo.CalcFibo(200);
+                        FiboCalc.CalcFibo(200);
+
                         cont++;
                         Thread.Sleep(55);
                     }

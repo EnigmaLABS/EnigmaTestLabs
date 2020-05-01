@@ -23,14 +23,14 @@ namespace ZMLabsData.repos
             if (config_map == null)
             {
                 config_map = new MapperConfiguration(cfg => {
-                    cfg.CreateMap<EFModels.testModels.ParteHoras, parte_horas>().ReverseMap();
+                    cfg.CreateMap<EFModels.testModels.ParteHoras, ParteHoras>().ReverseMap();
                 });
             }
 
             mapper = new Mapper(config_map);
         }
 
-        public bool InsertParteHorasAnual(List<parte_horas> _ParteAnual)
+        public bool InsertParteHorasAnual(List<IParteHoras> _ParteAnual)
         {
             try
             {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 
 using ZmLabsObjects;
+using ZmLabsObjects.sqltests;
 
 namespace ZmLabsBusiness.functions
 {
@@ -17,14 +18,21 @@ namespace ZmLabsBusiness.functions
         public enumEstadoProceso EstadoProceso;
     }
 
-    public class parte_horas : ZmLabsObjects.sqltests.parte_horas
+    public class parte_horas : ParteHoras
     {
+        private static List<IParteHoras> _ParteAnual;
+
+        public parte_horas(List<IParteHoras> p_ParteAnual)
+        {
+            _ParteAnual = p_ParteAnual;
+        }
+
+        //Propiedades privadas
         private static Random _rnd = new Random();
 
-        private static List<ZmLabsObjects.sqltests.parte_horas> ParteAnual = new List<ZmLabsObjects.sqltests.parte_horas>();
         private static List<parte_horas_estado_proceso> EstadoProceso = new List<parte_horas_estado_proceso>();
 
-        public List<ZmLabsObjects.sqltests.parte_horas> Generate(int numTrabajadores, int Anho)
+        public override List<IParteHoras> Generate(int numTrabajadores, int Anho)
         {
             for (int cont = 0; cont < numTrabajadores; cont++)
             {
@@ -50,20 +58,19 @@ namespace ZmLabsBusiness.functions
                 Thread.Sleep(555);
             }
 
-            return ParteAnual;
+            return _ParteAnual;
         }
 
-        public void Clear()
+        public override void Clear()
         {
-            ParteAnual.Clear();
+            _ParteAnual.Clear();
             EstadoProceso.Clear();
         }
 
-        public static void CalculaParteAnualTrabajador(Guid _Trabajador, int Anho)
+        private static void CalculaParteAnualTrabajador(Guid _Trabajador, int Anho)
         {
             try
             {
-
                 DateTime dtActual = new DateTime(Anho, 1, 1);
                 DateTime dtFin = new DateTime(Anho, 12, 31);
 
@@ -71,7 +78,7 @@ namespace ZmLabsBusiness.functions
                 {
                     if (dtActual.DayOfWeek != DayOfWeek.Saturday & dtActual.DayOfWeek != DayOfWeek.Sunday)
                     {
-                        ZmLabsObjects.sqltests.parte_horas _partediario = new ZmLabsObjects.sqltests.parte_horas()
+                        ParteHoras _partediario = new ParteHoras()
                         {
                             Trabajador = _Trabajador,
                             Fecha = dtActual
@@ -104,7 +111,7 @@ namespace ZmLabsBusiness.functions
                         //---------------------------------------------------------------------------------------------
 
                         // ¿Hubo baja los últimos 5 días trabajados?
-                        bool HuboBaja = ParteAnual.Exists(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == enumTipoJornada.Baja);
+                        bool HuboBaja = _ParteAnual.Exists(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == enumTipoJornada.Baja);
 
                         // ¿Hubo incidencia los últimos 5 días trabajados, sin baja médica?
                         // Si hubo obtiene las horas de incidencia acumuladas
@@ -113,7 +120,7 @@ namespace ZmLabsBusiness.functions
 
                         if (!HuboBaja)
                         {
-                            var Indicencias5Dias = ParteAnual.Where(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == enumTipoJornada.Incidencia).ToList();
+                            var Indicencias5Dias = _ParteAnual.Where(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == enumTipoJornada.Incidencia).ToList();
                             HuboIncidencia = Indicencias5Dias.Count > 0;
 
                             if (HuboIncidencia)
@@ -136,14 +143,15 @@ namespace ZmLabsBusiness.functions
                             _partediario.Horas = GetHorasNormal();
                         }
 
-                        ParteAnual.Add(_partediario);
+                        _ParteAnual.Add(_partediario);
                     }
 
 
                     dtActual = dtActual.AddDays(1);
                 }
 
-                EstadoProceso.Where(tr => tr.Trabajador == _Trabajador).First().EstadoProceso = parte_horas_estado_proceso.enumEstadoProceso.Finalizado;
+                EstadoProceso.Where(tr => tr.Trabajador == _Trabajador).First()
+                                                        .EstadoProceso = parte_horas_estado_proceso.enumEstadoProceso.Finalizado;
             }
             catch (Exception ex)
             {

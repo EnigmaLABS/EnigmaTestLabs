@@ -6,7 +6,8 @@ using System.Linq;
 
 namespace ZMLabsData.EFModels
 {
-    public class Tests
+    [Table("Tests")]
+    public class TestsModel
     {
         public Int64 id { get; set; }
 
@@ -29,12 +30,12 @@ namespace ZMLabsData.EFModels
         [StringLength(555)]
         public string Url_Stackoverflow { get; set; }
 
-        public Categories Categorie { get; set; }
+        public CategoriesModel Categorie { get; set; }
 
         [Required]
         [ForeignKey("Categorie")]
         public int idCategorie { get; set; }
 
-        public List<TestCases> TestCases { get; set; }
+        public List<TestCasesModel> TestCases { get; set; }
     }
 }

@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="data_object.cs" />
+    <Compile Include="DataDomainObject.cs" />
     <Compile Include="sqltests\IParteHoras.cs" />
     <Compile Include="sqltests\ParteHoras.cs" />
-    <Compile Include="test_object.cs" />
+    <Compile Include="TestDomainObjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

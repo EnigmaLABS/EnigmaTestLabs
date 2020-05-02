@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using static ZmLabsObjects.data_object;
+using static ZmLabsObjects.DataDomain;
 using ZmLabsObjects;
 
 using ZmLabsBusiness;
@@ -24,7 +24,7 @@ namespace ZmLabsMonitor
         private enum enumPantalla { MonitorList, TestInfo }
 
         private test_functions_base _test_functions;
-        private List<test_object> _lst_tests = new List<test_object>(); //-->> para el treeview
+        private List<TestDomain> _lst_tests = new List<TestDomain>(); //-->> para el treeview
 
         private controls.usrctrl_testinfo _ctrl_test_info;
         private enumDataSystem _DataSystem;
@@ -154,15 +154,15 @@ namespace ZmLabsMonitor
             _lst_tests = _test_functions.getTests();
             treeCatalogo.Nodes.Clear();
 
-            List<Categories> _lstcat = _test_functions.getCategories();
+            List<CategoriesDomain> _lstcat = _test_functions.getCategories();
 
             //rellenamos el tree view
-            foreach (Categories _cat in _lstcat.Where(ct => ct.Categorie_dad == null))
+            foreach (CategoriesDomain _cat in _lstcat.Where(ct => ct.Categorie_dad == null))
             {
                 TreeNode _trprincipal = new TreeNode(_cat.Categorie);
 
                 //cargamos los hijos
-                foreach (Categories _catsub in _lstcat.Where(c => c.Categorie_dad != null && c.Categorie_dad.id == _cat.id))
+                foreach (CategoriesDomain _catsub in _lstcat.Where(c => c.Categorie_dad != null && c.Categorie_dad.id == _cat.id))
                 {
                     GetCategorieChildrensAndTests(ref _trprincipal, _catsub, _lstcat);
                 }
@@ -183,7 +183,7 @@ namespace ZmLabsMonitor
             treeCatalogo.ExpandAll();
         }
 
-        public void GetCategorieChildrensAndTests(ref TreeNode _trprincipal, Categories _catsub, List<Categories> _lstcat)
+        public void GetCategorieChildrensAndTests(ref TreeNode _trprincipal, CategoriesDomain _catsub, List<CategoriesDomain> _lstcat)
         {
             TreeNode _hijo = new TreeNode(_catsub.Categorie);
 
@@ -196,13 +196,13 @@ namespace ZmLabsMonitor
             _hijo.Tag = _treeElem;
 
             //cargamos los hijos
-            foreach (Categories _catsubsub in _lstcat.Where(c => c.Categorie_dad != null && c.Categorie_dad.id == _catsub.id))
+            foreach (CategoriesDomain _catsubsub in _lstcat.Where(c => c.Categorie_dad != null && c.Categorie_dad.id == _catsub.id))
             {
                 GetCategorieChildrensAndTests(ref _hijo, _catsubsub, _lstcat);
             }
 
             //cargamos los test de la categoría actual
-            foreach (test_object _test in _lst_tests.Where(ct => ct.Categorie.id == _catsub.id))
+            foreach (TestDomain _test in _lst_tests.Where(ct => ct.Categorie.id == _catsub.id))
             {
                 objects.treeElement _treeTestElem = new objects.treeElement()
                 {

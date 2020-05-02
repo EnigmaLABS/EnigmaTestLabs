@@ -6,7 +6,8 @@ using System.Linq;
 
 namespace ZMLabsData.EFModels
 {
-    public class TestCases
+    [Table("TestCases")]
+    public class TestCasesModel
     {
         public Int64 id { get; set; }
 
@@ -21,6 +22,6 @@ namespace ZMLabsData.EFModels
         [ForeignKey("Test")]
         public Int64 idTest { get; set; }
 
-        public EFModels.Tests Test { get; set; }
+        public EFModels.TestsModel Test { get; set; }
     }
 }

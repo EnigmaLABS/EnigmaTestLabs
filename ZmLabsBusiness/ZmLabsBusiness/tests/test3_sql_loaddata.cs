@@ -49,7 +49,7 @@ namespace ZmLabsBusiness.tests
 
             while (cont < _testobject.TestCases.Count)
             {
-                TestCases _test = _testobject.TestCases[cont];
+                TestCasesDomain _test = _testobject.TestCases[cont];
 
                 switch (_test.Function)
                 {
@@ -78,9 +78,9 @@ namespace ZmLabsBusiness.tests
             ParteHorasFunctions.Clear();
         }
 
-        private TestCases EFBulkData(List<IParteHoras> _ParteAnual, TestCases _test)
+        private TestCasesDomain EFBulkData(List<IParteHoras> _ParteAnual, TestCasesDomain _test)
         {
-            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;
@@ -98,9 +98,9 @@ namespace ZmLabsBusiness.tests
             return _test;
         }
 
-        private TestCases ADOBulkData_Datatable(List<IParteHoras> _ParteAnual, TestCases _test)
+        private TestCasesDomain ADOBulkData_Datatable(List<IParteHoras> _ParteAnual, TestCasesDomain _test)
         {
-            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;

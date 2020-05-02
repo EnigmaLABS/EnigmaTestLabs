@@ -23,9 +23,9 @@ namespace ZmLabsBusiness.test_info
             _datatestrepository = new labs_repos(_df.GetLabsCnx());
         }
 
-        public override List<Categories> getCategories()
+        public override List<CategoriesDomain> getCategories()
         {
-            List<Categories> res = new List<Categories>();
+            List<CategoriesDomain> res = new List<CategoriesDomain>();
 
             try
             {
@@ -40,9 +40,9 @@ namespace ZmLabsBusiness.test_info
             return res;
         }
 
-        public override List<test_object> getTests()
+        public override List<TestDomain> getTests()
         {
-            List<test_object> res = new List<test_object>();
+            List<TestDomain> res = new List<TestDomain>();
 
             try
             {
@@ -72,7 +72,7 @@ namespace ZmLabsBusiness.test_info
             return res;
         }
 
-        public override TestCases insertTestCase(TestCases _testcase)
+        public override TestCasesDomain insertTestCase(TestCasesDomain _testcase)
         {
             bool res;
 
@@ -88,7 +88,7 @@ namespace ZmLabsBusiness.test_info
             return _testcase;
         }
 
-        public override bool InsertExecution(TestCaseExecutions _testCaseExec)
+        public override bool InsertExecution(TestCaseExecutionsDomain _testCaseExec)
         {
             bool res;
 

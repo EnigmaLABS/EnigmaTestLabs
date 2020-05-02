@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZmLabsObjects.sqltests
 {
-    public class ParteHoras : IParteHoras
+    public class ParteHorasDomain : IParteHoras
     {
         public enum enumTipoJornada { Normal, Baja, Incidencia };
 

@@ -18,7 +18,7 @@ namespace ZmLabsBusiness.functions
         public enumEstadoProceso EstadoProceso;
     }
 
-    public class parte_horas : ParteHoras
+    public class parte_horas : ParteHorasDomain
     {
         private static List<IParteHoras> _ParteAnual;
 
@@ -78,7 +78,7 @@ namespace ZmLabsBusiness.functions
                 {
                     if (dtActual.DayOfWeek != DayOfWeek.Saturday & dtActual.DayOfWeek != DayOfWeek.Sunday)
                     {
-                        ParteHoras _partediario = new ParteHoras()
+                        ParteHorasDomain _partediario = new ParteHorasDomain()
                         {
                             Trabajador = _Trabajador,
                             Fecha = dtActual

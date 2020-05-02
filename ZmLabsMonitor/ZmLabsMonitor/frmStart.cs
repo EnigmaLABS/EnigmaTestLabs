@@ -11,9 +11,9 @@ namespace ZmLabsMonitor
     public partial class frmStart : Form
     {
         private frmMonitor _container;
-        private data_object.enumDataSystem _DataSystem;
+        private DataDomain.enumDataSystem _DataSystem;
 
-        public frmStart(frmMonitor p_container, data_object.enumDataSystem p_DataSystem)
+        public frmStart(frmMonitor p_container, DataDomain.enumDataSystem p_DataSystem)
         {
             InitializeComponent();
 
@@ -35,12 +35,12 @@ namespace ZmLabsMonitor
 
             switch (_DataSystem)
             {
-                case data_object.enumDataSystem.ADO:
+                case DataDomain.enumDataSystem.ADO:
 
                     CrearMedianteScripts();
                     break;
 
-                case data_object.enumDataSystem.EF:
+                case DataDomain.enumDataSystem.EF:
 
                     CrearMedianteEF();
                     break;
@@ -104,7 +104,7 @@ namespace ZmLabsMonitor
 
                 if (_df.TestMasterDB(txtServer.Text.Trim()))
                 {
-                    List<data_object> _files = _df.GetFilesPath(txtServer.Text.Trim());
+                    List<DataDomain> _files = _df.GetFilesPath(txtServer.Text.Trim());
 
                     if (_files.Count >= 2)
                     {

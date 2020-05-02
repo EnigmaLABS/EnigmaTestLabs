@@ -21,12 +21,12 @@ namespace ZmLabsBusiness.functions
             {
                 if (cont == 0)
                 {
-                    lstelements[cont] = 0;
+                    lstelements.Add(0);
                     anterioranterior = 0;
                 }
                 else if (cont == 1)
                 {
-                    lstelements[cont] = 1;
+                    lstelements.Add(1);
                     anterior = 1;
                 }
                 else
@@ -36,7 +36,7 @@ namespace ZmLabsBusiness.functions
                     anterioranterior = anterior;
                     anterior = newelem;
 
-                    lstelements[cont] = newelem;
+                    lstelements.Add(newelem);
                 }
 
                 cont++;

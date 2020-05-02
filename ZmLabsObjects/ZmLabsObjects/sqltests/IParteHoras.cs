@@ -15,7 +15,7 @@ namespace ZmLabsObjects.sqltests
 
         Int16 Horas { get; set; }
 
-        ParteHoras.enumTipoJornada TipoJornada { get; set; }
+        ParteHorasDomain.enumTipoJornada TipoJornada { get; set; }
 
         //Métodos
         List<IParteHoras> Generate(int numTrabajadores, int Anho);

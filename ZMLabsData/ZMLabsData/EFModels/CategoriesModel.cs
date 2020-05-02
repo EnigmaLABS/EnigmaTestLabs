@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace ZMLabsData.EFModels
 {
-    public class Categories
+    [Table("Categories")]
+    public class CategoriesModel
     {
         public int id { get; set; }
 
@@ -16,6 +17,6 @@ namespace ZMLabsData.EFModels
         [StringLength(255)]
         public string Categorie { get; set; }
 
-        public Categories Categorie_dad { get; set; }
+        public CategoriesModel Categorie_dad { get; set; }
     }
 }

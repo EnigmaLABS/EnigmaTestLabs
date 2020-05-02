@@ -3,13 +3,13 @@ using System.Windows.Forms;
 
 using ZmLabsObjects;
 using ZmLabsBusiness.test_info;
-using static ZmLabsObjects.data_object;
+using static ZmLabsObjects.DataDomain;
 
 namespace ZmLabsMonitor.subforms
 {
     public partial class frm_newtest : Form
     {
-        private Categories _cat;
+        private CategoriesDomain _cat;
         private frmMonitor _container;
         private test_functions_base _testObject;
 
@@ -19,7 +19,7 @@ namespace ZmLabsMonitor.subforms
         /// <param name="p_cat"></param>
         /// <param name="p_container"></param>
         /// <param name="p_DataSystem"></param>
-        public frm_newtest(Categories p_cat, frmMonitor p_container, test_functions_base p_testObject)
+        public frm_newtest(CategoriesDomain p_cat, frmMonitor p_container, test_functions_base p_testObject)
         {
             InitializeComponent();
 

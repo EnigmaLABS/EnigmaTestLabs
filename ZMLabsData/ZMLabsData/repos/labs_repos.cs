@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 
 using AutoMapper;
+
 using ZmLabsObjects;
+using ZMLabsData.EFModels;
 
 namespace ZMLabsData.repos
 {
@@ -22,19 +24,19 @@ namespace ZMLabsData.repos
 
             if (config_map == null)
             {
-                config_map = new MapperConfiguration(cfg => { cfg.CreateMap<EFModels.Categories, Categories>().ReverseMap();
-                                                              cfg.CreateMap<EFModels.Tests, test_object>().ReverseMap();
-                                                              cfg.CreateMap<EFModels.TestCases, TestCases>().ReverseMap();
-                                                              cfg.CreateMap<EFModels.Executions, TestCaseExecutions>().ReverseMap();
+                config_map = new MapperConfiguration(cfg => { cfg.CreateMap<CategoriesModel, CategoriesDomain>().ReverseMap();
+                                                              cfg.CreateMap<TestsModel, TestDomain>().ReverseMap();
+                                                              cfg.CreateMap<TestCasesModel, TestCasesDomain>().ReverseMap();
+                                                              cfg.CreateMap<ExecutionsModel, TestCaseExecutionsDomain>().ReverseMap();
                 });               
             }
 
             mapper = new Mapper(config_map);
         }
 
-        public List<Categories> getCategories()
+        public List<CategoriesDomain> getCategories()
         {
-            List<Categories> res = new List<Categories>();
+            List<CategoriesDomain> res = new List<CategoriesDomain>();
 
             using (var db = new context.LabsContext(_str_cnx))
             {
@@ -46,9 +48,9 @@ namespace ZMLabsData.repos
             return res;
         }
 
-        public List<test_object> getTests()
+        public List<TestDomain> getTests()
         {
-            List<test_object> res = new List<test_object>();
+            List<TestDomain> res = new List<TestDomain>();
 
             using (var db = new context.LabsContext(_str_cnx))
             {
@@ -59,11 +61,11 @@ namespace ZMLabsData.repos
             return res;
         }
 
-        public bool insertTest(test_object Test)
+        public bool insertTest(TestDomain Test)
         {
             try
             {
-                EFModels.Tests _testmodel = mapper.Map<EFModels.Tests>(Test);
+                TestsModel _testmodel = mapper.Map<TestsModel>(Test);
 
                 using (var db = new context.LabsContext(_str_cnx))
                 {
@@ -79,11 +81,11 @@ namespace ZMLabsData.repos
             return true;
         }
 
-        public bool insertTestCase(ref TestCases TestCase)
+        public bool insertTestCase(ref TestCasesDomain TestCase)
         {
             try
             {
-                EFModels.TestCases _testcasemodel = mapper.Map<EFModels.TestCases>(TestCase);
+                TestCasesModel _testcasemodel = mapper.Map<TestCasesModel>(TestCase);
 
                 using (var db = new context.LabsContext(_str_cnx))
                 {
@@ -99,11 +101,11 @@ namespace ZMLabsData.repos
             return true;
         }
 
-        public bool InsertExecution(TestCaseExecutions _TestCaseExec)
+        public bool InsertExecution(TestCaseExecutionsDomain _TestCaseExec)
         {
             try
             {
-                EFModels.Executions _testexecmodel = mapper.Map<EFModels.Executions>(_TestCaseExec);
+                ExecutionsModel _testexecmodel = mapper.Map<ExecutionsModel>(_TestCaseExec);
 
                 using (var db = new context.LabsContext(_str_cnx))
                 {

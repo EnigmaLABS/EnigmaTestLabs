@@ -59,11 +59,11 @@
     <Compile Include="context\LabsContext.cs" />
     <Compile Include="ADO\data_labs.cs" />
     <Compile Include="ADO\data_tests_info.cs" />
-    <Compile Include="EFModels\Categories.cs" />
-    <Compile Include="EFModels\Executions.cs" />
-    <Compile Include="EFModels\TestCases.cs" />
+    <Compile Include="EFModels\CategoriesModel.cs" />
+    <Compile Include="EFModels\ExecutionsModel.cs" />
+    <Compile Include="EFModels\TestCasesModel.cs" />
     <Compile Include="EFModels\testModels\ParteHoras.cs" />
-    <Compile Include="EFModels\Tests.cs" />
+    <Compile Include="EFModels\TestsModel.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="repos\labs_repos.cs" />

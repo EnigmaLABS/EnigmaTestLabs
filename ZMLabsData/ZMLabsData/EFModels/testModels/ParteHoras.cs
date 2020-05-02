@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ZMLabsData.EFModels.testModels
 {
     [Table("ParteHoras", Schema = "test")]
-    public class ParteHoras
+    public class ParteHorasModel
     {
         public Int64 id { get; set; }
 

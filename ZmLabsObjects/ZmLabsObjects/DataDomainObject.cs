@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZmLabsObjects
 {
-    public class data_object
+    public class DataDomain
     {
         public enum enumFileType { data, log }
         public enum enumDataSystem { ADO, EF }

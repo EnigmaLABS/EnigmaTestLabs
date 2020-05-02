@@ -34,7 +34,7 @@ namespace ZmLabsMonitor.subforms
         {
             if (txtFunctionName.Text.Trim().Length > 1)
             {
-                TestCases _tc = new TestCases()
+                TestCasesDomain _tc = new TestCasesDomain()
                 {
                     idTest = _test_object.id,
                     Function = txtFunctionName.Text.Trim(),

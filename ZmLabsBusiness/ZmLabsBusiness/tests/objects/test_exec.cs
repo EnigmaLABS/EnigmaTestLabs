@@ -55,7 +55,7 @@ namespace ZmLabsBusiness.tests.objects
             SetMsg(casename + " Case iniciado a las " + dtBegin.ToShortTimeString() + " " + dtBegin.ToLongTimeString());
         }
 
-        public void EndTestCase(string casename, TestCaseExecutions _testexec)
+        public void EndTestCase(string casename, TestCaseExecutionsDomain _testexec)
         {
             SetMsg(casename + " Case finalizado a las " + _testexec.dtEnd);
             SetMsg(casename + " Case ejecutado en " + _testexec.Miliseconds + " milisegundos");

@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using AutoMapper;
+
 using ZmLabsObjects.sqltests;
+using ZMLabsData.EFModels.testModels;
 
 namespace ZMLabsData.repos
 {
@@ -23,7 +25,7 @@ namespace ZMLabsData.repos
             if (config_map == null)
             {
                 config_map = new MapperConfiguration(cfg => {
-                    cfg.CreateMap<EFModels.testModels.ParteHoras, ParteHoras>().ReverseMap();
+                    cfg.CreateMap<ParteHorasModel, ParteHorasDomain>().ReverseMap();
                 });
             }
 
@@ -34,7 +36,7 @@ namespace ZMLabsData.repos
         {
             try
             {
-                List<EFModels.testModels.ParteHoras> _ParteAnualModel = new List<EFModels.testModels.ParteHoras>();
+                List<ParteHorasModel> _ParteAnualModel = new List<ParteHorasModel>();
 
                 _ParteAnualModel = mapper.Map(_ParteAnual, _ParteAnualModel);
 

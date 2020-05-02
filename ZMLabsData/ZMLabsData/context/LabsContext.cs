@@ -19,13 +19,13 @@ namespace ZMLabsData.context
     {
         public LabsContext(string cnx_str) : base(cnx_str) {  }
 
-        public DbSet<EFModels.Categories> Categories { get; set; }
-        public DbSet<EFModels.Tests> Test { get; set; }
-        public DbSet<EFModels.TestCases> TestCases { get; set; }
-        public DbSet<EFModels.Executions> Executions { get; set; }
+        public DbSet<EFModels.CategoriesModel> Categories { get; set; }
+        public DbSet<EFModels.TestsModel> Test { get; set; }
+        public DbSet<EFModels.TestCasesModel> TestCases { get; set; }
+        public DbSet<EFModels.ExecutionsModel> Executions { get; set; }
 
         //Modelos de test
-        public DbSet<EFModels.testModels.ParteHoras> ParteHoras { get; set; }
+        public DbSet<EFModels.testModels.ParteHorasModel> ParteHoras { get; set; }
     }
 
     public static class MyCnxBuilder

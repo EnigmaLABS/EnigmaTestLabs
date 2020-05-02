@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ZMLabsData.EFModels
 {
-    public class Executions
+    [Table("Executions")]
+    public class ExecutionsModel
     {
         public Int64 id { get; set; }
 
@@ -15,6 +16,6 @@ namespace ZMLabsData.EFModels
         [ForeignKey("TestCase")]
         public Int64 idTestCase { get; set; }
 
-        public EFModels.TestCases TestCase { get; set; }
+        public EFModels.TestCasesModel TestCase { get; set; }
     }
 }

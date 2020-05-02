@@ -14,7 +14,7 @@ namespace ZmLabsMonitor.objects
     public class treeElement
     {
         public enumElemType ElemType;
-        public test_object TestObject;
-        public Categories Categorie;
+        public TestDomain TestObject;
+        public CategoriesDomain Categorie;
     }
 }

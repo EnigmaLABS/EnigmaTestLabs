@@ -11,27 +11,27 @@ namespace ZmLabsBusiness.test_info
     /// Heredan las clases derivadas test_functions_EF y test_functions_ADO que comparten los mismos métodos, cuyas funcionalidades son equivalentes
     /// pero en una clase de implementa el acceso a datos con ADO.NET y en la otra con Entity Framework
     /// </summary>
-    public class test_functions_base : test_object
+    public class test_functions_base : TestDomain
     {
         //private test_functions_base neg_object;
 
         public test_functions_base()  {  }
 
-        public virtual List<Categories> getCategories() { return new List<Categories>(); }
+        public virtual List<CategoriesDomain> getCategories() { return new List<CategoriesDomain>(); }
 
-        public virtual List<test_object> getTests() { return new List<test_object>(); }
+        public virtual List<TestDomain> getTests() { return new List<TestDomain>(); }
 
         public virtual bool insertTest() { return false; }
 
-        public virtual TestCases insertTestCase(TestCases testCase) { return new TestCases(); }
+        public virtual TestCasesDomain insertTestCase(TestCasesDomain testCase) { return new TestCasesDomain(); }
 
-        public virtual bool InsertExecution(TestCaseExecutions _testCaseExec) { return true; }
+        public virtual bool InsertExecution(TestCaseExecutionsDomain _testCaseExec) { return true; }
 
 
         //-->>
         #region TestObject
 
-        public void SetTestObject(test_object _testobject)
+        public void SetTestObject(TestDomain _testobject)
         {
             this.id = _testobject.id;
             this.Description = _testobject.Description;
@@ -46,9 +46,9 @@ namespace ZmLabsBusiness.test_info
             this.Test = _testobject.Test;
         }
 
-        public test_object GetTestObject()
+        public TestDomain GetTestObject()
         {
-            test_object res = new test_object()
+            TestDomain res = new TestDomain()
             {
                 id = this.id,
                 Description = this.Description,

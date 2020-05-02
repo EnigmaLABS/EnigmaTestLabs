@@ -49,13 +49,13 @@ namespace ZmLabsBusiness.data
         /// </summary>
         /// <param name="Server"></param>
         /// <returns></returns>
-        public List<data_object> GetFilesPath(string Server)
+        public List<DataDomain> GetFilesPath(string Server)
         {
             string cnx_str = GetCnx(Server, "master");
 
-            List<data_object> _files = data_labs.GetFilesPath(cnx_str);
+            List<DataDomain> _files = data_labs.GetFilesPath(cnx_str);
 
-            foreach (data_object _do in _files)
+            foreach (DataDomain _do in _files)
             {
                 char chr = '\\';
                 int index = _do.Path.LastIndexOf(chr);
@@ -75,7 +75,7 @@ namespace ZmLabsBusiness.data
         /// <param name="Server"></param>
         /// <param name="Files"></param>
         /// <returns></returns>
-        public bool CreateDatabase(string Server, List<data_object> Files)
+        public bool CreateDatabase(string Server, List<DataDomain> Files)
         {
             bool res = true;
             bool res2 = true;
@@ -91,8 +91,8 @@ namespace ZmLabsBusiness.data
                 string scriptCreateDatabase = tr.ReadToEnd();
                 string scriptCreateSchemaTest = tr2.ReadToEnd();
 
-                string rutaDatos = Files.Where(tp => tp.FileType == data_object.enumFileType.data).First().Path;
-                string rutaLog = Files.Where(tp => tp.FileType == data_object.enumFileType.log).First().Path;
+                string rutaDatos = Files.Where(tp => tp.FileType == DataDomain.enumFileType.data).First().Path;
+                string rutaLog = Files.Where(tp => tp.FileType == DataDomain.enumFileType.log).First().Path;
 
                 scriptCreateDatabase = scriptCreateDatabase.Replace("##RUTADATOS##", rutaDatos).Replace("##RUTALOG##", rutaLog).Replace("##DATABASENAME##", DBLabs);
 

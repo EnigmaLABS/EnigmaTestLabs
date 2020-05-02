@@ -31,7 +31,7 @@ namespace ZmLabsBusiness.tests
 
             while (cont < _testobject.TestCases.Count)
             {
-                TestCases _test = _testobject.TestCases[cont];
+                TestCasesDomain _test = _testobject.TestCases[cont];
 
                 switch (_test.Function)
                 {
@@ -66,9 +66,9 @@ namespace ZmLabsBusiness.tests
         /// </summary>
         /// <param name="_test"></param>
         /// <returns></returns>
-        public TestCases MultithreadingCase(TestCases _test)
+        public TestCasesDomain MultithreadingCase(TestCasesDomain _test)
         {
-            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;
@@ -116,8 +116,9 @@ namespace ZmLabsBusiness.tests
 
                 _lst_process_control[index].Estado = objects.process_control.enumEstadoProceso.Finalizado;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string err = ex.Message;
                 _lst_process_control[index].Estado = objects.process_control.enumEstadoProceso.Erroneo;
             }
         }
@@ -127,9 +128,9 @@ namespace ZmLabsBusiness.tests
         /// </summary>
         /// <param name="_test"></param>
         /// <returns></returns>
-        public TestCases SinglethreadingCase(TestCases _test)
+        public TestCasesDomain SinglethreadingCase(TestCasesDomain _test)
         {
-            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;
@@ -161,9 +162,9 @@ namespace ZmLabsBusiness.tests
             return _test;
         }
 
-        public TestCases HybridCase(TestCases _test)
+        public TestCasesDomain HybridCase(TestCasesDomain _test)
         {
-            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;

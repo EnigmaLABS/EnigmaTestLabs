@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 using ZmLabsObjects;
 using ZmLabsBusiness.test_info;
-using static ZmLabsObjects.data_object;
+using static ZmLabsObjects.DataDomain;
 
 namespace ZmLabsMonitor.controls
 {
@@ -32,7 +32,7 @@ namespace ZmLabsMonitor.controls
         {
             if (lstCases.SelectedItems.Count == 1)
             {
-                TestCases _testcase = (TestCases)lstCases.SelectedItems[0].Tag;
+                TestCasesDomain _testcase = (TestCasesDomain)lstCases.SelectedItems[0].Tag;
 
                 txtCaseDesc.Text = _testcase.Description;
             }
@@ -46,7 +46,7 @@ namespace ZmLabsMonitor.controls
         {
             lstCases.Items.Clear();
 
-            foreach (TestCases _tc in _testobject.TestCases)
+            foreach (TestCasesDomain _tc in _testobject.TestCases)
             {
                 ListViewItem lstIt = new ListViewItem(_tc.Function);
                 lstIt.Tag = _tc;
@@ -55,7 +55,7 @@ namespace ZmLabsMonitor.controls
             }
         }
 
-        public void AddTestCase(TestCases _testcase)
+        public void AddTestCase(TestCasesDomain _testcase)
         {
             _testobject.TestCases.Add(_testcase);
             ShowTestCases();

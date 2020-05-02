@@ -43,13 +43,13 @@
             //Categorías
 
             //Ramas de nivel 1
-            EFModels.Categories _cat_sqlserver = new EFModels.Categories()
+            EFModels.CategoriesModel _cat_sqlserver = new EFModels.CategoriesModel()
             {
                 id = 1,
                 Categorie = "SQL Server Tips"
             };
 
-            EFModels.Categories _cat_csharpr = new EFModels.Categories()
+            EFModels.CategoriesModel _cat_csharpr = new EFModels.CategoriesModel()
             {
                 id = 2,
                 Categorie = "C# Tips"
@@ -59,21 +59,21 @@
             context.Categories.AddOrUpdate(x => x.id, _cat_csharpr);
 
             //Ramas de nivel 2
-            EFModels.Categories _cat_Multithreading = new EFModels.Categories()
+            EFModels.CategoriesModel _cat_Multithreading = new EFModels.CategoriesModel()
             {
                 id = 3,
                 Categorie = "Multithreading Tests",
                 Categorie_dad = _cat_csharpr
             };
 
-            EFModels.Categories _cat_Basics = new EFModels.Categories()
+            EFModels.CategoriesModel _cat_Basics = new EFModels.CategoriesModel()
             {
                 id = 4,
                 Categorie = "Basics Tips",
                 Categorie_dad = _cat_csharpr
             };
 
-            EFModels.Categories _cat_DataLayer = new EFModels.Categories()
+            EFModels.CategoriesModel _cat_DataLayer = new EFModels.CategoriesModel()
             {
                 id = 5,
                 Categorie = "Data Layer",
@@ -87,7 +87,7 @@
             context.SaveChanges();
 
             //Tests
-            EFModels.Tests _test1 = new EFModels.Tests()
+            EFModels.TestsModel _test1 = new EFModels.TestsModel()
             {
                 id = 1,
                 Test = "Multithreading vs Singlethreading",
@@ -101,7 +101,7 @@
                 idCategorie = _cat_Multithreading.id
             };
 
-            EFModels.Tests _test2 = new EFModels.Tests()
+            EFModels.TestsModel _test2 = new EFModels.TestsModel()
             {
                 id = 2,
                 Test = "Concatenate Strings",
@@ -114,7 +114,7 @@
                 idCategorie = _cat_Basics.id
             };
 
-            EFModels.Tests _test3 = new EFModels.Tests()
+            EFModels.TestsModel _test3 = new EFModels.TestsModel()
             {
                 id = 3,
                 Test = "Bulk Data - Store Procedure vs Entity Framework",
@@ -134,7 +134,7 @@
             context.SaveChanges();
 
             //TestCases - Test1
-            EFModels.TestCases _test1_case1 = new EFModels.TestCases()
+            EFModels.TestCasesModel _test1_case1 = new EFModels.TestCasesModel()
             {
                 id = 1,
                 Function = "MultithreadingCase",
@@ -143,7 +143,7 @@
                 Test = _test1,
                 idTest = _test1.id
             };
-            EFModels.TestCases _test1_case2 = new EFModels.TestCases()
+            EFModels.TestCasesModel _test1_case2 = new EFModels.TestCasesModel()
             {
                 id = 2,
                 Function = "SinglethreadingCase",
@@ -152,7 +152,7 @@
                 Test = _test1,
                 idTest = _test1.id
             };
-            EFModels.TestCases _test1_case3 = new EFModels.TestCases()
+            EFModels.TestCasesModel _test1_case3 = new EFModels.TestCasesModel()
             {
                 id = 3,
                 Function = "HybridCase",
@@ -163,7 +163,7 @@
             };
 
             //TestCases - Test2
-            EFModels.TestCases _test2_case1 = new EFModels.TestCases()
+            EFModels.TestCasesModel _test2_case1 = new EFModels.TestCasesModel()
             {
                 id = 4,
                 Function = "Concat_PlusOperator",
@@ -172,7 +172,7 @@
                 Test = _test2,
                 idTest = _test2.id
             };
-            EFModels.TestCases _test2_case2 = new EFModels.TestCases()
+            EFModels.TestCasesModel _test2_case2 = new EFModels.TestCasesModel()
             {
                 id = 5,
                 Function = "Concat_StringBuilder",
@@ -183,7 +183,7 @@
             };
 
             //TestCases - Test3
-            EFModels.TestCases _test3_case1 = new EFModels.TestCases()
+            EFModels.TestCasesModel _test3_case1 = new EFModels.TestCasesModel()
             {
                 id = 6,
                 Function = "EFBulkData",
@@ -192,7 +192,7 @@
                 Test = _test3,
                 idTest = _test3.id
             };
-            EFModels.TestCases _test3_case2 = new EFModels.TestCases()
+            EFModels.TestCasesModel _test3_case2 = new EFModels.TestCasesModel()
             {
                 id = 7,
                 Function = "ADOBulkData_Datatable",

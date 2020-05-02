@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 using ZmLabsBusiness.test_info;
 using ZmLabsObjects;
-using static ZmLabsObjects.data_object;
+using static ZmLabsObjects.DataDomain;
 
 namespace ZmLabsMonitor.controls
 {

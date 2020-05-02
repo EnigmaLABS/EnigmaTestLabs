@@ -18,9 +18,9 @@ namespace ZMLabsData
             str_cnx = p_str_cnx;
         }
 
-        public List<Categories> getCategories()
+        public List<CategoriesDomain> getCategories()
         {
-            List<Categories> res = new List<Categories>();
+            List<CategoriesDomain> res = new List<CategoriesDomain>();
 
             try
             {
@@ -37,7 +37,7 @@ namespace ZMLabsData
 
                 while (reader.Read())
                 {
-                    Categories _cat = new Categories()
+                    CategoriesDomain _cat = new CategoriesDomain()
                     {
                         id = int.Parse(reader["idCategorie"].ToString()),
                         Categorie = reader["Categorie"].ToString(),
@@ -45,7 +45,7 @@ namespace ZMLabsData
 
                     if (reader["idCategorieNode"] != DBNull.Value)
                     {
-                        _cat.Categorie_dad = new Categories()
+                        _cat.Categorie_dad = new CategoriesDomain()
                         {
                             id = int.Parse(reader["idCategorieNode"].ToString()) 
                         };
@@ -64,9 +64,9 @@ namespace ZMLabsData
             return res;
         }
 
-        public List<test_object> getTests()
+        public List<TestDomain> getTests()
         {
-            List<test_object> res = new List<test_object>();
+            List<TestDomain> res = new List<TestDomain>();
 
             try
             {
@@ -83,7 +83,7 @@ namespace ZMLabsData
 
                 while (reader.Read())
                 {
-                    test_object _test = new test_object()
+                    TestDomain _test = new TestDomain()
                     {
                         id = int.Parse(reader["idTest"].ToString()),
                         Test = reader["Test"].ToString(),
@@ -92,7 +92,7 @@ namespace ZMLabsData
                         Url_blog = reader["Url_Blog"].ToString(),
                         Url_git = reader["Url_GIT"].ToString(),
 
-                        Categorie = new Categories()
+                        Categorie = new CategoriesDomain()
                         {
                             id = int.Parse(reader["idCategorie"].ToString()),
                             Categorie = reader["Categorie"].ToString()
@@ -104,7 +104,7 @@ namespace ZMLabsData
 
                 cnx.Close();
 
-                foreach (test_object _test in res)
+                foreach (TestDomain _test in res)
                 {
                     _test.TestCases = getTestCases(_test.id);
                 }
@@ -174,7 +174,7 @@ namespace ZMLabsData
             return res;
         }
 
-        public bool InsertExecution(TestCaseExecutions _TestCaseExec)
+        public bool InsertExecution(TestCaseExecutionsDomain _TestCaseExec)
         {
             try
             {
@@ -204,9 +204,9 @@ namespace ZMLabsData
         //-->>
         #region Privados
 
-        private List<TestCases>  getTestCases(Int64 id)
+        private List<TestCasesDomain>  getTestCases(Int64 id)
         {
-            List<TestCases> res = new List<TestCases>();
+            List<TestCasesDomain> res = new List<TestCasesDomain>();
             
             try
             {
@@ -225,7 +225,7 @@ namespace ZMLabsData
 
                 while (reader.Read())
                 {
-                    TestCases _testcase = new TestCases()
+                    TestCasesDomain _testcase = new TestCasesDomain()
                     {
                         id = Int64.Parse(reader["idTestCase"].ToString()),
                         Function = reader["FunctionName"].ToString(),

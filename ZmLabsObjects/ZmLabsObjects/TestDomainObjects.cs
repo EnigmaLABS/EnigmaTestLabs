@@ -11,7 +11,7 @@ namespace ZmLabsObjects
         test3_sql_loaddata
     }
 
-    public class test_object
+    public class TestDomain
     {
         public Int64 id { get; set; }
         public string Test { get; set; }
@@ -21,20 +21,20 @@ namespace ZmLabsObjects
         public string Url_git { get; set; }
         public int idCategorie { get; set; }
 
-        public Categories Categorie { get; set; }
-        public ExecutionProperties Execution { get; set; } = new ExecutionProperties();
-        public List<TestCases> TestCases { get; set; }
+        public CategoriesDomain Categorie { get; set; }
+        public ExecutionPropertiesDomain Execution { get; set; } = new ExecutionPropertiesDomain();
+        public List<TestCasesDomain> TestCases { get; set; }
     }
 
-    public class Categories
+    public class CategoriesDomain
     {
         public int id { get; set; }
         public string Categorie { get; set; } = "";
 
-        public Categories Categorie_dad { get; set; }
+        public CategoriesDomain Categorie_dad { get; set; }
     }
 
-    public class ExecutionProperties
+    public class ExecutionPropertiesDomain
     {
         public enumTestTypes TestType;
 
@@ -44,7 +44,7 @@ namespace ZmLabsObjects
         public Object OBJ;
     }
 
-    public class TestCases
+    public class TestCasesDomain
     {
         public Int64 id { get; set; }
         public string Function { get; set; }
@@ -53,7 +53,7 @@ namespace ZmLabsObjects
         public Int64 idTest { get; set; }
     }
 
-    public class TestCaseExecutions
+    public class TestCaseExecutionsDomain
     {
         public Int64 id { get; set; }
         public Int64 idTestCase { get; set; } 

@@ -29,9 +29,9 @@ namespace ZMLabsData
             return true;
         }
 
-        public static List<data_object> GetFilesPath(string cnx_str)
+        public static List<DataDomain> GetFilesPath(string cnx_str)
         {
-            List<data_object> res = new List<data_object>();
+            List<DataDomain> res = new List<DataDomain>();
 
             SqlConnection cnx = new SqlConnection(cnx_str);
             SqlCommand cmd = new SqlCommand();
@@ -46,15 +46,15 @@ namespace ZMLabsData
 
             while (reader.Read())
             {
-                data_object _do = new data_object();
+                DataDomain _do = new DataDomain();
 
                 if (reader["usage"].ToString() == "data only")
                 {
-                    _do.FileType = data_object.enumFileType.data;
+                    _do.FileType = DataDomain.enumFileType.data;
                 }
                 else if (reader["usage"].ToString() == "log only")
                 {
-                    _do.FileType = data_object.enumFileType.log;
+                    _do.FileType = DataDomain.enumFileType.log;
                 }
 
                 _do.Path = reader["filename"].ToString();

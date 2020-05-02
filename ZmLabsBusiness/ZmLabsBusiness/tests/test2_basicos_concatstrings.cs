@@ -24,7 +24,7 @@ namespace ZmLabsBusiness.tests
 
             while (cont < _testobject.TestCases.Count)
             {
-                TestCases _test = _testobject.TestCases[cont];
+                TestCasesDomain _test = _testobject.TestCases[cont];
 
                 switch (_test.Function)
                 {
@@ -46,9 +46,9 @@ namespace ZmLabsBusiness.tests
             this.EndTest();
         }
 
-        public TestCases Concat_PlusOperator(TestCases _test)
+        public TestCasesDomain Concat_PlusOperator(TestCasesDomain _test)
         {
-            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;
@@ -64,9 +64,9 @@ namespace ZmLabsBusiness.tests
             return _test;
         }
 
-        public TestCases Concat_StringBuilder(TestCases _test)
+        public TestCasesDomain Concat_StringBuilder(TestCasesDomain _test)
         {
-            TestCaseExecutions _testexec = new TestCaseExecutions() { idTestCase = _test.id };
+            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
 
             //registra inicio
             _testexec.dtBegin = DateTime.Now;

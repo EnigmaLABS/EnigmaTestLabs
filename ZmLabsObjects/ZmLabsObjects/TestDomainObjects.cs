@@ -47,6 +47,7 @@ namespace ZmLabsObjects
     public class TestCasesDomain
     {
         public Int64 id { get; set; }
+        public int Orden { get; set; }
         public string Function { get; set; }
         public string Description { get; set; }
 

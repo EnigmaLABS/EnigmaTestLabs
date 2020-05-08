@@ -21,7 +21,7 @@ namespace ZmLabsBusiness
 
         public static Object GetObject(test_info.test_functions_base _functions, ZmLabsObjects.enumTestTypes _type)
         {
-            test_exec res = new test_exec(_functions);
+            test_base res = new test_base(_functions);
 
             switch (_type)
             {

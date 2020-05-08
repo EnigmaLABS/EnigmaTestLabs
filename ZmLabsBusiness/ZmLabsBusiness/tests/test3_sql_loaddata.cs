@@ -11,7 +11,7 @@ using ZMLabsData.ADO;
 
 namespace ZmLabsBusiness.tests
 {
-    public class test3_sql_loaddata : objects.test_exec
+    public class test3_sql_loaddata : objects.test_base
     {
         data.data_functions _df = new data.data_functions();
 

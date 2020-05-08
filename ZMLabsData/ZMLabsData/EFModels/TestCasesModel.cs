@@ -12,6 +12,9 @@ namespace ZMLabsData.EFModels
         public Int64 id { get; set; }
 
         [Required]
+        public int Orden { get; set; }
+
+        [Required]
         [StringLength(255)]
         public string Function { get; set; }
 

@@ -229,7 +229,8 @@ namespace ZMLabsData
                     {
                         id = Int64.Parse(reader["idTestCase"].ToString()),
                         Function = reader["FunctionName"].ToString(),
-                        Description = reader["Description"].ToString()
+                        Description = reader["Description"].ToString(),
+                        Orden = int.Parse(reader["Orden"].ToString())
                     };
 
                     res.Add(_testcase);

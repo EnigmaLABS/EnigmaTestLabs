@@ -10,7 +10,8 @@ using ZMLabsData.repos;
 
 namespace ZmLabsBusiness.test_info
 {
-    public class test_functions_ADO : test_info.test_functions_base
+    //ISOLATED
+    class test_functions_ADO_ISOLATED : test_info.test_functions_base
     {
         private data_tests_info _datatestobj;
 
@@ -18,7 +19,7 @@ namespace ZmLabsBusiness.test_info
         /// Enlaza con el acceso a datos mediante ADO.NET
         /// </summary>
         /// <param name="TestObject"></param>
-        public test_functions_ADO() 
+        public test_functions_ADO_ISOLATED() 
         {
             data.data_functions _df = new data.data_functions();
             

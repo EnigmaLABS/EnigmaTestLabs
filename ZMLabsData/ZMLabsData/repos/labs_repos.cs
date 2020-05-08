@@ -63,19 +63,12 @@ namespace ZMLabsData.repos
 
         public bool insertTest(TestDomain Test)
         {
-            try
-            {
-                TestsModel _testmodel = mapper.Map<TestsModel>(Test);
+            TestsModel _testmodel = mapper.Map<TestsModel>(Test);
 
-                using (var db = new context.LabsContext(_str_cnx))
-                {
-                    db.Test.Add(_testmodel);
-                    db.SaveChanges();
-                }
-            }
-            catch (Exception ex)
+            using (var db = new context.LabsContext(_str_cnx))
             {
-                return false;
+                db.Test.Add(_testmodel);
+                db.SaveChanges();
             }
 
             return true;
@@ -83,19 +76,12 @@ namespace ZMLabsData.repos
 
         public bool insertTestCase(ref TestCasesDomain TestCase)
         {
-            try
-            {
-                TestCasesModel _testcasemodel = mapper.Map<TestCasesModel>(TestCase);
+            TestCasesModel _testcasemodel = mapper.Map<TestCasesModel>(TestCase);
 
-                using (var db = new context.LabsContext(_str_cnx))
-                {
-                    db.TestCases.Add(_testcasemodel);
-                    db.SaveChanges();
-                }
-            }
-            catch (Exception ex)
+            using (var db = new context.LabsContext(_str_cnx))
             {
-                return false;
+                db.TestCases.Add(_testcasemodel);
+                db.SaveChanges();
             }
 
             return true;
@@ -103,19 +89,16 @@ namespace ZMLabsData.repos
 
         public bool InsertExecution(TestCaseExecutionsDomain _TestCaseExec)
         {
-            try
-            {
-                ExecutionsModel _testexecmodel = mapper.Map<ExecutionsModel>(_TestCaseExec);
+            ExecutionsModel _testexecmodel = mapper.Map<ExecutionsModel>(_TestCaseExec);
 
-                using (var db = new context.LabsContext(_str_cnx))
-                {
-                    db.Executions.Add(_testexecmodel);
-                    db.SaveChanges();
-                }
-            }
-            catch (Exception ex)
+            using (var db = new context.LabsContext(_str_cnx))
             {
-                return false;
+                db.Executions.Add(_testexecmodel);
+
+                //error!!!!
+                //object o2 = null; int i2 = (int)o2;
+
+                db.SaveChanges();
             }
 
             return true;

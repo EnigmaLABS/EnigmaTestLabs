@@ -10,6 +10,8 @@ namespace ZmLabsBusiness.test_info
 {
     public class test_functions_EF : test_info.test_functions_base
     {
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         private labs_repos _datatestrepository;
 
         /// <summary>
@@ -34,7 +36,7 @@ namespace ZmLabsBusiness.test_info
             }
             catch (Exception ex)
             {
-
+                _logger.Error(ex, "Error en getCategories");
             }
 
             return res;
@@ -50,7 +52,7 @@ namespace ZmLabsBusiness.test_info
             }
             catch (Exception ex)
             {
-
+                _logger.Error(ex, "Error en getTests");
             }
 
             return res;
@@ -64,8 +66,12 @@ namespace ZmLabsBusiness.test_info
             {
                 res = _datatestrepository.insertTest(this);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.Error(ex, "Error en insertTest");
+
+                //TODO - Guardar test de contexto en JSON
+
                 return false;
             }
 
@@ -80,9 +86,11 @@ namespace ZmLabsBusiness.test_info
             {
                 res = _datatestrepository.insertTestCase(ref _testcase);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.Error(ex, "Error en insertTestCase");
 
+                //TODO - Guardar testcase de contexto en JSON
             }
 
             return _testcase;
@@ -90,18 +98,9 @@ namespace ZmLabsBusiness.test_info
 
         public override bool InsertExecution(TestCaseExecutionsDomain _testCaseExec)
         {
-            bool res;
-
-            try
-            {
-                res = _datatestrepository.InsertExecution(_testCaseExec);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
+            bool res = _datatestrepository.InsertExecution(_testCaseExec);
             return res;
         }
+
     }
 }

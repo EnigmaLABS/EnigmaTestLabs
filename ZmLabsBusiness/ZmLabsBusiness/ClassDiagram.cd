@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ZmLabsBusiness.data.data_functions" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAIAAACAgEAAQAgAEAAAAAAAAQIAAAQAAAAI=</HashCode>
+      <FileName>data\data_functions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.functions.fibo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>functions\fibo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ZmLabsBusiness.functions.fibo_linq" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>functions\fibo_linq.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ZmLabsBusiness.functions.parte_horas_estado_proceso" Collapsed="true">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="ZmLabsBusiness.functions.parte_horas_estado_proceso.enumEstadoProceso" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>functions\parte_horas.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>functions\parte_horas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.functions.parte_horas" Collapsed="true">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAgAIAAAAAAAAAACEAAAFAAAAAAAAAEBAAAA=</HashCode>
+      <FileName>functions\parte_horas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.functions.quijote" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAgAAAAAAAAAAC+//9hAQAAAAA=</HashCode>
+      <FileName>functions\quijote.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ZmLabsBusiness.functions.reflections" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>functions\reflections.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.registry.registry_functions" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAEAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>registry\registry_functions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.test_info.test_functions_ADO" Collapsed="true">
+    <Position X="4.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAABAAAAEAACAAAAAAAAI=</HashCode>
+      <FileName>test_info\test_functions_ADO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.test_info.test_functions_base">
+    <Position X="2.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAABAAAAEAACAAAgAgAAA=</HashCode>
+      <FileName>test_info\test_functions_base.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.test_info.test_functions_EF" Collapsed="true">
+    <Position X="4.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAACAAAAAAABAAAAEAACAAAAAAAAA=</HashCode>
+      <FileName>test_info\test_functions_EF.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.test_types" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>test_info\test_types.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.tests.objects.process_control" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>tests\objects\process_control.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.tests.objects.test_exec" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAAAAACAAAABABAAAQAAAIAQAAAEAAAAACQAAAAg=</HashCode>
+      <FileName>tests\objects\test_exec.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.tests.test2_basicos_concatstrings" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>tests\test2_basicos_concatstrings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZmLabsBusiness.tests.test3_sql_loaddata" Collapsed="true">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAACAABEAAAAAAAEAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\test3_sql_loaddata.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZMLabsData.data_labs" Collapsed="true">
+    <Position X="0.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.data_tests_info" Collapsed="true">
+    <Position X="4" Y="9.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.ADO.data_test_sql" Collapsed="true">
+    <Position X="2.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.context.MyContextFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="7" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ZMLabsData.context.LabsContext" Collapsed="true">
+    <Position X="5.75" Y="7" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.context.MyCnxBuilder" Collapsed="true">
+    <Position X="2.25" Y="7" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.EFModels.CategoriesModel" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.EFModels.ExecutionsModel" Collapsed="true">
+    <Position X="2.25" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.EFModels.TestCasesModel" Collapsed="true">
+    <Position X="7.5" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.EFModels.TestsModel" Collapsed="true">
+    <Position X="5.75" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.EFModels.testModels.ParteHorasModel" Collapsed="true">
+    <Position X="4" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.Migrations.Configuration" Collapsed="true">
+    <Position X="0.5" Y="7" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.repos.labs_repos" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ZMLabsData.repos.sqltest_repos_partehoras" Collapsed="true">
+    <Position X="2.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="ZmLabsBusiness.functions.contracts.IFibo" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>functions\contracts\IFibo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ZmLabsBusiness.functions.contracts.IQuijote" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>functions\contracts\IQuijote.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

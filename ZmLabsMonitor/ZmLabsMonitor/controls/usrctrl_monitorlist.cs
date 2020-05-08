@@ -18,6 +18,8 @@ namespace ZmLabsMonitor.controls
 
         private usrctrl_testinfo _container;
 
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Control de usuario que invoca la ejecución de un Test y va mostrando los resultados de la ejecución en pantalla
         /// </summary>
@@ -40,6 +42,7 @@ namespace ZmLabsMonitor.controls
             this.Cursor = Cursors.WaitCursor;
             Thread.Sleep(3000);
 
+            timerControl.Interval = 5500;
             timerControl.Enabled = true;
         }
 
@@ -47,11 +50,22 @@ namespace ZmLabsMonitor.controls
         {
             List<test_types.mensajes> lstMensajes = new List<test_types.mensajes>();
 
-            test_exec execObject = (test_exec)_testobject.Execution.OBJ;
+            test_base execObject = (test_base)_testobject.Execution.OBJ;
 
             _estadoProceso = execObject.Estado;
 
-            lstMensajes = execObject.Mensajes.Where(msg => msg.leido == false).ToList();
+            try
+            {
+                lstMensajes = execObject.Mensajes.Where(msg => msg.leido == false).ToList();
+            }
+            catch (InvalidOperationException)
+            {
+                _logger.Warn("Colección modificada");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al leer los mensajes - timerControl_Tick ");
+            }
 
             foreach (var msg in lstMensajes)
             {
@@ -81,8 +95,6 @@ namespace ZmLabsMonitor.controls
                     lstMonitor.Items.Add(lstIt);
                 }
 
-                lstMensajes.Clear();
-
                 //volvemos a establecer el cursor por defecto
                 _container.SetDefaultCursor();
 
@@ -92,7 +104,7 @@ namespace ZmLabsMonitor.controls
 
         public static void HiloNegocio()
         {
-            var negobject = (test_exec)_testobject.Execution.OBJ;
+            var negobject = (test_base)_testobject.Execution.OBJ;
             negobject.Start();
         }
     }

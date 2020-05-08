@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 using ZmLabsBusiness.test_info;
 using ZmLabsObjects;
 using ZMLabsData.repos;
+
+using NLog;
 
 namespace ZmLabsBusiness.tests.objects
 {
@@ -15,14 +18,19 @@ namespace ZmLabsBusiness.tests.objects
     /// Heredan las clases específicas de cada uno de los test: test1_x , test2_x etc...
     /// Gestiona la ejecución del test y la lectura/escritura que los test van generando, así como el estado de la ejecución
     /// </summary>
-    public class test_exec
+    public class test_base
     {
         public test_types.enumEstadoProceso Estado;
 
         public List<test_types.mensajes> Mensajes = new List<test_types.mensajes>();
+
+        private static int intentos_mensajes = 0;
+
         public test_functions_base _testobject;
 
-        public test_exec(test_functions_base p_testobject)
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
+        public test_base(test_functions_base p_testobject)
         {
             _testobject = p_testobject;
         }
@@ -57,15 +65,42 @@ namespace ZmLabsBusiness.tests.objects
 
         public void EndTestCase(string casename, TestCaseExecutionsDomain _testexec)
         {
-            SetMsg(casename + " Case finalizado a las " + _testexec.dtEnd);
-            SetMsg(casename + " Case ejecutado en " + _testexec.Miliseconds + " milisegundos");
+            try
+            {
+                _testobject.InsertExecution(_testexec);
+            }
+            catch (Exception ex)
+            {
+                SetMsg("Ha habido un problema al grabar los resultados en BBDD. Revise el fichero de erores");
 
-            _testobject.InsertExecution(_testexec);
+                _logger.Error(ex, "Error en EndTestCase(" + casename + ")");
+            }
+            finally
+            {
+                SetMsg(casename + " Case finalizado a las " + _testexec.dtEnd);
+                SetMsg(casename + " Case ejecutado en " + _testexec.Miliseconds + " milisegundos");
+            }
         }
 
         public void SetMsgLeido(Guid id)
         {
-            Mensajes.Where(idx => idx.id == id).First().leido = true;
+            reintenta:
+            try
+            {
+                this.Mensajes.Where(idx => idx.id == id).First().leido = true;
+            }
+            catch (InvalidOperationException ex_inv)
+            {
+                intentos_mensajes++;
+                _logger.Warn(ex_inv, "Lista modificada en SetMsgLeido - Intento  " + intentos_mensajes.ToString());
+                
+                Thread.Sleep(100);
+
+                if (intentos_mensajes < 8539)
+                {
+                    goto reintenta;
+                }
+            }
         }
 
         public void SetMsg(string Msg)

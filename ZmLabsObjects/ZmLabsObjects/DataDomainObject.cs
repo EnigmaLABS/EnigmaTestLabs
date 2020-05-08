@@ -9,11 +9,12 @@ namespace ZmLabsObjects
     public class DataDomain
     {
         public enum enumFileType { data, log }
-        public enum enumDataSystem { ADO, EF }
+
+        //public enum enumDataSystem { ADO, EF }
 
         public enumFileType FileType;
         public string Path;
 
-        public enumDataSystem DataSystem;
+        //public enumDataSystem DataSystem;
     }
 }

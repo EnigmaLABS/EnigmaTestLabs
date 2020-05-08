@@ -35,6 +35,7 @@ namespace ZmLabsMonitor.controls
             _ctrl_test_info_details = new usrctrl_testinfo_detalles(_testobject);
             _ctrl_test_exec_info = new usrctrl_monitorlist(this);
 
+            _ctrl_test_exec_info.Dock = DockStyle.Fill;
             panelDetalle.Controls.Add(_ctrl_test_exec_info);
             _ctrl_test_exec_info.Visible = false;
 

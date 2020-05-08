@@ -5,13 +5,17 @@ using ZmLabsBusiness.functions.contracts;
 
 namespace ZmLabsBusiness.tests
 {
-    public class test2_basicos_concatstrings : objects.test_exec
+    public class test2_basicos_concatstrings : objects.test_base
     {
         private IQuijote QuijoteFunctions;
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
+        private static objects.test_base _testexecbase;
 
         public test2_basicos_concatstrings(test_info.test_functions_base p_testobject, IQuijote p_QuijoteFunctions) : base(p_testobject)
         {
             QuijoteFunctions = p_QuijoteFunctions;
+            _testexecbase = this;
         }
 
         public override void Start()
@@ -50,16 +54,24 @@ namespace ZmLabsBusiness.tests
         {
             TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
 
-            //registra inicio
-            _testexec.dtBegin = DateTime.Now;
-            InitTestCase(_test.Function, _testexec.dtBegin);
+            try
+            {
+                //registra inicio
+                _testexec.dtBegin = DateTime.Now;
+                InitTestCase(_test.Function, _testexec.dtBegin);
 
-            //ejecuta testcase
-            QuijoteFunctions.ConcatQuijotePlusOperator();
+                //ejecuta testcase
+                QuijoteFunctions.ConcatQuijotePlusOperator();
 
-            //registra fin
-            _testexec.dtEnd = DateTime.Now;
-            EndTestCase(_test.Function, _testexec);
+                //registra fin
+                _testexec.dtEnd = DateTime.Now;
+                EndTestCase(_test.Function, _testexec);
+            }
+            catch (Exception ex)
+            {
+                _testexecbase.SetMsg("Error ejecutando Concat_PlusOperator");
+                _logger.Error(ex, "Error ejecutando Concat_PlusOperator");
+            }
 
             return _test;
         }
@@ -68,16 +80,24 @@ namespace ZmLabsBusiness.tests
         {
             TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
 
-            //registra inicio
-            _testexec.dtBegin = DateTime.Now;
-            InitTestCase(_test.Function, _testexec.dtBegin);
+            try
+            {
+                //registra inicio
+                _testexec.dtBegin = DateTime.Now;
+                InitTestCase(_test.Function, _testexec.dtBegin);
 
-            //ejecuta testcase
-            QuijoteFunctions.ConcatQuijoteStringBuilder();
+                //ejecuta testcase
+                QuijoteFunctions.ConcatQuijoteStringBuilder();
 
-            //registra fin
-            _testexec.dtEnd = DateTime.Now;
-            EndTestCase(_test.Function, _testexec);
+                //registra fin
+                _testexec.dtEnd = DateTime.Now;
+                EndTestCase(_test.Function, _testexec);
+            }
+            catch (Exception ex)
+            {
+                _testexecbase.SetMsg("Error ejecutando Concat_StringBuilder");
+                _logger.Error(ex, "Error ejecutando Concat_StringBuilder");
+            }
 
             return _test;
         }

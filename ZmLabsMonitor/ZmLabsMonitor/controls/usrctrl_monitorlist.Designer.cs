@@ -44,7 +44,7 @@
             this.lstMonitor.Location = new System.Drawing.Point(6, 5);
             this.lstMonitor.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.lstMonitor.Name = "lstMonitor";
-            this.lstMonitor.Size = new System.Drawing.Size(1443, 957);
+            this.lstMonitor.Size = new System.Drawing.Size(1466, 964);
             this.lstMonitor.TabIndex = 1;
             this.lstMonitor.UseCompatibleStateImageBehavior = false;
             this.lstMonitor.View = System.Windows.Forms.View.List;
@@ -62,7 +62,7 @@
             this.Font = new System.Drawing.Font("Verdana", 14.25F);
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "usrctrl_monitorlist";
-            this.Size = new System.Drawing.Size(1455, 968);
+            this.Size = new System.Drawing.Size(1500, 1000);
             this.ResumeLayout(false);
 
         }

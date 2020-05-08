@@ -30,6 +30,10 @@
                         ctx.Database.Initialize(true);
                     }
                 }
+                else
+                {
+                    Seed(_myContext);
+                }
             }
             else
             {
@@ -137,8 +141,19 @@
             EFModels.TestCasesModel _test1_case1 = new EFModels.TestCasesModel()
             {
                 id = 1,
+                Orden = 1,
                 Function = "MultithreadingCase",
                 Description = "Cálculo simultáneo de la serie fibo (500 hilos, 200 elementos por hilo)",
+
+                Test = _test1,
+                idTest = _test1.id
+            };
+            EFModels.TestCasesModel _test1_case1WithErrors = new EFModels.TestCasesModel()
+            {
+                id = 8,
+                Orden = 2,
+                Function = "MultithreadingCaseWithErrors",
+                Description = "igual que MultithreadingCase, pero provocando una excepción en la ejecución de cada hilo, y desencadenando 500 entradas en fichero log",
 
                 Test = _test1,
                 idTest = _test1.id
@@ -146,6 +161,7 @@
             EFModels.TestCasesModel _test1_case2 = new EFModels.TestCasesModel()
             {
                 id = 2,
+                Orden = 3,
                 Function = "SinglethreadingCase",
                 Description = "Cálculo secuencial de la serie fibo (500 iteraciones, 200 elementos por iteración)",
 
@@ -155,6 +171,7 @@
             EFModels.TestCasesModel _test1_case3 = new EFModels.TestCasesModel()
             {
                 id = 3,
+                Orden = 4,
                 Function = "HybridCase",
                 Description = "20 hilos calculan 25 veces cada uno la serie fibo",
 
@@ -166,6 +183,7 @@
             EFModels.TestCasesModel _test2_case1 = new EFModels.TestCasesModel()
             {
                 id = 4,
+                Orden = 1,
                 Function = "Concat_PlusOperator",
                 Description = "Concatenación con operador + Concatena 100 veces 26 variables string con el operador",
                 
@@ -175,6 +193,7 @@
             EFModels.TestCasesModel _test2_case2 = new EFModels.TestCasesModel()
             {
                 id = 5,
+                Orden = 2,
                 Function = "Concat_StringBuilder",
                 Description = "Concatenación con StringBuilder: Concatena 100 veces 26 variables string con un StringBuilder",
 
@@ -186,6 +205,7 @@
             EFModels.TestCasesModel _test3_case1 = new EFModels.TestCasesModel()
             {
                 id = 6,
+                Orden = 1, 
                 Function = "EFBulkData",
                 Description = "Grabación de parte de horas anual para 100 trabajadores con Entity Framework",
 
@@ -195,6 +215,7 @@
             EFModels.TestCasesModel _test3_case2 = new EFModels.TestCasesModel()
             {
                 id = 7,
+                Orden = 2,
                 Function = "ADOBulkData_Datatable",
                 Description = @"Grabación de parte de horas anual para 100 trabajadores con ADO.NET convirtiendo con reflection la clase Parte_Horas en un DataTable que recibe un procedimiento almacenado como parámetro",
 
@@ -202,8 +223,8 @@
                 idTest = _test3.id
             };
 
-
             context.TestCases.AddOrUpdate(tc => tc.id, _test1_case1);
+            context.TestCases.AddOrUpdate(tc => tc.id, _test1_case1WithErrors);
             context.TestCases.AddOrUpdate(tc => tc.id, _test1_case2);
             context.TestCases.AddOrUpdate(tc => tc.id, _test1_case3);
 

@@ -46,7 +46,7 @@ namespace ZmLabsMonitor.controls
         {
             lstCases.Items.Clear();
 
-            foreach (TestCasesDomain _tc in _testobject.TestCases)
+            foreach (TestCasesDomain _tc in _testobject.TestCases.OrderBy(ord => ord.Orden))
             {
                 ListViewItem lstIt = new ListViewItem(_tc.Function);
                 lstIt.Tag = _tc;

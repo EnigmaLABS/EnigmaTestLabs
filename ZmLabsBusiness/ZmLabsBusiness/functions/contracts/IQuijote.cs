@@ -10,6 +10,5 @@ namespace ZmLabsBusiness.functions.contracts
     {
         void ConcatQuijotePlusOperator();
         void ConcatQuijoteStringBuilder();
-
     }
 }

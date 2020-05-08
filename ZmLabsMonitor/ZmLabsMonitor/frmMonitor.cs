@@ -27,7 +27,6 @@ namespace ZmLabsMonitor
         private List<TestDomain> _lst_tests = new List<TestDomain>(); //-->> para el treeview
 
         private controls.usrctrl_testinfo _ctrl_test_info;
-        private enumDataSystem _DataSystem;
 
         /// <summary>
         /// Formulario principal que puestra el árbol de categorías y tests de cada categoría
@@ -36,21 +35,22 @@ namespace ZmLabsMonitor
         {
             InitializeComponent();
 
-            string strDataSystem = ConfigurationManager.AppSettings["DBStrategy"].ToString();
-            _DataSystem = (enumDataSystem)Enum.Parse(typeof(enumDataSystem), strDataSystem);
+            //08/05/2020 - Suprimimos compatibilidad con ADO
 
-            switch (_DataSystem)
-            {
-                case enumDataSystem.ADO:
+            _test_functions = new test_functions_EF();
 
-                    _test_functions = new test_functions_ADO();
-                    break;
+            //switch (_DataSystem)
+            //{
+            //    case enumDataSystem.ADO:
 
-                case enumDataSystem.EF:
+            //        _test_functions = new test_functions_ADO();
+            //        break;
 
-                    _test_functions = new test_functions_EF();
-                    break;
-            }
+            //    case enumDataSystem.EF:
+
+            //        _test_functions = new test_functions_EF();
+            //        break;
+            //}
         }
 
         private void frmMonitor_Load(object sender, EventArgs e)
@@ -62,7 +62,7 @@ namespace ZmLabsMonitor
             //primero comprobamos si existe la BBDD
             if (!existeBBDD)
             {
-                frmStart _frm = new frmStart(this, _DataSystem);
+                frmStart _frm = new frmStart(this);
                 _frm.ShowDialog();
             }
             else

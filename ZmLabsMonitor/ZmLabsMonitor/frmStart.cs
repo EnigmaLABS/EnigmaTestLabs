@@ -11,14 +11,11 @@ namespace ZmLabsMonitor
     public partial class frmStart : Form
     {
         private frmMonitor _container;
-        private DataDomain.enumDataSystem _DataSystem;
 
-        public frmStart(frmMonitor p_container, DataDomain.enumDataSystem p_DataSystem)
+        public frmStart(frmMonitor p_container)
         {
             InitializeComponent();
-
             _container = p_container;
-            _DataSystem = p_DataSystem;
         }
 
         private void frmStart_Load(object sender, EventArgs e)
@@ -33,24 +30,35 @@ namespace ZmLabsMonitor
 
             this.Cursor = Cursors.WaitCursor;
 
-            switch (_DataSystem)
-            {
-                case DataDomain.enumDataSystem.ADO:
+            //08/05/2020 - Suprimimos compatibilidad con ADO
 
-                    CrearMedianteScripts();
-                    break;
+            CrearMedianteEF();
 
-                case DataDomain.enumDataSystem.EF:
+            //switch (_DataSystem)
+            //{
+            //    case DataDomain.enumDataSystem.ADO:
 
-                    CrearMedianteEF();
-                    break;
-            }
+            //        CrearMedianteScripts();
+            //        break;
+
+            //    case DataDomain.enumDataSystem.EF:
+
+            //        CrearMedianteEF();
+            //        break;
+            //}
 
             cmdCancelar.Enabled = true;
             cmdEmpezar.Enabled = true;
 
             this.Cursor = Cursors.Default;
         }
+
+        private void cmdCancelar_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        #region Privados
 
         private void CrearMedianteEF()
         {
@@ -96,6 +104,9 @@ namespace ZmLabsMonitor
             
         }
 
+        #endregion
+
+        //EN DESUSO
         private void CrearMedianteScripts()
         {
             if (txtServer.Text.Trim().Length > 2)
@@ -143,9 +154,5 @@ namespace ZmLabsMonitor
             }
         }
 
-        private void cmdCancelar_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
     }
 }

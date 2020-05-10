@@ -2,8 +2,9 @@
 using System.Windows.Forms;
 
 using ZmLabsObjects;
-using ZmLabsBusiness.test_info;
 using static ZmLabsObjects.DataDomain;
+
+using ZmLabsObjects.contracts;
 
 namespace ZmLabsMonitor.subforms
 {
@@ -11,7 +12,7 @@ namespace ZmLabsMonitor.subforms
     {
         private CategoriesDomain _cat;
         private frmMonitor _container;
-        private test_functions_base _testObject;
+        private ITestFunctionsDomain _test_functions;
 
         /// <summary>
         /// Formulario para la creación de un nuevo Test en BBDD
@@ -19,28 +20,31 @@ namespace ZmLabsMonitor.subforms
         /// <param name="p_cat"></param>
         /// <param name="p_container"></param>
         /// <param name="p_DataSystem"></param>
-        public frm_newtest(CategoriesDomain p_cat, frmMonitor p_container, test_functions_base p_testObject)
+        public frm_newtest(CategoriesDomain p_cat, frmMonitor p_container, ITestFunctionsDomain p_test_functions)
         {
             InitializeComponent();
 
-            _cat = p_cat;
             _container = p_container;
 
-            _testObject = p_testObject;
+            _cat = p_cat;
+            _test_functions = p_test_functions;
         }
 
         private void picSave_Click(object sender, EventArgs e)
         {
             picSave.Enabled = false;
 
-            _testObject.Test = txtTest.Text;
-            _testObject.Classname = txtClassName.Text;
-            _testObject.Description = txtDesc.Text;
+            TestDomain _test = new TestDomain(_test_functions)
+            {
+                Test = txtTest.Text,
+                Classname = txtClassName.Text,
+                Description = txtDesc.Text,
 
-            _testObject.idCategorie = _cat.id;
-            _testObject.Categorie = null;
+                idCategorie = _cat.id,
+                Categorie = null
+            };
 
-            if (_testObject.insertTest())
+            if (_test_functions.insertTest(_test))
             {
                 _container.GetCategories();
                 this.Close();

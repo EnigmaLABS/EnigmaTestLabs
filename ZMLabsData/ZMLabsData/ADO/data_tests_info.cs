@@ -9,13 +9,15 @@ using ZmLabsObjects;
 
 namespace ZMLabsData
 {
-    public class data_tests_info
+    public class data_tests_info : contracts.ITestRepository
     {
         private string str_cnx;
+        private ZmLabsObjects.contracts.ITestFunctionsDomain TestFunctions;
 
-        public data_tests_info(string p_str_cnx)
+        public data_tests_info(string p_str_cnx, ZmLabsObjects.contracts.ITestFunctionsDomain p_TestFunctions)
         {
             str_cnx = p_str_cnx;
+            TestFunctions = p_TestFunctions;
         }
 
         public List<CategoriesDomain> getCategories()
@@ -37,7 +39,7 @@ namespace ZMLabsData
 
                 while (reader.Read())
                 {
-                    CategoriesDomain _cat = new CategoriesDomain()
+                    CategoriesDomain _cat = new CategoriesDomain(TestFunctions)
                     {
                         id = int.Parse(reader["idCategorie"].ToString()),
                         Categorie = reader["Categorie"].ToString(),
@@ -45,7 +47,7 @@ namespace ZMLabsData
 
                     if (reader["idCategorieNode"] != DBNull.Value)
                     {
-                        _cat.Categorie_dad = new CategoriesDomain()
+                        _cat.Categorie_dad = new CategoriesDomain(TestFunctions)
                         {
                             id = int.Parse(reader["idCategorieNode"].ToString()) 
                         };
@@ -83,7 +85,7 @@ namespace ZMLabsData
 
                 while (reader.Read())
                 {
-                    TestDomain _test = new TestDomain()
+                    TestDomain _test = new TestDomain(TestFunctions)
                     {
                         id = int.Parse(reader["idTest"].ToString()),
                         Test = reader["Test"].ToString(),
@@ -92,7 +94,7 @@ namespace ZMLabsData
                         Url_blog = reader["Url_Blog"].ToString(),
                         Url_git = reader["Url_GIT"].ToString(),
 
-                        Categorie = new CategoriesDomain()
+                        Categorie = new CategoriesDomain(TestFunctions)
                         {
                             id = int.Parse(reader["idCategorie"].ToString()),
                             Categorie = reader["Categorie"].ToString()
@@ -117,7 +119,7 @@ namespace ZMLabsData
             return res;
         }
 
-        public bool insertTest(string test, string classname, string desc, int idCategorie)
+        public bool insertTest(TestDomain _test)
         {
             try
             {
@@ -128,10 +130,10 @@ namespace ZMLabsData
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "insertTest";
 
-                cmd.Parameters.AddWithValue("@Test", test);
-                cmd.Parameters.AddWithValue("@ClassName", classname);
-                cmd.Parameters.AddWithValue("@Description", desc);
-                cmd.Parameters.AddWithValue("@idCategorie", idCategorie);
+                cmd.Parameters.AddWithValue("@Test", _test.Test);
+                cmd.Parameters.AddWithValue("@ClassName", _test.Classname);
+                cmd.Parameters.AddWithValue("@Description", _test.Description);
+                cmd.Parameters.AddWithValue("@idCategorie", _test.idCategorie);
 
                 cnx.Open();
                 cmd.ExecuteNonQuery();
@@ -145,33 +147,28 @@ namespace ZMLabsData
             return true;
         }
 
-        public Int64 insertTestCase(Int64 idTest, string functionName, string Description)
+        public bool insertTestCase(ref TestCasesDomain testCase)
         {
             Int64 res = 0;
 
-            try
-            {
-                SqlConnection cnx = new SqlConnection(str_cnx);
-                SqlCommand cmd = new SqlCommand();
+            SqlConnection cnx = new SqlConnection(str_cnx);
+            SqlCommand cmd = new SqlCommand();
 
-                cmd.Connection = cnx;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "insertTestCase";
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "insertTestCase";
 
-                cmd.Parameters.AddWithValue("@idTest", idTest);
-                cmd.Parameters.AddWithValue("@FunctionName", functionName);
-                cmd.Parameters.AddWithValue("@Description", Description);
+            cmd.Parameters.AddWithValue("@idTest", testCase.idTest);
+            cmd.Parameters.AddWithValue("@FunctionName", testCase.Function);
+            cmd.Parameters.AddWithValue("@Description", testCase.Description);
 
-                cnx.Open();
-                res = (Int64)cmd.ExecuteScalar();
-                cnx.Close();
-            }
-            catch (Exception ex)
-            {
-                return 0;
-            }
+            cnx.Open();
+            res = (Int64)cmd.ExecuteScalar();
+            cnx.Close();
 
-            return res;
+            testCase.id = res;
+
+            return true;
         }
 
         public bool InsertExecution(TestCaseExecutionsDomain _TestCaseExec)

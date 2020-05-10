@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Data;
 using System.Collections.Generic;
 
@@ -9,17 +10,26 @@ using ZMLabsData;
 using ZMLabsData.repos;
 using ZMLabsData.ADO;
 
+using ZmLabsBusiness.data.contracts;
+using ZmLabsObjects.contracts;
+
 namespace ZmLabsBusiness.tests
 {
     public class test3_sql_loaddata : objects.test_base
     {
-        data.data_functions _df = new data.data_functions();
-
         private IParteHoras ParteHorasFunctions;
+        private IDataFunctions DataFunctions;
+        private ITestFunctionsDomain DomainFunctions;
 
-        public test3_sql_loaddata(test_info.test_functions_base p_testfunctions, IParteHoras p_ParteHorasFunctions) : base(p_testfunctions)
+        public test3_sql_loaddata(TestDomain p_test,
+                                  ITestFunctionsDomain p_DomainFunctions,
+                                  IDataFunctions p_DataFunctions,
+                                  IParteHoras p_ParteHorasFunctions
+                                  ) : base(p_test, p_DomainFunctions)
         {
             ParteHorasFunctions = p_ParteHorasFunctions;
+            DataFunctions = p_DataFunctions;
+            DomainFunctions = p_DomainFunctions;
         }
 
         public override void Start()
@@ -30,7 +40,7 @@ namespace ZmLabsBusiness.tests
             //limpia la tabla antes de iniciar la ejecución
             //functions.parte_horas _partehoras = new functions.parte_horas();
 
-            bool resTruncate = data_labs.ExecScript("truncate table [test].[ParteHoras]", _df.GetLabsCnx());
+            bool resTruncate = data_labs.ExecScript("truncate table [test].[ParteHoras]", DataFunctions.GetLabsCnx());
 
             //genera el parte de horas (fuera del cálculo de cada uno de los testcases)
             DateTime dtInicioCalculo = DateTime.Now;
@@ -47,26 +57,26 @@ namespace ZmLabsBusiness.tests
             //recorre y ejecuta testcases
             int cont = 0;
 
-            while (cont < _testobject.TestCases.Count)
+            while (cont < Test.TestCases.Count)
             {
-                TestCasesDomain _test = _testobject.TestCases[cont];
+                TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont + 1).First();
 
-                switch (_test.Function)
+                switch (_testcase.Function)
                 {
                     //Graba con EF
                     case "EFBulkData":
 
-                        _testobject.TestCases[cont] = EFBulkData(listahoras, _test);
+                        EFBulkData(listahoras, ref _testcase);
 
                         //Limpia la tabla para nueva ejecución
-                        resTruncate = data_labs.ExecScript("truncate table [test].[ParteHoras]", _df.GetLabsCnx());
+                        resTruncate = data_labs.ExecScript("truncate table [test].[ParteHoras]", DataFunctions.GetLabsCnx());
 
                         break;
 
+                    //Graba con Sp y Datatable
                     case "ADOBulkData_Datatable":
 
-                        //Graba con Sp y Datatable
-                        _testobject.TestCases[cont] = ADOBulkData_Datatable(listahoras, _test);
+                        ADOBulkData_Datatable(listahoras, ref _testcase);
                         break;
                 }
 
@@ -78,36 +88,34 @@ namespace ZmLabsBusiness.tests
             ParteHorasFunctions.Clear();
         }
 
-        private TestCasesDomain EFBulkData(List<IParteHoras> _ParteAnual, TestCasesDomain _test)
+        private void EFBulkData(List<IParteHoras> _ParteAnual, ref TestCasesDomain _testcase)
         {
-            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
+            _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
             //registra inicio
-            _testexec.dtBegin = DateTime.Now;
-            InitTestCase(_test.Function, _testexec.dtBegin);
+            _testcase.TestCaseExecution.dtBegin = DateTime.Now;
+            InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
             //ejecuta testcase
-            sqltest_repos_partehoras _testrepos = new sqltest_repos_partehoras(_df.GetLabsCnx());
+            sqltest_repos_partehoras _testrepos = new sqltest_repos_partehoras(DataFunctions.GetLabsCnx());
 
             _testrepos.InsertParteHorasAnual(_ParteAnual);
 
             //registra fin
-            _testexec.dtEnd = DateTime.Now;
-            EndTestCase(_test.Function, _testexec);
-
-            return _test;
+            _testcase.TestCaseExecution.dtEnd = DateTime.Now;
+            EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
         }
 
-        private TestCasesDomain ADOBulkData_Datatable(List<IParteHoras> _ParteAnual, TestCasesDomain _test)
+        private void ADOBulkData_Datatable(List<IParteHoras> _ParteAnual, ref TestCasesDomain _testcase)
         {
-            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
+            _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
             //registra inicio
-            _testexec.dtBegin = DateTime.Now;
-            InitTestCase(_test.Function, _testexec.dtBegin);
+            _testcase.TestCaseExecution.dtBegin = DateTime.Now;
+            InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
             //ejecuta testcase
-            data_test_sql _data_test_sql = new data_test_sql(_df.GetLabsCnx());
+            data_test_sql _data_test_sql = new data_test_sql(DataFunctions.GetLabsCnx());
 
             //1. inicia conversión
             DateTime dtInicioConversion = DateTime.Now;
@@ -125,15 +133,12 @@ namespace ZmLabsBusiness.tests
             _data_test_sql.InsertParteHorasAnual(_dtParteHoras);
 
             //registra fin
-            _testexec.dtEnd = DateTime.Now;
-            EndTestCase(_test.Function, _testexec);
-
-            return _test;
+            _testcase.TestCaseExecution.dtEnd = DateTime.Now;
+            EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
         }
 
         private void ADOBulkData_RowByRow()
         {
-
 
         }
     }

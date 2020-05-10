@@ -5,25 +5,26 @@ using System.Text;
 using System.Windows.Forms;
 
 using ZmLabsObjects;
-using ZmLabsBusiness.test_info;
-using static ZmLabsObjects.DataDomain;
+using ZmLabsObjects.contracts;
 
 namespace ZmLabsMonitor.controls
 {
     public partial class usrctrl_testinfo_detalles : UserControl
     {
-        private test_functions_base _testobject;
+        private TestDomain _test;
+        private ITestFunctionsDomain TestFunctions;
 
-        public usrctrl_testinfo_detalles(test_functions_base p_testobject)
+        public usrctrl_testinfo_detalles(TestDomain p_test, ITestFunctionsDomain p_TestFunctions)
         {
             InitializeComponent();
 
-            _testobject = p_testobject;
+            _test = p_test;
+            TestFunctions = p_TestFunctions;
         }
 
         private void usrctrl_testinfo_detalles_Load(object sender, EventArgs e)
         {
-            txtDesc2.Text = _testobject.Description;
+            txtDesc2.Text = _test.Description;
 
             ShowTestCases();
         }
@@ -46,7 +47,7 @@ namespace ZmLabsMonitor.controls
         {
             lstCases.Items.Clear();
 
-            foreach (TestCasesDomain _tc in _testobject.TestCases.OrderBy(ord => ord.Orden))
+            foreach (TestCasesDomain _tc in _test.TestCases.OrderBy(ord => ord.Orden))
             {
                 ListViewItem lstIt = new ListViewItem(_tc.Function);
                 lstIt.Tag = _tc;
@@ -57,13 +58,13 @@ namespace ZmLabsMonitor.controls
 
         public void AddTestCase(TestCasesDomain _testcase)
         {
-            _testobject.TestCases.Add(_testcase);
+            _test.TestCases.Add(_testcase);
             ShowTestCases();
         }
 
         private void picNewTestCase_Click(object sender, EventArgs e)
         {
-            subforms.frm_newcase _frm = new subforms.frm_newcase(_testobject, this);
+            subforms.frm_newcase _frm = new subforms.frm_newcase(_test, TestFunctions, this);
             _frm.ShowDialog();
         }
     }

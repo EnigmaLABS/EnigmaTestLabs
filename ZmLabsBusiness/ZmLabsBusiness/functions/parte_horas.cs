@@ -18,11 +18,11 @@ namespace ZmLabsBusiness.functions
         public enumEstadoProceso EstadoProceso;
     }
 
-    public class parte_horas : ParteHorasDomain
+    public class parte_horas_functions : ParteHorasDomain
     {
         private static List<IParteHoras> _ParteAnual;
 
-        public parte_horas(List<IParteHoras> p_ParteAnual)
+        public parte_horas_functions(List<IParteHoras> p_ParteAnual)
         {
             _ParteAnual = p_ParteAnual;
         }

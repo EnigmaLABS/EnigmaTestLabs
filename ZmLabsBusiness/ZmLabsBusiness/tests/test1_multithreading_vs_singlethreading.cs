@@ -7,24 +7,28 @@ using System.Threading.Tasks;
 
 using ZmLabsBusiness.functions.contracts;
 using ZmLabsBusiness.tests.objects;
+
 using ZmLabsObjects;
+using ZmLabsObjects.contracts;
 
 namespace ZmLabsBusiness.tests
 {
     public class test1_multithreading_vs_singlethreading : objects.test_base
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
-
         public static List<objects.process_control> _lst_process_control = new List<objects.process_control>();
 
+        private static TestDomain Test;
         private static IFibo FiboCalc;
+        private static test_base _testexec;
 
-        private static objects.test_base _testexec;
-
-        public test1_multithreading_vs_singlethreading(test_info.test_functions_base p_testfunctions, IFibo p_FiboCalc) : base(p_testfunctions)
+        public test1_multithreading_vs_singlethreading(TestDomain p_Test,
+                                                       ITestFunctionsDomain p_DomainFunctions,
+                                                        IFibo p_FiboCalc) : base(p_Test, p_DomainFunctions)
         {
             FiboCalc = p_FiboCalc;
             _testexec = this;
+            Test = p_Test;
         }
 
         public override void Start()
@@ -35,30 +39,30 @@ namespace ZmLabsBusiness.tests
             //recorre y ejecuta testcases
             int cont = 0;
 
-            while (cont < _testexec._testobject.TestCases.Count)
+            while (cont < Test.TestCases.Count)
             {
-                TestCasesDomain _test = _testexec._testobject.TestCases.Where(ord => ord.Orden == cont+1).First();
+                TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont+1).First();
 
-                switch (_test.Function)
+                switch (_testcase.Function)
                 {
                     case "MultithreadingCase":
 
-                        MultithreadingCase(ref _test);
+                        MultithreadingCase(ref _testcase);
                         break;
 
                     case "MultithreadingCaseWithErrors":
 
-                        MultithreadingCaseWithErrors(ref _test);
+                        MultithreadingCaseWithErrors(ref _testcase);
                         break;
 
                     case "SinglethreadingCase":
 
-                        SinglethreadingCase(ref _test);
+                        SinglethreadingCase(ref _testcase);
                         break;
 
                     case "HybridCase":
 
-                        HybridCase(ref _test);
+                        HybridCase(ref _testcase);
                         break;
                 }
 
@@ -77,15 +81,15 @@ namespace ZmLabsBusiness.tests
         /// </summary>
         /// <param name="_test"></param>
         /// <returns></returns>
-        public void MultithreadingCase(ref TestCasesDomain _test)
+        public void MultithreadingCase(ref TestCasesDomain _testcase)
         {
-            TestCaseExecutionsDomain _execution = new TestCaseExecutionsDomain() { idTestCase = _test.id };
+            _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
             try
             {
                 //registra inicio
-                _execution.dtBegin = DateTime.Now;
-                InitTestCase(_test.Function, _execution.dtBegin);
+                _testcase.TestCaseExecution.dtBegin = DateTime.Now;
+                InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 _lst_process_control.Clear();
 
@@ -114,8 +118,8 @@ namespace ZmLabsBusiness.tests
                 }
 
                 //registra fin
-                _execution.dtEnd = DateTime.Now;
-                EndTestCase(_test.Function, _execution);
+                _testcase.TestCaseExecution.dtEnd = DateTime.Now;
+                EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
 
                 _lst_process_control.Clear();
             }
@@ -131,15 +135,15 @@ namespace ZmLabsBusiness.tests
         /// </summary>
         /// <param name="_test"></param>
         /// <returns></returns>
-        public void MultithreadingCaseWithErrors(ref TestCasesDomain _test)
+        public void MultithreadingCaseWithErrors(ref TestCasesDomain _testcase)
         {
-            TestCaseExecutionsDomain _execution = new TestCaseExecutionsDomain() { idTestCase = _test.id };
+            _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
             try
             {
                 //registra inicio
-                _execution.dtBegin = DateTime.Now;
-                InitTestCase(_test.Function, _execution.dtBegin);
+                _testcase.TestCaseExecution.dtBegin = DateTime.Now;
+                InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 _lst_process_control.Clear();
 
@@ -168,8 +172,8 @@ namespace ZmLabsBusiness.tests
                 }
 
                 //registra fin
-                _execution.dtEnd = DateTime.Now;
-                EndTestCase(_test.Function, _execution);
+                _testcase.TestCaseExecution.dtEnd = DateTime.Now;
+                EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
             }
             catch (Exception ex)
             {
@@ -236,15 +240,15 @@ namespace ZmLabsBusiness.tests
         /// </summary>
         /// <param name="_test"></param>
         /// <returns></returns>
-        public void SinglethreadingCase(ref TestCasesDomain _test)
+        public void SinglethreadingCase(ref TestCasesDomain _testcase)
         {
             try
             {
-                TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
+                _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
                 //registra inicio
-                _testexec.dtBegin = DateTime.Now;
-                InitTestCase(_test.Function, _testexec.dtBegin);
+                _testcase.TestCaseExecution.dtBegin = DateTime.Now;
+                InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 //500 iteraciones calculando 200 elementos de la serie fibo
                 int cont = 0;
@@ -262,8 +266,8 @@ namespace ZmLabsBusiness.tests
                 }
 
                 //registra fin
-                _testexec.dtEnd = DateTime.Now;
-                EndTestCase(_test.Function, _testexec);
+                _testcase.TestCaseExecution.dtEnd = DateTime.Now;
+                EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
             }
             catch (Exception ex)
             {
@@ -276,15 +280,15 @@ namespace ZmLabsBusiness.tests
         /// Combinación de Singlethreading y Multithreading
         /// </summary>
         /// <param name="_test"></param>
-        public void HybridCase(ref TestCasesDomain _test)
+        public void HybridCase(ref TestCasesDomain _testcase)
         {
             try
             {
-                TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
+                _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
                 //registra inicio
-                _testexec.dtBegin = DateTime.Now;
-                InitTestCase(_test.Function, _testexec.dtBegin);
+                _testcase.TestCaseExecution.dtBegin = DateTime.Now;
+                InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 _lst_process_control.Clear();
 
@@ -313,8 +317,8 @@ namespace ZmLabsBusiness.tests
                 }
 
                 //registra fin
-                _testexec.dtEnd = DateTime.Now;
-                EndTestCase(_test.Function, _testexec);
+                _testcase.TestCaseExecution.dtEnd = DateTime.Now;
+                EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
             }
             catch (Exception ex)
             {

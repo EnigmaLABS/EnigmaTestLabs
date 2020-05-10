@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using ZmLabsBusiness.test_info;
 using ZmLabsObjects;
+using ZmLabsObjects.contracts;
+
 using static ZmLabsObjects.DataDomain;
 
 namespace ZmLabsMonitor.controls
 {
     public partial class usrctrl_testinfo : UserControl
     {
-        private test_functions_base _testobject;
+        private TestDomain Test;
+        private ITestFunctionsDomain TestFunctions;
+
         private usrctrl_testinfo_detalles _ctrl_test_info_details;
         private usrctrl_monitorlist _ctrl_test_exec_info;
 
@@ -20,20 +23,21 @@ namespace ZmLabsMonitor.controls
         /// </summary>
         /// <param name="p_testobject"></param>
         /// <param name="p_DataSystem"></param>
-        public usrctrl_testinfo(test_functions_base p_testobject)
+        public usrctrl_testinfo(TestDomain p_test, ITestFunctionsDomain p_TestFunctions)
         {
             InitializeComponent();
 
-            _testobject = p_testobject;
+            Test = p_test;
+            TestFunctions = p_TestFunctions;
         }
 
         private void usrctrl_testinfo_Load(object sender, EventArgs e)
         {
-            txtTest.Text = _testobject.Test;
-            txtClassName.Text = _testobject.Classname;
+            txtTest.Text = Test.Test;
+            txtClassName.Text = Test.Classname;
 
-            _ctrl_test_info_details = new usrctrl_testinfo_detalles(_testobject);
-            _ctrl_test_exec_info = new usrctrl_monitorlist(this);
+            _ctrl_test_info_details = new usrctrl_testinfo_detalles(Test, TestFunctions);
+            _ctrl_test_exec_info = new usrctrl_monitorlist(this, Test);
 
             _ctrl_test_exec_info.Dock = DockStyle.Fill;
             panelDetalle.Controls.Add(_ctrl_test_exec_info);
@@ -51,7 +55,7 @@ namespace ZmLabsMonitor.controls
 
             this.Cursor = Cursors.WaitCursor;
 
-            _ctrl_test_exec_info.Activate(_testobject);
+            _ctrl_test_exec_info.Activate();
         }
 
         private void cmdInfo_Click(object sender, EventArgs e)

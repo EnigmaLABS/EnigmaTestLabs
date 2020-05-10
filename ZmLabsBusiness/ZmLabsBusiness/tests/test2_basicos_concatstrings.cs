@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 
 using ZmLabsObjects;
+using ZmLabsObjects.contracts;
+
 using ZmLabsBusiness.functions.contracts;
 
 namespace ZmLabsBusiness.tests
@@ -12,7 +15,9 @@ namespace ZmLabsBusiness.tests
 
         private static objects.test_base _testexecbase;
 
-        public test2_basicos_concatstrings(test_info.test_functions_base p_testobject, IQuijote p_QuijoteFunctions) : base(p_testobject)
+        public test2_basicos_concatstrings(TestDomain p_test,
+                                           ITestFunctionsDomain p_DomainFunctions,
+                                           IQuijote p_QuijoteFunctions) : base(p_test, p_DomainFunctions)
         {
             QuijoteFunctions = p_QuijoteFunctions;
             _testexecbase = this;
@@ -26,20 +31,20 @@ namespace ZmLabsBusiness.tests
             //recorre y ejecuta testcases
             int cont = 0;
 
-            while (cont < _testobject.TestCases.Count)
+            while (cont < Test.TestCases.Count)
             {
-                TestCasesDomain _test = _testobject.TestCases[cont];
+                TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont + 1).First();
 
-                switch (_test.Function)
+                switch (_testcase.Function)
                 {
                     case "Concat_PlusOperator":
 
-                        _testobject.TestCases[cont] = Concat_PlusOperator(_test);
+                        Concat_PlusOperator(ref _testcase);
                         break;
 
                     case "Concat_StringBuilder":
 
-                        _testobject.TestCases[cont] = Concat_StringBuilder(_test);
+                        Concat_StringBuilder(ref _testcase);
                         break;
                 }
 
@@ -50,56 +55,53 @@ namespace ZmLabsBusiness.tests
             this.EndTest();
         }
 
-        public TestCasesDomain Concat_PlusOperator(TestCasesDomain _test)
+        private void Concat_PlusOperator(ref TestCasesDomain _testcase)
         {
-            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
+            _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
             try
             {
                 //registra inicio
-                _testexec.dtBegin = DateTime.Now;
-                InitTestCase(_test.Function, _testexec.dtBegin);
+
+                _testcase.TestCaseExecution.dtBegin = DateTime.Now;
+                InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 //ejecuta testcase
                 QuijoteFunctions.ConcatQuijotePlusOperator();
 
                 //registra fin
-                _testexec.dtEnd = DateTime.Now;
-                EndTestCase(_test.Function, _testexec);
+                _testcase.TestCaseExecution.dtEnd = DateTime.Now;
+                EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
             }
             catch (Exception ex)
             {
                 _testexecbase.SetMsg("Error ejecutando Concat_PlusOperator");
                 _logger.Error(ex, "Error ejecutando Concat_PlusOperator");
             }
-
-            return _test;
         }
 
-        public TestCasesDomain Concat_StringBuilder(TestCasesDomain _test)
+        private void Concat_StringBuilder(ref TestCasesDomain _testcase)
         {
-            TestCaseExecutionsDomain _testexec = new TestCaseExecutionsDomain() { idTestCase = _test.id };
+            _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
             try
             {
                 //registra inicio
-                _testexec.dtBegin = DateTime.Now;
-                InitTestCase(_test.Function, _testexec.dtBegin);
+                _testcase.TestCaseExecution.dtBegin = DateTime.Now;
+                InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 //ejecuta testcase
                 QuijoteFunctions.ConcatQuijoteStringBuilder();
 
                 //registra fin
-                _testexec.dtEnd = DateTime.Now;
-                EndTestCase(_test.Function, _testexec);
+                _testcase.TestCaseExecution.dtEnd = DateTime.Now;
+                EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
             }
             catch (Exception ex)
             {
                 _testexecbase.SetMsg("Error ejecutando Concat_StringBuilder");
                 _logger.Error(ex, "Error ejecutando Concat_StringBuilder");
             }
-
-            return _test;
         }
     }
 }

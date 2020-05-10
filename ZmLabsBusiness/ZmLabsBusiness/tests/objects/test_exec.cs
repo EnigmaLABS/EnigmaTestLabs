@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-using ZmLabsBusiness.test_info;
 using ZmLabsObjects;
-using ZMLabsData.repos;
+using ZmLabsObjects.contracts;
+
+//using ZMLabsData.repos;
 
 using NLog;
+
 
 namespace ZmLabsBusiness.tests.objects
 {
@@ -20,39 +22,46 @@ namespace ZmLabsBusiness.tests.objects
     /// </summary>
     public class test_base
     {
+        public TestDomain Test;
+
         public test_types.enumEstadoProceso Estado;
 
         public List<test_types.mensajes> Mensajes = new List<test_types.mensajes>();
 
         private static int intentos_mensajes = 0;
 
-        public test_functions_base _testobject;
-
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public test_base(test_functions_base p_testobject)
+        private ITestFunctionsDomain DomainFunctions;
+
+        public test_base(TestDomain p_Test, ITestFunctionsDomain p_DomainFunctions)
         {
-            _testobject = p_testobject;
+            //TestFunctions = p_testfunctions;
+            Test = p_Test;
+            DomainFunctions = p_DomainFunctions;
         }
 
         /// <summary>
         /// Inicia la ejecución del Test seleccionado
         /// Sobreescrito en cada una de las clases de los test: test1_x , test2_x etc...
         /// </summary>
-        public virtual void Start() {  }
+        public virtual void Start()
+        {
+
+        }
 
         public void InitTest()
         {
             this.Estado = test_types.enumEstadoProceso.Ejecutando;
 
             SetMsg("- - - - -");
-            SetMsg(_testobject.Test + " iniciado a las " + DateTime.Now.ToLongTimeString());
+            SetMsg(Test.Test + " iniciado a las " + DateTime.Now.ToLongTimeString());
         }
 
         public void EndTest()
         {
             SetMsg("- - - - -");
-            SetMsg(_testobject.Test + " finalizado a las " + DateTime.Now.ToLongTimeString());
+            SetMsg(Test.Test + " finalizado a las " + DateTime.Now.ToLongTimeString());
 
             this.Estado = test_types.enumEstadoProceso.Finalizado;
         }
@@ -67,7 +76,7 @@ namespace ZmLabsBusiness.tests.objects
         {
             try
             {
-                _testobject.InsertExecution(_testexec);
+                _testexec.Insert(DomainFunctions);
             }
             catch (Exception ex)
             {

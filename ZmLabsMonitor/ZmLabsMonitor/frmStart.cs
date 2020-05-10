@@ -64,7 +64,7 @@ namespace ZmLabsMonitor
         {
             if (txtServer.Text.Trim().Length > 2)
             {
-                data_functions _df = new data_functions();
+                Business_Data_Functions _df = new Business_Data_Functions();
 
                 if (_df.TestMasterDB(txtServer.Text.Trim()))
                 {
@@ -100,59 +100,59 @@ namespace ZmLabsMonitor
 
         private void UpdateDatabase()
         {
-            data_functions _df = new data_functions();
-            
+            Business_Data_Functions _df = new Business_Data_Functions();
+            _df.UpdateDatabaseEF(_df.GetLabsCnx());
         }
 
         #endregion
 
         //EN DESUSO
-        private void CrearMedianteScripts()
-        {
-            if (txtServer.Text.Trim().Length > 2)
-            {
-                data_functions _df = new data_functions();
+        //private void CrearMedianteScripts()
+        //{
+        //    if (txtServer.Text.Trim().Length > 2)
+        //    {
+        //        data_functions _df = new data_functions();
 
-                if (_df.TestMasterDB(txtServer.Text.Trim()))
-                {
-                    List<DataDomain> _files = _df.GetFilesPath(txtServer.Text.Trim());
+        //        if (_df.TestMasterDB(txtServer.Text.Trim()))
+        //        {
+        //            List<DataDomain> _files = _df.GetFilesPath(txtServer.Text.Trim());
 
-                    if (_files.Count >= 2)
-                    {
-                        if (_df.CreateDatabase(txtServer.Text.Trim(), _files))
-                        {
-                            registry_functions _reg = new registry_functions();
+        //            if (_files.Count >= 2)
+        //            {
+        //                if (_df.CreateDatabase(txtServer.Text.Trim(), _files))
+        //                {
+        //                    registry_functions _reg = new registry_functions();
 
-                            if (_reg.SetBBDDCreada(txtServer.Text.Trim()))
-                            {
-                                _container.GetCategories();
-                                this.Close();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Error al registrar");
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("No se ha podido crear la base de datos");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("conexión OK. No se encuentran los ficheros de datos");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Error");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Introduzca el nombre del servidor SQL Server");
-            }
-        }
+        //                    if (_reg.SetBBDDCreada(txtServer.Text.Trim()))
+        //                    {
+        //                        _container.GetCategories();
+        //                        this.Close();
+        //                    }
+        //                    else
+        //                    {
+        //                        MessageBox.Show("Error al registrar");
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    MessageBox.Show("No se ha podido crear la base de datos");
+        //                }
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show("conexión OK. No se encuentran los ficheros de datos");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Error");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Introduzca el nombre del servidor SQL Server");
+        //    }
+        //}
 
     }
 }

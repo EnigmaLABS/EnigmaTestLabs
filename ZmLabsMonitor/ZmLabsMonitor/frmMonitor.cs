@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Configuration;
-using System.Reflection;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,14 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using static ZmLabsObjects.DataDomain;
 using ZmLabsObjects;
+using ZmLabsObjects.functions;
+using static ZmLabsObjects.DataDomain;
 
 using ZmLabsBusiness;
 using ZmLabsBusiness.data;
-using ZmLabsBusiness.test_info;
 using ZmLabsBusiness.registry;
 
+using ZMLabsData.repos;
 
 namespace ZmLabsMonitor
 {
@@ -23,10 +22,15 @@ namespace ZmLabsMonitor
     {
         private enum enumPantalla { MonitorList, TestInfo }
 
-        private test_functions_base _test_functions;
+        //private Business_Test_Functions_base _test_functions;
         private List<TestDomain> _lst_tests = new List<TestDomain>(); //-->> para el treeview
 
         private controls.usrctrl_testinfo _ctrl_test_info;
+
+        private labs_repos Repository;
+        private Business_Test_Functions_EF BusinessFunctions;
+        private Domain_Test_Functions_EF DomainFunctions;
+        private Business_Data_Functions DataFunctions;
 
         /// <summary>
         /// Formulario principal que puestra el árbol de categorías y tests de cada categoría
@@ -36,8 +40,6 @@ namespace ZmLabsMonitor
             InitializeComponent();
 
             //08/05/2020 - Suprimimos compatibilidad con ADO
-
-            _test_functions = new test_functions_EF();
 
             //switch (_DataSystem)
             //{
@@ -51,6 +53,12 @@ namespace ZmLabsMonitor
             //        _test_functions = new test_functions_EF();
             //        break;
             //}
+
+            //Dependencias
+            DataFunctions = new Business_Data_Functions();
+            Repository = new labs_repos(DataFunctions.GetLabsCnx());
+            BusinessFunctions = new Business_Test_Functions_EF(Repository);
+            DomainFunctions = new Domain_Test_Functions_EF(BusinessFunctions);
         }
 
         private void frmMonitor_Load(object sender, EventArgs e)
@@ -67,9 +75,7 @@ namespace ZmLabsMonitor
             }
             else
             {
-                data_functions _df = new data_functions();
-                _df.UpdateDatabaseEF(_reg.GetRegisteredServer());
-
+                DataFunctions.UpdateDatabaseEF(_reg.GetRegisteredServer());
                 GetCategories();
             }
         }
@@ -86,8 +92,6 @@ namespace ZmLabsMonitor
 
                 if (_treeelem.ElemType == objects.enumElemType.Test)
                 {
-                    _test_functions.SetTestObject(_treeelem.TestObject);
-
                     try
                     {
                         enumTestTypes _type = (enumTestTypes)Enum.Parse(typeof(enumTestTypes),
@@ -95,11 +99,9 @@ namespace ZmLabsMonitor
                          
                         _treeelem.TestObject.Execution.TestType = _type;
 
-                        _treeelem.TestObject.Execution.OBJ = test_types.GetObject(_test_functions, _type);
+                        _treeelem.TestObject.Execution.OBJ = test_types.GetObject(_treeelem.TestObject, _type, DomainFunctions);
 
-                        _test_functions.SetTestObject(_treeelem.TestObject);
-
-                        _ctrl_test_info = new controls.usrctrl_testinfo(_test_functions);
+                        _ctrl_test_info = new controls.usrctrl_testinfo(_treeelem.TestObject, BusinessFunctions);
 
                         splitContainer.Panel2.Controls.Clear();
 
@@ -139,7 +141,7 @@ namespace ZmLabsMonitor
         {
             objects.treeElement _treeelem = (objects.treeElement)treeCatalogo.SelectedNode.Tag;
 
-            subforms.frm_newtest _frm = new subforms.frm_newtest(_treeelem.Categorie, this, _test_functions);
+            subforms.frm_newtest _frm = new subforms.frm_newtest(_treeelem.Categorie, this, DomainFunctions);
             _frm.ShowDialog();
         }
         
@@ -151,10 +153,10 @@ namespace ZmLabsMonitor
 
         public void GetCategories()
         {
-            _lst_tests = _test_functions.getTests();
+            _lst_tests = BusinessFunctions.getTests();
             treeCatalogo.Nodes.Clear();
 
-            List<CategoriesDomain> _lstcat = _test_functions.getCategories();
+            List<CategoriesDomain> _lstcat = BusinessFunctions.getCategories();
 
             //rellenamos el tree view
             foreach (CategoriesDomain _cat in _lstcat.Where(ct => ct.Categorie_dad == null))

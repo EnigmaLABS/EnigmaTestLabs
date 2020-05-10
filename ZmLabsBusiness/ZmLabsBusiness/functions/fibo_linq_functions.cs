@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZmLabsBusiness.functions
 {
-    public class fibo_linq : contracts.IFibo
+    public class fibo_linq_functions : contracts.IFibo
     {
         public List<ulong> CalcFibo(int numelements)
         {

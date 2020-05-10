@@ -6,14 +6,16 @@ using System.Threading;
 using System.Windows.Forms;
 
 using ZmLabsBusiness;
-using ZmLabsBusiness.test_info;
 using ZmLabsBusiness.tests.objects;
+
+using ZmLabsObjects;
 
 namespace ZmLabsMonitor.controls
 {
     public partial class usrctrl_monitorlist : UserControl
     {
-        public static test_functions_base _testobject;
+        public static TestDomain Test;
+
         public static test_types.enumEstadoProceso _estadoProceso;
 
         private usrctrl_testinfo _container;
@@ -24,16 +26,16 @@ namespace ZmLabsMonitor.controls
         /// Control de usuario que invoca la ejecución de un Test y va mostrando los resultados de la ejecución en pantalla
         /// </summary>
         /// <param name="p_container"></param>
-        public usrctrl_monitorlist(usrctrl_testinfo p_container)
+        public usrctrl_monitorlist(usrctrl_testinfo p_container, TestDomain p_test)
         {
             InitializeComponent();
 
             _container = p_container;
+            Test = p_test;
         }
 
-        public void Activate(test_functions_base p_testobject)
+        public void Activate()
         {
-            _testobject = p_testobject;
             _estadoProceso = test_types.enumEstadoProceso.Parado;
 
             Thread _th = new Thread(() => HiloNegocio());
@@ -50,7 +52,7 @@ namespace ZmLabsMonitor.controls
         {
             List<test_types.mensajes> lstMensajes = new List<test_types.mensajes>();
 
-            test_base execObject = (test_base)_testobject.Execution.OBJ;
+            test_base execObject = (test_base)Test.Execution.OBJ;
 
             _estadoProceso = execObject.Estado;
 
@@ -104,7 +106,7 @@ namespace ZmLabsMonitor.controls
 
         public static void HiloNegocio()
         {
-            var negobject = (test_base)_testobject.Execution.OBJ;
+            var negobject = (test_base)Test.Execution.OBJ;
             negobject.Start();
         }
     }

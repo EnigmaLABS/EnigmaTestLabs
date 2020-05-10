@@ -59,11 +59,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="data\data_functions.cs" />
+    <Compile Include="data\contracts\IDataFunctions.cs" />
+    <Compile Include="data\Business_Data_Functions.cs" />
+    <Compile Include="data\Business_Test_Functions_EF.cs" />
     <Compile Include="functions\contracts\IFibo.cs" />
     <Compile Include="functions\contracts\IQuijote.cs" />
-    <Compile Include="functions\fibo.cs" />
-    <Compile Include="functions\fibo_linq.cs" />
+    <Compile Include="functions\fibo_functions.cs" />
+    <Compile Include="functions\fibo_linq_functions.cs" />
     <Compile Include="functions\parte_horas.cs" />
     <Compile Include="functions\quijote.cs" />
     <Compile Include="functions\reflections.cs" />
@@ -73,11 +75,9 @@
     <Compile Include="tests\test1_multithreading_vs_singlethreading.cs" />
     <Compile Include="tests\test2_basicos_concatstrings.cs" />
     <Compile Include="tests\test3_sql_loaddata.cs" />
-    <Compile Include="test_info\test_functions_ADO.cs" />
+    <Compile Include="data\Business_Test_Functions_base.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="test_info\test_functions_base.cs" />
-    <Compile Include="test_info\test_functions_EF.cs" />
-    <Compile Include="test_info\test_types.cs" />
+    <Compile Include="tests\objects\test_types.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ZMLabsData\ZMLabsData\ZMLabsData.csproj">

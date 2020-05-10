@@ -11,7 +11,7 @@ using ZMLabsData.EFModels;
 
 namespace ZMLabsData.repos
 {
-    public class labs_repos
+    public class labs_repos : contracts.ITestRepository
     {
         private string _str_cnx;
 
@@ -105,3 +105,4 @@ namespace ZMLabsData.repos
         }
     }
 }
+

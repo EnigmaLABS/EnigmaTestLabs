@@ -9,7 +9,7 @@ using ZmLabsObjects;
 
 namespace ZmLabsBusiness.data
 {
-    public class data_functions
+    public class Business_Data_Functions : contracts.IDataFunctions
     {
         const string DBMaster = "master";
         private string DBLabs;
@@ -18,7 +18,7 @@ namespace ZmLabsBusiness.data
         /// Lógica de negocio para el proceso inicial de creación de base de datos del usuario
         /// A desencadenarse en la primera ejecución de la solución
         /// </summary>
-        public data_functions()
+        public Business_Data_Functions()
         {
             DBLabs = ConfigurationManager.AppSettings["DBLABS"].ToString();
         }

@@ -4,35 +4,34 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using ZmLabsObjects;
-using ZMLabsData.repos;
 
-namespace ZmLabsBusiness.test_info
+namespace ZmLabsObjects.functions
 {
-    public class test_functions_EF : test_info.test_functions_base
+    public class Domain_Test_Functions_EF : contracts.ITestFunctionsDomain
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private labs_repos _datatestrepository;
+        private contracts.ITestFunctionsDomain TestFunctions;
 
         /// <summary>
         /// Enlaza con el acceso a datos mediante Entity Framework
         /// </summary>
         /// <param name="TestObject"></param>
-        public test_functions_EF() 
+        public Domain_Test_Functions_EF(contracts.ITestFunctionsDomain p_TestFunctions)
         {
-            data.data_functions _df = new data.data_functions();
+            //data.data_functions _df = new data.data_functions();
+            //_datatestrepository = new labs_repos(_df.GetLabsCnx());
 
-            _datatestrepository = new labs_repos(_df.GetLabsCnx());
+            TestFunctions = p_TestFunctions;
         }
 
-        public override List<CategoriesDomain> getCategories()
+        public List<CategoriesDomain> getCategories()
         {
             List<CategoriesDomain> res = new List<CategoriesDomain>();
 
             try
             {
-                res = _datatestrepository.getCategories();
-
+                res = TestFunctions.getCategories();
             }
             catch (Exception ex)
             {
@@ -42,13 +41,13 @@ namespace ZmLabsBusiness.test_info
             return res;
         }
 
-        public override List<TestDomain> getTests()
+        public List<TestDomain> getTests()
         {
             List<TestDomain> res = new List<TestDomain>();
 
             try
             {
-                res = _datatestrepository.getTests();
+                res = TestFunctions.getTests();
             }
             catch (Exception ex)
             {
@@ -58,13 +57,13 @@ namespace ZmLabsBusiness.test_info
             return res;
         }
 
-        public override bool insertTest()
+        public bool insertTest(TestDomain _test)
         {
             bool res;
 
             try
             {
-                res = _datatestrepository.insertTest(this);
+                res = TestFunctions.insertTest(_test);
             }
             catch (Exception ex)
             {
@@ -78,13 +77,17 @@ namespace ZmLabsBusiness.test_info
             return res;
         }
 
-        public override TestCasesDomain insertTestCase(TestCasesDomain _testcase)
+        public TestCasesDomain insertTestCase(TestCasesDomain _testcase)
         {
-            bool res;
+            TestCasesDomain res;
 
             try
             {
-                res = _datatestrepository.insertTestCase(ref _testcase);
+                int maxorden = ((from x in _testcase.Test.TestCases select x.Orden).Max())+1;
+
+                _testcase.Orden = maxorden;
+
+                res = TestFunctions.insertTestCase(_testcase);
             }
             catch (Exception ex)
             {
@@ -96,9 +99,9 @@ namespace ZmLabsBusiness.test_info
             return _testcase;
         }
 
-        public override bool InsertExecution(TestCaseExecutionsDomain _testCaseExec)
+        public bool InsertExecution(TestCaseExecutionsDomain _testCaseExec)
         {
-            bool res = _datatestrepository.InsertExecution(_testCaseExec);
+            bool res = TestFunctions.InsertExecution(_testCaseExec);
             return res;
         }
 

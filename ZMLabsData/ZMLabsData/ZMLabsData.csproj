@@ -59,6 +59,7 @@
     <Compile Include="context\LabsContext.cs" />
     <Compile Include="ADO\data_labs.cs" />
     <Compile Include="ADO\data_tests_info.cs" />
+    <Compile Include="contracts\ITestRepository.cs" />
     <Compile Include="EFModels\CategoriesModel.cs" />
     <Compile Include="EFModels\ExecutionsModel.cs" />
     <Compile Include="EFModels\TestCasesModel.cs" />

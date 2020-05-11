@@ -4,22 +4,19 @@ using System.Linq;
 using ZmLabsObjects;
 using ZmLabsObjects.contracts;
 
-using ZmLabsBusiness.functions.contracts;
+using ZmLabsBusiness.functions;
 
 namespace ZmLabsBusiness.tests
 {
     public class test2_basicos_concatstrings : objects.test_base
     {
-        private IQuijote QuijoteFunctions;
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static objects.test_base _testexecbase;
 
         public test2_basicos_concatstrings(TestDomain p_test,
-                                           ITestFunctionsDomain p_DomainFunctions,
-                                           IQuijote p_QuijoteFunctions) : base(p_test, p_DomainFunctions)
+                                           ITestFunctionsDomain p_DomainFunctions) : base(p_test, p_DomainFunctions)
         {
-            QuijoteFunctions = p_QuijoteFunctions;
             _testexecbase = this;
         }
 
@@ -67,7 +64,7 @@ namespace ZmLabsBusiness.tests
                 InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 //ejecuta testcase
-                QuijoteFunctions.ConcatQuijotePlusOperator();
+                quijote_functions.ConcatQuijotePlusOperator();
 
                 //registra fin
                 _testcase.TestCaseExecution.dtEnd = DateTime.Now;
@@ -91,7 +88,7 @@ namespace ZmLabsBusiness.tests
                 InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 //ejecuta testcase
-                QuijoteFunctions.ConcatQuijoteStringBuilder();
+                quijote_functions.ConcatQuijoteStringBuilder();
 
                 //registra fin
                 _testcase.TestCaseExecution.dtEnd = DateTime.Now;

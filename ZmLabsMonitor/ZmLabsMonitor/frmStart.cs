@@ -70,9 +70,7 @@ namespace ZmLabsMonitor
                 {
                     if (_df.CreateDatabaseEF(txtServer.Text.Trim()))
                     {
-                        registry_functions _reg = new registry_functions();
-
-                        if (_reg.SetBBDDCreada(txtServer.Text.Trim()))
+                        if (registry_functions.SetBBDDCreada(txtServer.Text.Trim()))
                         {
                             _container.GetCategories();
                             this.Close();

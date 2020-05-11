@@ -63,9 +63,7 @@ namespace ZmLabsMonitor
 
         private void frmMonitor_Load(object sender, EventArgs e)
         {
-            registry_functions _reg = new registry_functions();
-
-            bool existeBBDD = _reg.ExisteBBDD();
+            bool existeBBDD = registry_functions.ExisteBBDD();
 
             //primero comprobamos si existe la BBDD
             if (!existeBBDD)
@@ -75,7 +73,7 @@ namespace ZmLabsMonitor
             }
             else
             {
-                DataFunctions.UpdateDatabaseEF(_reg.GetRegisteredServer());
+                DataFunctions.UpdateDatabaseEF(registry_functions.GetRegisteredServer());
                 GetCategories();
             }
         }

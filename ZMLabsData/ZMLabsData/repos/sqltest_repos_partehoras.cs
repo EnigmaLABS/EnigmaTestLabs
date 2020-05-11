@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ using ZMLabsData.EFModels.testModels;
 
 namespace ZMLabsData.repos
 {
-    public class sqltest_repos_partehoras
+    public class sqltest_repos_partehoras : contracts.IParteHorasRepository
     {
         private string _str_cnx;
 
@@ -24,7 +25,8 @@ namespace ZMLabsData.repos
 
             if (config_map == null)
             {
-                config_map = new MapperConfiguration(cfg => {
+                config_map = new MapperConfiguration(cfg =>
+                {
                     cfg.CreateMap<ParteHorasModel, ParteHorasDomain>().ReverseMap();
                 });
             }
@@ -32,7 +34,7 @@ namespace ZMLabsData.repos
             mapper = new Mapper(config_map);
         }
 
-        public bool InsertParteHorasAnual(List<IParteHoras> _ParteAnual)
+        public bool InsertParteHorasAnual(List<ParteHorasDomain> _ParteAnual)
         {
             try
             {
@@ -52,6 +54,11 @@ namespace ZMLabsData.repos
             }
 
             return true;
+        }
+
+        public bool InsertParteHorasAnualADO(DataTable _tblParteAnual)
+        {
+            throw new NotImplementedException();
         }
     }
 }

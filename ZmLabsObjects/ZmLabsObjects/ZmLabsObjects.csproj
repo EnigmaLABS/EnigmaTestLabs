@@ -51,15 +51,14 @@
   <ItemGroup>
     <Compile Include="contracts\ITestFunctionsDomain.cs" />
     <Compile Include="DataDomainObject.cs" />
-    <Compile Include="functions\test_functions_ADO_ISOLATED.cs" />
     <Compile Include="functions\Domain_Test_Functions_EF.cs" />
-    <Compile Include="sqltests\IParteHoras.cs" />
-    <Compile Include="sqltests\ParteHoras.cs" />
+    <Compile Include="sqltests\ParteHorasDomain.cs" />
     <Compile Include="TestDomainObjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

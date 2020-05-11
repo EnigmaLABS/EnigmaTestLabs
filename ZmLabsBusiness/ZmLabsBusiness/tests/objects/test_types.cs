@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 using ZmLabsObjects;
-using ZmLabsObjects.sqltests;
+using ZmLabsObjects.contracts;
 
 using ZmLabsBusiness.functions;
 using ZmLabsBusiness.tests;
@@ -22,31 +20,30 @@ namespace ZmLabsBusiness
 
         public enum enumEstadoProceso { Parado, Ejecutando, Finalizado, Erroneo }
 
-        private static ZmLabsObjects.contracts.ITestFunctionsDomain FunctionDomain;
+        private static ITestFunctionsDomain FunctionDomain;
 
-        public static Object GetObject(TestDomain Test, ZmLabsObjects.enumTestTypes _type, ZmLabsObjects.contracts.ITestFunctionsDomain p_FunctionDomain)
+        public static Object GetObject(TestDomain Test, enumTestTypes _type, ITestFunctionsDomain p_FunctionDomain)
         {
             FunctionDomain = p_FunctionDomain;
             test_base res = new test_base(Test, FunctionDomain);
 
             switch (_type)
             {
-                case ZmLabsObjects.enumTestTypes.test1_multithreading_vs_singlethreading:
+                case enumTestTypes.test1_multithreading_vs_singlethreading:
 
-                    res = new test1_multithreading_vs_singlethreading(Test, FunctionDomain, new fibo_functions());
+                    res = new test1_multithreading_vs_singlethreading(Test, FunctionDomain);
                     break;
 
-                case ZmLabsObjects.enumTestTypes.test2_basicos_concatstrings:
+                case enumTestTypes.test2_basicos_concatstrings:
 
-                    res = new test2_basicos_concatstrings(Test, FunctionDomain, new quijote());
+                    res = new test2_basicos_concatstrings(Test, FunctionDomain);
                     break;
 
-                case ZmLabsObjects.enumTestTypes.test3_sql_loaddata:
+                case enumTestTypes.test3_sql_loaddata:
 
                     res = new test3_sql_loaddata(Test,
                                                     FunctionDomain,
-                                                    new data.Business_Data_Functions(),
-                                                    new parte_horas_functions(new List<IParteHoras>()));
+                                                    new data.Business_Data_Functions());
                                                     
                     break;
 

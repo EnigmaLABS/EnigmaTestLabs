@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using ZmLabsBusiness.functions.contracts;
+using ZmLabsBusiness.functions;
 using ZmLabsBusiness.tests.objects;
 
 using ZmLabsObjects;
@@ -19,14 +19,11 @@ namespace ZmLabsBusiness.tests
         public static List<objects.process_control> _lst_process_control = new List<objects.process_control>();
 
         private static TestDomain Test;
-        private static IFibo FiboCalc;
         private static test_base _testexec;
 
         public test1_multithreading_vs_singlethreading(TestDomain p_Test,
-                                                       ITestFunctionsDomain p_DomainFunctions,
-                                                        IFibo p_FiboCalc) : base(p_Test, p_DomainFunctions)
+                                                       ITestFunctionsDomain p_DomainFunctions) : base(p_Test, p_DomainFunctions)
         {
-            FiboCalc = p_FiboCalc;
             _testexec = this;
             Test = p_Test;
         }
@@ -190,7 +187,7 @@ namespace ZmLabsBusiness.tests
         {
             try
             {
-                FiboCalc.CalcFibo(200);
+                fibo_functions.CalcFibo(200);
 
                 _lst_process_control[index].Estado = objects.process_control.enumEstadoProceso.Finalizado;
             }
@@ -220,7 +217,7 @@ namespace ZmLabsBusiness.tests
                     int a = 0; int b = 1 / a;
                 }
 
-                FiboCalc.CalcFibo(200);
+                fibo_functions.CalcFibo(200);
 
                 _lst_process_control[index].Estado = objects.process_control.enumEstadoProceso.Finalizado;
 
@@ -257,7 +254,7 @@ namespace ZmLabsBusiness.tests
                 {
                     try
                     {
-                        FiboCalc.CalcFibo(200);
+                        fibo_functions.CalcFibo(200);
                         Thread.Sleep(55);
                     }
                     catch (Exception) {  }  //TODO ????
@@ -341,7 +338,7 @@ namespace ZmLabsBusiness.tests
                 {
                     try
                     {
-                        FiboCalc.CalcFibo(200);
+                        fibo_functions.CalcFibo(200);
                         Thread.Sleep(55);
                     }
                     catch (Exception) {  }  // TODO ?????????

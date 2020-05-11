@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ZmLabsObjects.contracts;
+
 namespace ZmLabsObjects.sqltests
 {
-    public class ParteHorasDomain : IParteHoras
+    public class ParteHorasDomain 
     {
         public enum enumTipoJornada { Normal, Baja, Incidencia };
 
@@ -37,17 +39,5 @@ namespace ZmLabsObjects.sqltests
         }
 
         public enumTipoJornada TipoJornada { get; set; }
-
-        //Métodos
-        public virtual List<IParteHoras> Generate(int numTrabajadores, int Anho)
-        {
-            return new List<IParteHoras>();
-        }
-
-        public virtual void Clear() {  }
-
-
-
-
     }
 }

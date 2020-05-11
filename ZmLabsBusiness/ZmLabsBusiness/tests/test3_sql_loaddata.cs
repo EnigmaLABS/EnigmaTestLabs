@@ -10,24 +10,23 @@ using ZMLabsData;
 using ZMLabsData.repos;
 using ZMLabsData.ADO;
 
+using ZmLabsBusiness.functions;
 using ZmLabsBusiness.data.contracts;
+
 using ZmLabsObjects.contracts;
 
 namespace ZmLabsBusiness.tests
 {
     public class test3_sql_loaddata : objects.test_base
     {
-        private IParteHoras ParteHorasFunctions;
         private IDataFunctions DataFunctions;
         private ITestFunctionsDomain DomainFunctions;
 
         public test3_sql_loaddata(TestDomain p_test,
                                   ITestFunctionsDomain p_DomainFunctions,
-                                  IDataFunctions p_DataFunctions,
-                                  IParteHoras p_ParteHorasFunctions
+                                  IDataFunctions p_DataFunctions
                                   ) : base(p_test, p_DomainFunctions)
         {
-            ParteHorasFunctions = p_ParteHorasFunctions;
             DataFunctions = p_DataFunctions;
             DomainFunctions = p_DomainFunctions;
         }
@@ -37,6 +36,8 @@ namespace ZmLabsBusiness.tests
             //inicia test
             this.InitTest();
 
+            parte_horas_functions _phfunctions = new parte_horas_functions();
+
             //limpia la tabla antes de iniciar la ejecución
             //functions.parte_horas _partehoras = new functions.parte_horas();
 
@@ -45,7 +46,7 @@ namespace ZmLabsBusiness.tests
             //genera el parte de horas (fuera del cálculo de cada uno de los testcases)
             DateTime dtInicioCalculo = DateTime.Now;
 
-            var listahoras = ParteHorasFunctions.Generate(100, 2020);
+            var listahoras = _phfunctions.Generate(100, 2020);
 
             DateTime dtFinCalculo = DateTime.Now;
 
@@ -85,10 +86,10 @@ namespace ZmLabsBusiness.tests
            
             //finaliza test
             this.EndTest();
-            ParteHorasFunctions.Clear();
+            _phfunctions.Clear();
         }
 
-        private void EFBulkData(List<IParteHoras> _ParteAnual, ref TestCasesDomain _testcase)
+        private void EFBulkData(List<ParteHorasDomain> _ParteAnual, ref TestCasesDomain _testcase)
         {
             _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
@@ -106,7 +107,7 @@ namespace ZmLabsBusiness.tests
             EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
         }
 
-        private void ADOBulkData_Datatable(List<IParteHoras> _ParteAnual, ref TestCasesDomain _testcase)
+        private void ADOBulkData_Datatable(List<ParteHorasDomain> _ParteAnual, ref TestCasesDomain _testcase)
         {
             _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
@@ -115,13 +116,13 @@ namespace ZmLabsBusiness.tests
             InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
             //ejecuta testcase
-            data_test_sql _data_test_sql = new data_test_sql(DataFunctions.GetLabsCnx());
+            data_test_partehoras _data_test_sql = new data_test_partehoras(DataFunctions.GetLabsCnx());
 
             //1. inicia conversión
             DateTime dtInicioConversion = DateTime.Now;
             SetMsg("Inicia conversión con reflection => parte_horas class to DataTable");
 
-            DataTable _dtParteHoras = functions.reflections.CreateDataTable<IParteHoras>(_ParteAnual, new List<string>() { "TipoJornada" });
+            DataTable _dtParteHoras = functions.reflections.CreateDataTable<ParteHorasDomain>(_ParteAnual, new List<string>() { "TipoJornada" });
 
             //fin conversión
             DateTime dtFinConversion = DateTime.Now;
@@ -130,7 +131,7 @@ namespace ZmLabsBusiness.tests
             SetMsg("Conversión completada " + _ts.TotalMilliseconds.ToString() + " milisegundos");
 
             //2. inicia grabación
-            _data_test_sql.InsertParteHorasAnual(_dtParteHoras);
+            _data_test_sql.InsertParteHorasAnualADO(_dtParteHoras);
 
             //registra fin
             _testcase.TestCaseExecution.dtEnd = DateTime.Now;
@@ -141,5 +142,6 @@ namespace ZmLabsBusiness.tests
         {
 
         }
+
     }
 }

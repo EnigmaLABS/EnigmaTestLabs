@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZmLabsBusiness.functions
 {
-    public class fibo_functions : contracts.IFibo
+    public static class fibo_functions 
     {
-        public List<ulong> CalcFibo(int numelements)
+        public static List<ulong> CalcFibo(int numelements)
         {
             List<ulong> lstelements = new List<ulong>();
 
@@ -43,6 +43,17 @@ namespace ZmLabsBusiness.functions
             }
 
             return lstelements;
+        }
+
+        public static List<ulong> CalcFiboLinq(int numelements)
+        {
+            List<ulong> fibonacciNumbers = new List<ulong>();
+
+            Enumerable.Range(0, numelements)
+                .ToList()
+                .ForEach(k => fibonacciNumbers.Add(k <= 1 ? 1 : fibonacciNumbers[k - 2] + fibonacciNumbers[k - 1]));
+
+            return fibonacciNumbers.Take(numelements).ToList();
         }
     }
 }

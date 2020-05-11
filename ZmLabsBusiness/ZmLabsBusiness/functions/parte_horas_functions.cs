@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-using ZmLabsObjects;
 using ZmLabsObjects.sqltests;
 
 namespace ZmLabsBusiness.functions
@@ -18,13 +17,13 @@ namespace ZmLabsBusiness.functions
         public enumEstadoProceso EstadoProceso;
     }
 
-    public class parte_horas_functions : ParteHorasDomain
+    public class parte_horas_functions 
     {
-        private static List<IParteHoras> _ParteAnual;
+        private static List<ParteHorasDomain> _ParteAnual;
 
-        public parte_horas_functions(List<IParteHoras> p_ParteAnual)
+        public parte_horas_functions()
         {
-            _ParteAnual = p_ParteAnual;
+            _ParteAnual = new List<ParteHorasDomain>();
         }
 
         //Propiedades privadas
@@ -32,7 +31,7 @@ namespace ZmLabsBusiness.functions
 
         private static List<parte_horas_estado_proceso> EstadoProceso = new List<parte_horas_estado_proceso>();
 
-        public override List<IParteHoras> Generate(int numTrabajadores, int Anho)
+        public List<ParteHorasDomain> Generate(int numTrabajadores, int Anho)
         {
             for (int cont = 0; cont < numTrabajadores; cont++)
             {
@@ -61,7 +60,7 @@ namespace ZmLabsBusiness.functions
             return _ParteAnual;
         }
 
-        public override void Clear()
+        public void Clear()
         {
             _ParteAnual.Clear();
             EstadoProceso.Clear();
@@ -84,34 +83,8 @@ namespace ZmLabsBusiness.functions
                             Fecha = dtActual
                         };
 
-                        // calculamos las horas trabajadas con el siguiente criterio:
-                        //---------------------------------------------------------------------------------------------
-
-                        // si no hubo ninguna incidencia ni baja los últimos 5 días trabajados:
-                        // 85% probabilidad de jornada normal
-                        // 7% incidencia de 1 a 2 horas
-                        // 5% incidencia de 2 a 4 horas
-                        // 3% probabilidad de baja médica
-                        //---------------------------------------------------------------------------------------------
-
-                        //si hubo incidencia los últimos 5 días (sin baja médica en los últimos 5 días)
-                        // 40% probabilidad de recuperar el 50% de la incidencia acumulada (max horas extras = 2)
-                        // 20% probabilidad de recuperar el 100% de la incidencia acumulada (max horas extras = 2)
-                        // 30% probabilidad jornada normal
-                        // 4% probabilidad nueva incidencia entre 1 a 2 horas
-                        // 3% probabilidad nueva incidencia entre 2 a 4 horas
-                        // 3% probabilidad de baja mádica
-                        //---------------------------------------------------------------------------------------------
-
-                        //si hubo baja médica en los últimos 5 días
-                        // 80% probabilidad jornada normal
-                        // 5%  probabilidad incidencia de 1 a 2 horas
-                        // 5%  probabilidad incidencia de 2 a 4 horas
-                        // 10% probabilidad nueva baja médica
-                        //---------------------------------------------------------------------------------------------
-
                         // ¿Hubo baja los últimos 5 días trabajados?
-                        bool HuboBaja = _ParteAnual.Exists(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == enumTipoJornada.Baja);
+                        bool HuboBaja = _ParteAnual.Exists(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == ParteHorasDomain.enumTipoJornada.Baja);
 
                         // ¿Hubo incidencia los últimos 5 días trabajados, sin baja médica?
                         // Si hubo obtiene las horas de incidencia acumuladas
@@ -120,7 +93,7 @@ namespace ZmLabsBusiness.functions
 
                         if (!HuboBaja)
                         {
-                            var Indicencias5Dias = _ParteAnual.Where(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == enumTipoJornada.Incidencia).ToList();
+                            var Indicencias5Dias = _ParteAnual.Where(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == ParteHorasDomain.enumTipoJornada.Incidencia).ToList();
                             HuboIncidencia = Indicencias5Dias.Count > 0;
 
                             if (HuboIncidencia)

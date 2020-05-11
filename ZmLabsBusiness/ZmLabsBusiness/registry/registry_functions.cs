@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ZmLabsBusiness.registry
 {
-    public class registry_functions
+    public static class registry_functions
     {
-        public bool ExisteBBDD()
+        public static bool ExisteBBDD()
         {
             RegistryKey rk1 = Registry.LocalMachine;
 
@@ -40,7 +40,7 @@ namespace ZmLabsBusiness.registry
             }
         }
 
-        public bool SetBBDDCreada(string Server)
+        public static bool SetBBDDCreada(string Server)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace ZmLabsBusiness.registry
             return true;
         }
 
-        public string GetRegisteredServer()
+        public static string GetRegisteredServer()
         {
             string res = "";
 

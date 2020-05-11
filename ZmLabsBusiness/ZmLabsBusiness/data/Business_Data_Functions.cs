@@ -239,9 +239,7 @@ namespace ZmLabsBusiness.data
 
         public string GetLabsCnx()
         {
-            registry.registry_functions _regfunc = new registry.registry_functions();
-
-            string server = _regfunc.GetRegisteredServer();
+            string server = registry.registry_functions.GetRegisteredServer();
             string res = GetCnx(server, DBLabs);
 
             return res;

@@ -24,44 +24,37 @@ namespace ZMLabsData
         {
             List<CategoriesDomain> res = new List<CategoriesDomain>();
 
-            try
+            SqlConnection cnx = new SqlConnection(str_cnx);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "GetCategories";
+
+            cnx.Open();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
             {
-                SqlConnection cnx = new SqlConnection(str_cnx);
-                SqlCommand cmd = new SqlCommand();
-
-                cmd.Connection = cnx;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "GetCategories";
-
-                cnx.Open();
-
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                CategoriesDomain _cat = new CategoriesDomain(TestFunctions)
                 {
-                    CategoriesDomain _cat = new CategoriesDomain(TestFunctions)
+                    id = int.Parse(reader["idCategorie"].ToString()),
+                    Categorie = reader["Categorie"].ToString(),
+                };
+
+                if (reader["idCategorieNode"] != DBNull.Value)
+                {
+                    _cat.Categorie_dad = new CategoriesDomain(TestFunctions)
                     {
-                        id = int.Parse(reader["idCategorie"].ToString()),
-                        Categorie = reader["Categorie"].ToString(),
+                        id = int.Parse(reader["idCategorieNode"].ToString()) 
                     };
-
-                    if (reader["idCategorieNode"] != DBNull.Value)
-                    {
-                        _cat.Categorie_dad = new CategoriesDomain(TestFunctions)
-                        {
-                            id = int.Parse(reader["idCategorieNode"].ToString()) 
-                        };
-                    }
-
-                    res.Add(_cat);
                 }
 
-                cnx.Close();
+                res.Add(_cat);
             }
-            catch (Exception ex)
-            {
 
-            }
+            cnx.Close();
 
             return res;
         }
@@ -70,50 +63,43 @@ namespace ZMLabsData
         {
             List<TestDomain> res = new List<TestDomain>();
 
-            try
+            SqlConnection cnx = new SqlConnection(str_cnx);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "getTests";
+
+            cnx.Open();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
             {
-                SqlConnection cnx = new SqlConnection(str_cnx);
-                SqlCommand cmd = new SqlCommand();
-
-                cmd.Connection = cnx;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "getTests";
-
-                cnx.Open();
-
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                TestDomain _test = new TestDomain(TestFunctions)
                 {
-                    TestDomain _test = new TestDomain(TestFunctions)
+                    id = int.Parse(reader["idTest"].ToString()),
+                    Test = reader["Test"].ToString(),
+                    Classname = reader["ClassName"].ToString(),
+                    Description = reader["Description"].ToString(),
+                    Url_blog = reader["Url_Blog"].ToString(),
+                    Url_git = reader["Url_GIT"].ToString(),
+
+                    Categorie = new CategoriesDomain(TestFunctions)
                     {
-                        id = int.Parse(reader["idTest"].ToString()),
-                        Test = reader["Test"].ToString(),
-                        Classname = reader["ClassName"].ToString(),
-                        Description = reader["Description"].ToString(),
-                        Url_blog = reader["Url_Blog"].ToString(),
-                        Url_git = reader["Url_GIT"].ToString(),
+                        id = int.Parse(reader["idCategorie"].ToString()),
+                        Categorie = reader["Categorie"].ToString()
+                    }
+                };
 
-                        Categorie = new CategoriesDomain(TestFunctions)
-                        {
-                            id = int.Parse(reader["idCategorie"].ToString()),
-                            Categorie = reader["Categorie"].ToString()
-                        }
-                   };
-
-                    res.Add(_test);
-                }
-
-                cnx.Close();
-
-                foreach (TestDomain _test in res)
-                {
-                    _test.TestCases = getTestCases(_test.id);
-                }
+                res.Add(_test);
             }
-            catch (Exception ex)
-            {
 
+            cnx.Close();
+
+            foreach (TestDomain _test in res)
+            {
+                _test.TestCases = getTestCases(_test.id);
             }
 
             return res;
@@ -121,28 +107,21 @@ namespace ZMLabsData
 
         public bool insertTest(TestDomain _test)
         {
-            try
-            {
-                SqlConnection cnx = new SqlConnection(str_cnx);
-                SqlCommand cmd = new SqlCommand();
+            SqlConnection cnx = new SqlConnection(str_cnx);
+            SqlCommand cmd = new SqlCommand();
 
-                cmd.Connection = cnx;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "insertTest";
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "insertTest";
 
-                cmd.Parameters.AddWithValue("@Test", _test.Test);
-                cmd.Parameters.AddWithValue("@ClassName", _test.Classname);
-                cmd.Parameters.AddWithValue("@Description", _test.Description);
-                cmd.Parameters.AddWithValue("@idCategorie", _test.idCategorie);
+            cmd.Parameters.AddWithValue("@Test", _test.Test);
+            cmd.Parameters.AddWithValue("@ClassName", _test.Classname);
+            cmd.Parameters.AddWithValue("@Description", _test.Description);
+            cmd.Parameters.AddWithValue("@idCategorie", _test.idCategorie);
 
-                cnx.Open();
-                cmd.ExecuteNonQuery();
-                cnx.Close();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            cnx.Open();
+            cmd.ExecuteNonQuery();
+            cnx.Close();
 
             return true;
         }
@@ -173,27 +152,20 @@ namespace ZMLabsData
 
         public bool InsertExecution(TestCaseExecutionsDomain _TestCaseExec)
         {
-            try
-            {
-                SqlConnection cnx = new SqlConnection(str_cnx);
-                SqlCommand cmd = new SqlCommand();
+            SqlConnection cnx = new SqlConnection(str_cnx);
+            SqlCommand cmd = new SqlCommand();
 
-                cmd.Connection = cnx;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "insertExecution";
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "insertExecution";
 
-                cmd.Parameters.AddWithValue("@dtStart", _TestCaseExec.dtBegin);
-                cmd.Parameters.AddWithValue("@dtEnd", _TestCaseExec.dtEnd);
-                cmd.Parameters.AddWithValue("@idTestCase", _TestCaseExec.idTestCase);
+            cmd.Parameters.AddWithValue("@dtStart", _TestCaseExec.dtBegin);
+            cmd.Parameters.AddWithValue("@dtEnd", _TestCaseExec.dtEnd);
+            cmd.Parameters.AddWithValue("@idTestCase", _TestCaseExec.idTestCase);
 
-                cnx.Open();
-                cmd.ExecuteNonQuery();
-                cnx.Close();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            cnx.Open();
+            cmd.ExecuteNonQuery();
+            cnx.Close();
 
             return true;
         }
@@ -205,40 +177,33 @@ namespace ZMLabsData
         {
             List<TestCasesDomain> res = new List<TestCasesDomain>();
             
-            try
+            SqlConnection cnx = new SqlConnection(str_cnx);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "getTestCases";
+
+            cmd.Parameters.AddWithValue("idTest", id);
+
+            cnx.Open();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
             {
-                SqlConnection cnx = new SqlConnection(str_cnx);
-                SqlCommand cmd = new SqlCommand();
-
-                cmd.Connection = cnx;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "getTestCases";
-
-                cmd.Parameters.AddWithValue("idTest", id);
-
-                cnx.Open();
-
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                TestCasesDomain _testcase = new TestCasesDomain()
                 {
-                    TestCasesDomain _testcase = new TestCasesDomain()
-                    {
-                        id = Int64.Parse(reader["idTestCase"].ToString()),
-                        Function = reader["FunctionName"].ToString(),
-                        Description = reader["Description"].ToString(),
-                        Orden = int.Parse(reader["Orden"].ToString())
-                    };
+                    id = Int64.Parse(reader["idTestCase"].ToString()),
+                    Function = reader["FunctionName"].ToString(),
+                    Description = reader["Description"].ToString(),
+                    Orden = int.Parse(reader["Orden"].ToString())
+                };
 
-                    res.Add(_testcase);
-                }
-
-                cnx.Close();
+                res.Add(_testcase);
             }
-            catch (Exception ex)
-            {
 
-            }
+            cnx.Close();
 
             return res;
         }

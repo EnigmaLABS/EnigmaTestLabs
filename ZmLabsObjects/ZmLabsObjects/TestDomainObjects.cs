@@ -46,7 +46,6 @@ namespace ZmLabsObjects
         {
             return TestFunctions.insertTest(this);
         }
-
     }
 
     public class CategoriesDomain
@@ -81,7 +80,8 @@ namespace ZmLabsObjects
 
         public enumTestTypes TestType;
 
-        public Object OBJ;
+        public contracts.ITest OBJ;
+        //public Object OBJ;
     }
 
     public class TestCasesDomain
@@ -149,5 +149,4 @@ namespace ZmLabsObjects
             return TestFunctions.InsertExecution(this);
         }
     }
-
 }

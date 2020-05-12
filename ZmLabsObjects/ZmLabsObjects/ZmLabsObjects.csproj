@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="contracts\ITest.cs" />
     <Compile Include="contracts\ITestFunctionsDomain.cs" />
     <Compile Include="DataDomainObject.cs" />
     <Compile Include="functions\Domain_Test_Functions_EF.cs" />

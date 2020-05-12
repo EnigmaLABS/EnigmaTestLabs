@@ -26,25 +26,18 @@ namespace ZMLabsData.ADO
 
         public bool InsertParteHorasAnualADO(DataTable _tblParteAnual)
         {
-            try
-            {
-                SqlConnection cnx = new SqlConnection(str_cnx);
-                SqlCommand cmd = new SqlCommand();
+            SqlConnection cnx = new SqlConnection(str_cnx);
+            SqlCommand cmd = new SqlCommand();
 
-                cmd.Connection = cnx;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "test.insertParteHoras";
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "test.insertParteHoras";
 
-                cmd.Parameters.AddWithValue("@ParteHoras", _tblParteAnual);
+            cmd.Parameters.AddWithValue("@ParteHoras", _tblParteAnual);
 
-                cnx.Open();
-                cmd.ExecuteNonQuery();
-                cnx.Close();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            cnx.Open();
+            cmd.ExecuteNonQuery();
+            cnx.Close();
 
             return true;
         }

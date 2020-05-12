@@ -22,7 +22,7 @@ namespace ZmLabsBusiness
 
         private static ITestFunctionsDomain FunctionDomain;
 
-        public static Object GetObject(TestDomain Test, enumTestTypes _type, ITestFunctionsDomain p_FunctionDomain)
+        public static test_base GetObject(TestDomain Test, enumTestTypes _type, ITestFunctionsDomain p_FunctionDomain)
         {
             FunctionDomain = p_FunctionDomain;
             test_base res = new test_base(Test, FunctionDomain);

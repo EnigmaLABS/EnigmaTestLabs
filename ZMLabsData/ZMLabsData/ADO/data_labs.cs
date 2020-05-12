@@ -14,17 +14,10 @@ namespace ZMLabsData
     {
         public static bool Test(string cnx_str)
         {
-            try
-            {
-                SqlConnection cnx = new SqlConnection(cnx_str);
+            SqlConnection cnx = new SqlConnection(cnx_str);
 
-                cnx.Open();
-                cnx.Close();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            cnx.Open();
+            cnx.Close();
 
             return true;
         }
@@ -69,46 +62,32 @@ namespace ZMLabsData
 
         public static bool ExecScript(string scriptText, string cnx_str)
         {
-            try
-            {
-                SqlConnection cnx = new SqlConnection(cnx_str);
-                SqlCommand cmd = new SqlCommand();
+            SqlConnection cnx = new SqlConnection(cnx_str);
+            SqlCommand cmd = new SqlCommand();
 
-                cmd.Connection = cnx;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = scriptText;
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = scriptText;
 
-                cnx.Open();
-                cmd.ExecuteNonQuery();
-                cnx.Close();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            cnx.Open();
+            cmd.ExecuteNonQuery();
+            cnx.Close();
 
             return true;
         }
 
         public static bool InitializeTables(string cnx_str)
         {
-            try
-            {
-                SqlConnection cnx = new SqlConnection(cnx_str);
-                SqlCommand cmd = new SqlCommand();
+            SqlConnection cnx = new SqlConnection(cnx_str);
+            SqlCommand cmd = new SqlCommand();
 
-                cmd.Connection = cnx;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "InitializeTables";
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "InitializeTables";
 
-                cnx.Open();
-                cmd.ExecuteNonQuery();
-                cnx.Close();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            cnx.Open();
+            cmd.ExecuteNonQuery();
+            cnx.Close();
 
             return true;
         }

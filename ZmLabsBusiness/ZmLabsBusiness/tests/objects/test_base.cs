@@ -12,7 +12,6 @@ using ZmLabsObjects.contracts;
 
 using NLog;
 
-
 namespace ZmLabsBusiness.tests.objects
 {
     /// <summary>
@@ -20,12 +19,11 @@ namespace ZmLabsBusiness.tests.objects
     /// Heredan las clases específicas de cada uno de los test: test1_x , test2_x etc...
     /// Gestiona la ejecución del test y la lectura/escritura que los test van generando, así como el estado de la ejecución
     /// </summary>
-    public class test_base
+    public class test_base : ITest
     {
         public TestDomain Test;
 
         public test_types.enumEstadoProceso Estado;
-
         public List<test_types.mensajes> Mensajes = new List<test_types.mensajes>();
 
         private static int intentos_mensajes = 0;
@@ -36,7 +34,6 @@ namespace ZmLabsBusiness.tests.objects
 
         public test_base(TestDomain p_Test, ITestFunctionsDomain p_DomainFunctions)
         {
-            //TestFunctions = p_testfunctions;
             Test = p_Test;
             DomainFunctions = p_DomainFunctions;
         }
@@ -91,6 +88,7 @@ namespace ZmLabsBusiness.tests.objects
             }
         }
 
+        //gestión de mensajes
         public void SetMsgLeido(Guid id)
         {
             reintenta:

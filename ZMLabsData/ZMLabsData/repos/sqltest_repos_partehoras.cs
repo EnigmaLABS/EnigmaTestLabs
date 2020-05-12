@@ -36,21 +36,14 @@ namespace ZMLabsData.repos
 
         public bool InsertParteHorasAnual(List<ParteHorasDomain> _ParteAnual)
         {
-            try
-            {
-                List<ParteHorasModel> _ParteAnualModel = new List<ParteHorasModel>();
+            List<ParteHorasModel> _ParteAnualModel = new List<ParteHorasModel>();
 
-                _ParteAnualModel = mapper.Map(_ParteAnual, _ParteAnualModel);
+            _ParteAnualModel = mapper.Map(_ParteAnual, _ParteAnualModel);
 
-                using (var db = new context.LabsContext(_str_cnx))
-                {
-                    db.ParteHoras.AddRange(_ParteAnualModel);
-                    db.SaveChanges();
-                }
-            }
-            catch (Exception ex)
+            using (var db = new context.LabsContext(_str_cnx))
             {
-                return false;
+                db.ParteHoras.AddRange(_ParteAnualModel);
+                db.SaveChanges();
             }
 
             return true;

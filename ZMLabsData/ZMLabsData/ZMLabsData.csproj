@@ -56,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ADO\data_test_partehoras.cs" />
-    <Compile Include="ADO\test_functions_ADO_ISOLATED.cs" />
     <Compile Include="context\LabsContext.cs" />
     <Compile Include="ADO\data_labs.cs" />
     <Compile Include="ADO\data_tests_info.cs" />

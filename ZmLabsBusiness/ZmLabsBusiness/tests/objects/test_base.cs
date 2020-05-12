@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 using ZmLabsObjects;
 using ZmLabsObjects.contracts;
-
-//using ZMLabsData.repos;
-
-using NLog;
 
 namespace ZmLabsBusiness.tests.objects
 {
@@ -49,24 +43,45 @@ namespace ZmLabsBusiness.tests.objects
 
         public void InitTest()
         {
-            this.Estado = test_types.enumEstadoProceso.Ejecutando;
+            try
+            {
+                this.Estado = test_types.enumEstadoProceso.Ejecutando;
 
-            SetMsg("- - - - -");
-            SetMsg(Test.Test + " iniciado a las " + DateTime.Now.ToLongTimeString());
+                SetMsg("- - - - -");
+                SetMsg(Test.Test + " iniciado a las " + DateTime.Now.ToLongTimeString());
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error en InitTest");
+            }
         }
 
         public void EndTest()
         {
-            SetMsg("- - - - -");
-            SetMsg(Test.Test + " finalizado a las " + DateTime.Now.ToLongTimeString());
+            try
+            {
+                SetMsg("- - - - -");
+                SetMsg(Test.Test + " finalizado a las " + DateTime.Now.ToLongTimeString());
 
-            this.Estado = test_types.enumEstadoProceso.Finalizado;
+                this.Estado = test_types.enumEstadoProceso.Finalizado;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error en EndTest");
+            }
         }
 
         public void InitTestCase(string casename, DateTime dtBegin)
         {
-            SetMsg("- - - - -");
-            SetMsg(casename + " Case iniciado a las " + dtBegin.ToShortTimeString() + " " + dtBegin.ToLongTimeString());
+            try
+            {
+                SetMsg("- - - - -");
+                SetMsg(casename + " Case iniciado a las " + dtBegin.ToShortTimeString() + " " + dtBegin.ToLongTimeString());
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error en InitTestCase");
+            }
         }
 
         public void EndTestCase(string casename, TestCaseExecutionsDomain _testexec)
@@ -100,7 +115,7 @@ namespace ZmLabsBusiness.tests.objects
             {
                 intentos_mensajes++;
                 _logger.Warn(ex_inv, "Lista modificada en SetMsgLeido - Intento  " + intentos_mensajes.ToString());
-                
+
                 Thread.Sleep(100);
 
                 if (intentos_mensajes < 8539)
@@ -108,16 +123,27 @@ namespace ZmLabsBusiness.tests.objects
                     goto reintenta;
                 }
             }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error ejecutando SetMsgLeido");
+            }
         }
 
         public void SetMsg(string Msg)
         {
-            this.Mensajes.Add(new test_types.mensajes()
+            try
             {
-                id = Guid.NewGuid(),
-                mensaje = Msg,
-                leido = false
-            });
+                this.Mensajes.Add(new test_types.mensajes()
+                {
+                    id = Guid.NewGuid(),
+                    mensaje = Msg,
+                    leido = false
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error ejecutando SetMsg");
+            }
         }
     }
 }

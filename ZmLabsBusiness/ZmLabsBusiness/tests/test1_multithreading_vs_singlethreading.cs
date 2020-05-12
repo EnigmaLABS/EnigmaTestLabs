@@ -1,9 +1,7 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 using ZmLabsBusiness.functions;
 using ZmLabsBusiness.tests.objects;
@@ -30,45 +28,53 @@ namespace ZmLabsBusiness.tests
 
         public override void Start()
         {
-            //inicia test
-            this.InitTest();
-
-            //recorre y ejecuta testcases
-            int cont = 0;
-
-            while (cont < Test.TestCases.Count)
+            try
             {
-                TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont+1).First();
+                //inicia test
+                this.InitTest();
 
-                switch (_testcase.Function)
+                //recorre y ejecuta testcases
+                int cont = 0;
+
+                while (cont < Test.TestCases.Count)
                 {
-                    case "MultithreadingCase":
+                    TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont + 1).First();
 
-                        MultithreadingCase(ref _testcase);
-                        break;
+                    switch (_testcase.Function)
+                    {
+                        case "MultithreadingCase":
 
-                    case "MultithreadingCaseWithErrors":
+                            MultithreadingCase(ref _testcase);
+                            break;
 
-                        MultithreadingCaseWithErrors(ref _testcase);
-                        break;
+                        case "MultithreadingCaseWithErrors":
 
-                    case "SinglethreadingCase":
+                            MultithreadingCaseWithErrors(ref _testcase);
+                            break;
 
-                        SinglethreadingCase(ref _testcase);
-                        break;
+                        case "SinglethreadingCase":
 
-                    case "HybridCase":
+                            SinglethreadingCase(ref _testcase);
+                            break;
 
-                        HybridCase(ref _testcase);
-                        break;
+                        case "HybridCase":
+
+                            HybridCase(ref _testcase);
+                            break;
+                    }
+
+                    cont++;
+                    Thread.Sleep(1000);
                 }
 
-                cont++;
-                Thread.Sleep(1000);
+                //finaliza test
+                this.EndTest();
             }
-
-            //finaliza test
-            this.EndTest();
+            catch (Exception ex)
+            {
+                _testexec.SetMsg("Error ejecutando test1_multithreading_vs_singlethreading - Start");
+                _logger.Error(ex, "Error ejecutando test1_multithreading_vs_singlethreading - Start");
+            }
         }
 
         #region Cases
@@ -78,7 +84,7 @@ namespace ZmLabsBusiness.tests
         /// </summary>
         /// <param name="_test"></param>
         /// <returns></returns>
-        public void MultithreadingCase(ref TestCasesDomain _testcase)
+        private void MultithreadingCase(ref TestCasesDomain _testcase)
         {
             _testcase.TestCaseExecution.idTestCase = _testcase.id;
 
@@ -117,13 +123,15 @@ namespace ZmLabsBusiness.tests
                 //registra fin
                 _testcase.TestCaseExecution.dtEnd = DateTime.Now;
                 EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
-
-                _lst_process_control.Clear();
             }
             catch (Exception ex)
             {
                 _testexec.SetMsg("Error ejecutando MultithreadingCase");
                 _logger.Error(ex, "Error ejecutando MultithreadingCase");
+            }
+            finally
+            {
+                _lst_process_control.Clear();
             }
         }
 
@@ -188,7 +196,6 @@ namespace ZmLabsBusiness.tests
             try
             {
                 fibo_functions.CalcFibo(200);
-
                 _lst_process_control[index].Estado = objects.process_control.enumEstadoProceso.Finalizado;
             }
             catch (Exception ex)
@@ -225,7 +232,6 @@ namespace ZmLabsBusiness.tests
             }
             catch (Exception ex)
             {
-                //_testexec.SetMsg("Error INESPECÍFICO calculando la serie - Hilo nº " + index.ToString());
                 _logger.Error(ex, " CalcFiboWithErrors - Index " + index.ToString());
 
                 _lst_process_control[index].Estado = objects.process_control.enumEstadoProceso.Erroneo;
@@ -336,12 +342,9 @@ namespace ZmLabsBusiness.tests
 
                 while (cont < 25)
                 {
-                    try
-                    {
-                        fibo_functions.CalcFibo(200);
-                        Thread.Sleep(55);
-                    }
-                    catch (Exception) {  }  // TODO ?????????
+                    fibo_functions.CalcFibo(200);
+                    Thread.Sleep(55);
+
                     cont++;
                 }
 

@@ -11,6 +11,8 @@ namespace ZmLabsBusiness.data
 {
     public class Business_Data_Functions : contracts.IDataFunctions
     {
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         const string DBMaster = "master";
         private string DBLabs;
 
@@ -37,9 +39,19 @@ namespace ZmLabsBusiness.data
         /// <returns></returns>
         public bool TestMasterDB(string Server)
         {
-            string cnxstr = GetCnx(Server, DBMaster);
+            bool res = true;
 
-            bool res = data_labs.Test(cnxstr);
+            try
+            {
+                string cnxstr = GetCnx(Server, DBMaster);
+
+                res = data_labs.Test(cnxstr);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error ejecutando TestMasterDB");
+                return false;
+            }
 
             return res;
         }
@@ -51,18 +63,26 @@ namespace ZmLabsBusiness.data
         /// <returns></returns>
         public List<DataDomain> GetFilesPath(string Server)
         {
-            string cnx_str = GetCnx(Server, "master");
+            string cnx_str = "";
+            List <DataDomain> _files = data_labs.GetFilesPath(cnx_str);
 
-            List<DataDomain> _files = data_labs.GetFilesPath(cnx_str);
-
-            foreach (DataDomain _do in _files)
+            try
             {
-                char chr = '\\';
-                int index = _do.Path.LastIndexOf(chr);
+                cnx_str = GetCnx(Server, "master");
 
-                string ruta = _do.Path.Substring(0, index+1);
+                foreach (DataDomain _do in _files)
+                {
+                    char chr = '\\';
+                    int index = _do.Path.LastIndexOf(chr);
 
-                _do.Path = ruta;
+                    string ruta = _do.Path.Substring(0, index + 1);
+
+                    _do.Path = ruta;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error ejecutando GetFilesPath");
             }
 
             return _files;
@@ -125,6 +145,8 @@ namespace ZmLabsBusiness.data
 
             catch (Exception ex)
             {
+                _logger.Error(ex, "Error ejecutando CreateDatabase");
+
                 res = false;
             }
 
@@ -175,9 +197,9 @@ namespace ZmLabsBusiness.data
                     return false;
                 }
             }
-
             catch (Exception ex)
             {
+                _logger.Error(ex, "Error ejecutando CreateDatabaseEF");
                 res = false;
             }
 
@@ -193,6 +215,7 @@ namespace ZmLabsBusiness.data
             }
             catch (Exception ex)
             {
+                _logger.Error(ex, "Error ejecutando UpdateDatabaseEF");
                 return false;
             }
 
@@ -211,24 +234,17 @@ namespace ZmLabsBusiness.data
         {
             bool res = true;
 
-            try
+
+            string cnx_str = GetCnx(Server, DBLabs);
+
+            TextReader tr = new StreamReader(@"sqlfiles\InitializeTables.txt");
+            string script = tr.ReadToEnd();
+
+            res = data_labs.ExecScript(script, cnx_str);
+
+            if (res)
             {
-                string cnx_str = GetCnx(Server, DBLabs);
-
-                TextReader tr = new StreamReader(@"sqlfiles\InitializeTables.txt");
-                string script = tr.ReadToEnd();
-
-                res = data_labs.ExecScript(script, cnx_str);
-
-                if (res)
-                {
-                    res = data_labs.InitializeTables(cnx_str);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                res = false;
+                res = data_labs.InitializeTables(cnx_str);
             }
 
             return res;
@@ -239,8 +255,17 @@ namespace ZmLabsBusiness.data
 
         public string GetLabsCnx()
         {
-            string server = registry.registry_functions.GetRegisteredServer();
-            string res = GetCnx(server, DBLabs);
+            string res = "";
+            try
+            {
+                string server = registry.registry_functions.GetRegisteredServer();
+                res = GetCnx(server, DBLabs);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error ejecutando GetLabsCnx");
+            }
 
             return res;
         }

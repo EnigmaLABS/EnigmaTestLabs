@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -68,68 +67,61 @@ namespace ZmLabsBusiness.functions
 
         private static void CalculaParteAnualTrabajador(Guid _Trabajador, int Anho)
         {
-            try
+            DateTime dtActual = new DateTime(Anho, 1, 1);
+            DateTime dtFin = new DateTime(Anho, 12, 31);
+
+            while (dtActual <= dtFin)
             {
-                DateTime dtActual = new DateTime(Anho, 1, 1);
-                DateTime dtFin = new DateTime(Anho, 12, 31);
-
-                while (dtActual <= dtFin)
+                if (dtActual.DayOfWeek != DayOfWeek.Saturday & dtActual.DayOfWeek != DayOfWeek.Sunday)
                 {
-                    if (dtActual.DayOfWeek != DayOfWeek.Saturday & dtActual.DayOfWeek != DayOfWeek.Sunday)
+                    ParteHorasDomain _partediario = new ParteHorasDomain()
                     {
-                        ParteHorasDomain _partediario = new ParteHorasDomain()
+                        Trabajador = _Trabajador,
+                        Fecha = dtActual
+                    };
+
+                    // ¿Hubo baja los últimos 5 días trabajados?
+                    bool HuboBaja = _ParteAnual.Exists(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == ParteHorasDomain.enumTipoJornada.Baja);
+
+                    // ¿Hubo incidencia los últimos 5 días trabajados, sin baja médica?
+                    // Si hubo obtiene las horas de incidencia acumuladas
+                    bool HuboIncidencia = false;
+                    int HorasIncidencia = 0;
+
+                    if (!HuboBaja)
+                    {
+                        var Indicencias5Dias = _ParteAnual.Where(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == ParteHorasDomain.enumTipoJornada.Incidencia).ToList();
+                        HuboIncidencia = Indicencias5Dias.Count > 0;
+
+                        if (HuboIncidencia)
                         {
-                            Trabajador = _Trabajador,
-                            Fecha = dtActual
-                        };
-
-                        // ¿Hubo baja los últimos 5 días trabajados?
-                        bool HuboBaja = _ParteAnual.Exists(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == ParteHorasDomain.enumTipoJornada.Baja);
-
-                        // ¿Hubo incidencia los últimos 5 días trabajados, sin baja médica?
-                        // Si hubo obtiene las horas de incidencia acumuladas
-                        bool HuboIncidencia = false;
-                        int HorasIncidencia = 0;
-
-                        if (!HuboBaja)
-                        {
-                            var Indicencias5Dias = _ParteAnual.Where(r => r.Fecha >= dtActual.AddDays(-5) && r.TipoJornada == ParteHorasDomain.enumTipoJornada.Incidencia).ToList();
-                            HuboIncidencia = Indicencias5Dias.Count > 0;
-
-                            if (HuboIncidencia)
-                            {
-                                HorasIncidencia = Indicencias5Dias.Sum(h => 8 - h.Horas);
-                            }
+                            HorasIncidencia = Indicencias5Dias.Sum(h => 8 - h.Horas);
                         }
-
-                        //calculamos las probabilidades para cada casuística
-                        if (HuboBaja)
-                        {
-                            _partediario.Horas = GetHorasConBaja();
-                        }
-                        else if (HuboIncidencia)
-                        {
-                            _partediario.Horas = GetHorasConIncidencia(HorasIncidencia);
-                        }
-                        else
-                        {
-                            _partediario.Horas = GetHorasNormal();
-                        }
-
-                        _ParteAnual.Add(_partediario);
                     }
 
+                    //calculamos las probabilidades para cada casuística
+                    if (HuboBaja)
+                    {
+                        _partediario.Horas = GetHorasConBaja();
+                    }
+                    else if (HuboIncidencia)
+                    {
+                        _partediario.Horas = GetHorasConIncidencia(HorasIncidencia);
+                    }
+                    else
+                    {
+                        _partediario.Horas = GetHorasNormal();
+                    }
 
-                    dtActual = dtActual.AddDays(1);
+                    _ParteAnual.Add(_partediario);
                 }
 
-                EstadoProceso.Where(tr => tr.Trabajador == _Trabajador).First()
-                                                        .EstadoProceso = parte_horas_estado_proceso.enumEstadoProceso.Finalizado;
+
+                dtActual = dtActual.AddDays(1);
             }
-            catch (Exception ex)
-            {
-                string err = ex.Message;
-            }
+
+            EstadoProceso.Where(tr => tr.Trabajador == _Trabajador).First()
+                                                    .EstadoProceso = parte_horas_estado_proceso.enumEstadoProceso.Finalizado;
         }
 
         private static Int16 GetHorasConBaja()

@@ -13,10 +13,6 @@ namespace ZmLabsObjects.functions
 
         private contracts.ITestFunctionsDomain TestFunctions;
 
-        /// <summary>
-        /// Enlaza con el acceso a datos mediante Entity Framework
-        /// </summary>
-        /// <param name="TestObject"></param>
         public Domain_Test_Functions_EF(contracts.ITestFunctionsDomain p_TestFunctions)
         {
             //data.data_functions _df = new data.data_functions();
@@ -27,75 +23,27 @@ namespace ZmLabsObjects.functions
 
         public List<CategoriesDomain> getCategories()
         {
-            List<CategoriesDomain> res = new List<CategoriesDomain>();
-
-            try
-            {
-                res = TestFunctions.getCategories();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error en getCategories");
-            }
-
+            List<CategoriesDomain> res = TestFunctions.getCategories();
             return res;
         }
 
         public List<TestDomain> getTests()
         {
             List<TestDomain> res = new List<TestDomain>();
-
-            try
-            {
-                res = TestFunctions.getTests();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error en getTests");
-            }
+            res = TestFunctions.getTests();
 
             return res;
         }
 
         public bool insertTest(TestDomain _test)
         {
-            bool res;
-
-            try
-            {
-                res = TestFunctions.insertTest(_test);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error en insertTest");
-
-                //TODO - Guardar test de contexto en JSON
-
-                return false;
-            }
-
+            bool res = TestFunctions.insertTest(_test);
             return res;
         }
 
         public TestCasesDomain insertTestCase(TestCasesDomain _testcase)
         {
-            TestCasesDomain res;
-
-            try
-            {
-                int maxorden = ((from x in _testcase.Test.TestCases select x.Orden).Max())+1;
-
-                _testcase.Orden = maxorden;
-
-                res = TestFunctions.insertTestCase(_testcase);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error en insertTestCase");
-
-                //TODO - Guardar testcase de contexto en JSON
-            }
-
+            TestCasesDomain res = TestFunctions.insertTestCase(_testcase);
             return _testcase;
         }
 

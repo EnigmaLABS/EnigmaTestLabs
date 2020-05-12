@@ -9,34 +9,45 @@ namespace ZmLabsBusiness.registry
 {
     public static class registry_functions
     {
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         public static bool ExisteBBDD()
         {
-            RegistryKey rk1 = Registry.LocalMachine;
-
-            RegistryKey rkSoftware = rk1.OpenSubKey("SOFTWARE", true);
-
-            RegistryKey rk_enigma = rkSoftware.OpenSubKey("EnigmaSoft", true);
-
-            if (rk_enigma == null)
+            try
             {
-                RegistryKey rk2 = rkSoftware.CreateSubKey("EnigmaSoft");
+                RegistryKey rk1 = Registry.LocalMachine;
 
-                rk2.SetValue("BBDDCreated", "N", RegistryValueKind.String);
+                RegistryKey rkSoftware = rk1.OpenSubKey("SOFTWARE", true);
 
-                return false;
-            }
-            else
-            {
-                string valor = rk_enigma.GetValue("BBDDCreated").ToString();
+                RegistryKey rk_enigma = rkSoftware.OpenSubKey("EnigmaSoft", true);
 
-                if (valor != "Y")
+                if (rk_enigma == null)
                 {
+                    RegistryKey rk2 = rkSoftware.CreateSubKey("EnigmaSoft");
+
+                    rk2.SetValue("BBDDCreated", "N", RegistryValueKind.String);
+
                     return false;
                 }
                 else
                 {
-                    return true;
+                    string valor = rk_enigma.GetValue("BBDDCreated").ToString();
+
+                    if (valor != "Y")
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error ejecutando ExisteBBDD");
+
+                return false;
             }
         }
 
@@ -56,6 +67,7 @@ namespace ZmLabsBusiness.registry
             }
             catch (Exception ex)
             {
+                _logger.Error(ex, "Error ejecutando SetBBDDCreada");
                 return false;
             }
 
@@ -85,10 +97,12 @@ namespace ZmLabsBusiness.registry
             }
             catch (Exception ex)
             {
-
+                _logger.Error(ex, "Error ejecutando GetRegisteredServer");
+                return "";
             }
 
             return res;
         }
+
     }
 }

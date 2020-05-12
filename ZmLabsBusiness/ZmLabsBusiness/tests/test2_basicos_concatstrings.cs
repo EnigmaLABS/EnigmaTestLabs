@@ -22,34 +22,42 @@ namespace ZmLabsBusiness.tests
 
         public override void Start()
         {
-            //inicia test
-            this.InitTest();
-
-            //recorre y ejecuta testcases
-            int cont = 0;
-
-            while (cont < Test.TestCases.Count)
+            try
             {
-                TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont + 1).First();
+                //inicia test
+                this.InitTest();
 
-                switch (_testcase.Function)
+                //recorre y ejecuta testcases
+                int cont = 0;
+
+                while (cont < Test.TestCases.Count)
                 {
-                    case "Concat_PlusOperator":
+                    TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont + 1).First();
 
-                        Concat_PlusOperator(ref _testcase);
-                        break;
+                    switch (_testcase.Function)
+                    {
+                        case "Concat_PlusOperator":
 
-                    case "Concat_StringBuilder":
+                            Concat_PlusOperator(ref _testcase);
+                            break;
 
-                        Concat_StringBuilder(ref _testcase);
-                        break;
+                        case "Concat_StringBuilder":
+
+                            Concat_StringBuilder(ref _testcase);
+                            break;
+                    }
+
+                    cont++;
                 }
 
-                cont++;
+                //finaliza test
+                this.EndTest();
             }
-
-            //finaliza test
-            this.EndTest();
+            catch (Exception ex)
+            {
+                _testexecbase.SetMsg("Error ejecutando test2_basicos_concatstrings - Start");
+                _logger.Error(ex, "Error ejecutando test2_basicos_concatstrings - Start");
+            }
         }
 
         private void Concat_PlusOperator(ref TestCasesDomain _testcase)

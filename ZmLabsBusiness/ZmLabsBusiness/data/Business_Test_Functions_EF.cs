@@ -91,7 +91,18 @@ namespace ZmLabsBusiness.data
 
         public override bool InsertExecution(TestCaseExecutionsDomain _testCaseExec)
         {
-            bool res = TestRepos.InsertExecution(_testCaseExec);
+            bool res = true;
+
+            try
+            {
+                res = TestRepos.InsertExecution(_testCaseExec);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error en InsertExecution");
+                res = false;
+            }
+
             return res;
         }
     }

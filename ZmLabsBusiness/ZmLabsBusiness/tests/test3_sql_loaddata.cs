@@ -22,6 +22,8 @@ namespace ZmLabsBusiness.tests
         private IDataFunctions DataFunctions;
         private ITestFunctionsDomain DomainFunctions;
 
+        private parte_horas_functions _phfunctions;
+
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         public test3_sql_loaddata(TestDomain p_test,
@@ -31,12 +33,12 @@ namespace ZmLabsBusiness.tests
         {
             DataFunctions = p_DataFunctions;
             DomainFunctions = p_DomainFunctions;
+
+            _phfunctions = new parte_horas_functions();
         }
 
         public override void Start()
         {
-            parte_horas_functions _phfunctions = new parte_horas_functions();
-
             try
             {
                 //inicia test
@@ -50,7 +52,7 @@ namespace ZmLabsBusiness.tests
                 //genera el parte de horas (fuera del cálculo de cada uno de los testcases)
                 DateTime dtInicioCalculo = DateTime.Now;
 
-                var listahoras = _phfunctions.Generate(100, 2020);
+                List<ParteHorasDomain> listahoras = _phfunctions.Generate(100, 2020);
 
                 DateTime dtFinCalculo = DateTime.Now;
 
@@ -114,9 +116,10 @@ namespace ZmLabsBusiness.tests
                 InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 //ejecuta testcase
-                sqltest_repos_partehoras _testrepos = new sqltest_repos_partehoras(DataFunctions.GetLabsCnx());
 
-                _testrepos.InsertParteHorasAnual(_ParteAnual);
+                //sqltest_repos_partehoras _testrepos = new sqltest_repos_partehoras(DataFunctions.GetLabsCnx());
+                //_testrepos.InsertParteHorasAnual(_ParteAnual);
+                _phfunctions.InsertParteAnualEF();
 
                 //registra fin
                 _testcase.TestCaseExecution.dtEnd = DateTime.Now;
@@ -140,14 +143,14 @@ namespace ZmLabsBusiness.tests
                 InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
 
                 //ejecuta testcase
-                data_test_partehoras _data_test_sql = new data_test_partehoras(DataFunctions.GetLabsCnx());
+                //data_test_partehoras _data_test_sql = new data_test_partehoras(DataFunctions.GetLabsCnx());
 
                 //1. inicia conversión
                 DateTime dtInicioConversion = DateTime.Now;
                 SetMsg("Inicia conversión con reflection => parte_horas class to DataTable");
 
                 DataTable _dtParteHoras = functions.reflections.CreateDataTable<ParteHorasDomain>(_ParteAnual, new List<string>() { "TipoJornada" });
-
+                                                                      
                 //fin conversión
                 DateTime dtFinConversion = DateTime.Now;
                 TimeSpan _ts = dtFinConversion - dtInicioConversion;
@@ -155,7 +158,9 @@ namespace ZmLabsBusiness.tests
                 SetMsg("Conversión completada " + _ts.TotalMilliseconds.ToString() + " milisegundos");
 
                 //2. inicia grabación
-                _data_test_sql.InsertParteHorasAnualADO(_dtParteHoras);
+
+                //_data_test_sql.InsertParteHorasAnualADO(_dtParteHoras);
+                _phfunctions.InsertParteAnualADO(_dtParteHoras);
 
                 //registra fin
                 _testcase.TestCaseExecution.dtEnd = DateTime.Now;

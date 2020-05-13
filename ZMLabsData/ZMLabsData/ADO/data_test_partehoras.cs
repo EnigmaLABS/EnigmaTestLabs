@@ -19,7 +19,7 @@ namespace ZMLabsData.ADO
             str_cnx = p_str_cnx;
         }
 
-        public bool InsertParteHorasAnual(List<ParteHorasDomain> _ParteAnual)
+        public bool InsertParteHorasAnualEF(List<ParteHorasDomain> _ParteAnual)
         {
             throw new NotImplementedException();
         }

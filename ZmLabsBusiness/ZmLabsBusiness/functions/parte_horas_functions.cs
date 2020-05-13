@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+
+using ZMLabsData.contracts;
 
 using ZmLabsObjects.sqltests;
 
@@ -19,10 +22,31 @@ namespace ZmLabsBusiness.functions
     public class parte_horas_functions 
     {
         private static List<ParteHorasDomain> _ParteAnual;
+        private IParteHorasRepository _Repository;
 
         public parte_horas_functions()
         {
             _ParteAnual = new List<ParteHorasDomain>();
+        }
+
+        public parte_horas_functions(IParteHorasRepository p_Repository)
+        {
+            _ParteAnual = new List<ParteHorasDomain>();
+
+            _Repository = p_Repository;
+        }
+
+        //Insert ADo y EF
+        public bool InsertParteAnualADO(DataTable _dtParteHoras)
+        {
+            bool res = _Repository.InsertParteHorasAnualADO(_dtParteHoras);
+            return res;
+        }
+
+        public bool InsertParteAnualEF()
+        {
+            bool res = _Repository.InsertParteHorasAnualEF(_ParteAnual);
+            return res;
         }
 
         //Propiedades privadas

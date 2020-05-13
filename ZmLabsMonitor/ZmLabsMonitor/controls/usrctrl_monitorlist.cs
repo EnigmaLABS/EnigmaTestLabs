@@ -52,7 +52,7 @@ namespace ZmLabsMonitor.controls
         {
             List<test_types.mensajes> lstMensajes = new List<test_types.mensajes>();
 
-            test_base execObject = (test_base)Test.Execution.TESTOBJ;
+            test_base execObject = (test_base)Test.Execution.OBJ;
 
             _estadoProceso = execObject.Estado;
 
@@ -106,7 +106,7 @@ namespace ZmLabsMonitor.controls
 
         public static void HiloNegocio()
         {
-            var negobject = (test_base)Test.Execution.TESTOBJ;
+            var negobject = (test_base)Test.Execution.OBJ;
             negobject.Start();
         }
     }

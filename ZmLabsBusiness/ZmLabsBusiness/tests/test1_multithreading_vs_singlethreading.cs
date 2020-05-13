@@ -26,56 +26,61 @@ namespace ZmLabsBusiness.tests
             Test = p_Test;
         }
 
-        public override void Start()
+public override void Start()
+{
+    try
+    {
+        //inicia test
+        this.InitTest();
+
+        //recorre y ejecuta testcases
+        int cont = 0;
+
+        while (cont < Test.TestCases.Count)
         {
-            try
+            TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont + 1).First();
+
+            switch (_testcase.Function)
             {
-                //inicia test
-                this.InitTest();
+                case "MultithreadingCase":
 
-                //recorre y ejecuta testcases
-                int cont = 0;
+                    MultithreadingCase(ref _testcase);
+                    break;
 
-                while (cont < Test.TestCases.Count)
-                {
-                    TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont + 1).First();
+                case "MultithreadingCaseWithErrors":
 
-                    switch (_testcase.Function)
-                    {
-                        case "MultithreadingCase":
+                    MultithreadingCaseWithErrors(ref _testcase);
+                    break;
 
-                            MultithreadingCase(ref _testcase);
-                            break;
+                case "SinglethreadingCase":
 
-                        case "MultithreadingCaseWithErrors":
+                    SinglethreadingCase(ref _testcase);
+                    break;
 
-                            MultithreadingCaseWithErrors(ref _testcase);
-                            break;
+                case "HybridCase":
 
-                        case "SinglethreadingCase":
+                    HybridCase(ref _testcase);
+                    break;
 
-                            SinglethreadingCase(ref _testcase);
-                            break;
+                case "SinglethreadingLinqCase":
 
-                        case "HybridCase":
-
-                            HybridCase(ref _testcase);
-                            break;
-                    }
-
-                    cont++;
-                    Thread.Sleep(1000);
-                }
-
-                //finaliza test
-                this.EndTest();
+                    SinglethreadingLinqCase(ref _testcase);
+                    break;
             }
-            catch (Exception ex)
-            {
-                _testexec.SetMsg("Error ejecutando test1_multithreading_vs_singlethreading - Start");
-                _logger.Error(ex, "Error ejecutando test1_multithreading_vs_singlethreading - Start");
-            }
+
+            cont++;
+            Thread.Sleep(1000);
         }
+
+        //finaliza test
+        this.EndTest();
+    }
+    catch (Exception ex)
+    {
+        _testexec.SetMsg("Error ejecutando test1_multithreading_vs_singlethreading - Start");
+        _logger.Error(ex, "Error ejecutando test1_multithreading_vs_singlethreading - Start");
+    }
+}
 
         #region Cases
 
@@ -258,12 +263,45 @@ namespace ZmLabsBusiness.tests
 
                 while (cont < 500)
                 {
-                    try
-                    {
-                        fibo_functions.CalcFibo(200);
-                        Thread.Sleep(55);
-                    }
-                    catch (Exception) {  }  //TODO ????
+                    fibo_functions.CalcFibo(200);
+                    Thread.Sleep(55);
+
+                    cont++;
+                }
+
+                //registra fin
+                _testcase.TestCaseExecution.dtEnd = DateTime.Now;
+                EndTestCase(_testcase.Function, _testcase.TestCaseExecution);
+            }
+            catch (Exception ex)
+            {
+                _testexec.SetMsg("Error ejecutando SinglethreadingCase");
+                _logger.Error(ex, "Error ejecutando SinglethreadingCase");
+            }
+        }
+
+        /// <summary>
+        /// Cálculo secuencial de la serie fibo (500 iteraciones, 200 elementos por iteración)
+        /// </summary>
+        /// <param name="_test"></param>
+        /// <returns></returns>
+        public void SinglethreadingLinqCase(ref TestCasesDomain _testcase)
+        {
+            try
+            {
+                _testcase.TestCaseExecution.idTestCase = _testcase.id;
+
+                //registra inicio
+                _testcase.TestCaseExecution.dtBegin = DateTime.Now;
+                InitTestCase(_testcase.Function, _testcase.TestCaseExecution.dtBegin);
+
+                //500 iteraciones calculando 200 elementos de la serie fibo
+                int cont = 0;
+
+                while (cont < 500)
+                {
+                    fibo_functions.CalcFiboLinq(200);
+                    Thread.Sleep(55);
 
                     cont++;
                 }

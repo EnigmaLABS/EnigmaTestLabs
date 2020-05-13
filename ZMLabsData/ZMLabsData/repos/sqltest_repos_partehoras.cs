@@ -34,7 +34,7 @@ namespace ZMLabsData.repos
             mapper = new Mapper(config_map);
         }
 
-        public bool InsertParteHorasAnual(List<ParteHorasDomain> _ParteAnual)
+        public bool InsertParteHorasAnualEF(List<ParteHorasDomain> _ParteAnual)
         {
             List<ParteHorasModel> _ParteAnualModel = new List<ParteHorasModel>();
 

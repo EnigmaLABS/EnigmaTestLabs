@@ -168,16 +168,32 @@
                 Test = _test1,
                 idTest = _test1.id
             };
+            EFModels.TestCasesModel _test1_caseLinq = new EFModels.TestCasesModel()
+            {
+                id = 9,
+                Orden = 4,
+                Function = "SinglethreadingLinqCase",
+                Description = "Cálculo secuencial de la serie fibo (500 iteraciones, 200 elementos por iteración) con instrucción one-line de linq",
+
+                Test = _test1,
+                idTest = _test1.id
+            };
             EFModels.TestCasesModel _test1_case3 = new EFModels.TestCasesModel()
             {
                 id = 3,
-                Orden = 4,
+                Orden = 5,
                 Function = "HybridCase",
                 Description = "20 hilos calculan 25 veces cada uno la serie fibo",
 
                 Test = _test1,
                 idTest = _test1.id
             };
+
+            context.TestCases.AddOrUpdate(tc => tc.id, _test1_case1);
+            context.TestCases.AddOrUpdate(tc => tc.id, _test1_case1WithErrors);
+            context.TestCases.AddOrUpdate(tc => tc.id, _test1_case2);
+            context.TestCases.AddOrUpdate(tc => tc.id, _test1_caseLinq);
+            context.TestCases.AddOrUpdate(tc => tc.id, _test1_case3);
 
             //TestCases - Test2
             EFModels.TestCasesModel _test2_case1 = new EFModels.TestCasesModel()
@@ -201,6 +217,9 @@
                 idTest = _test2.id
             };
 
+            context.TestCases.AddOrUpdate(tc => tc.id, _test2_case1);
+            context.TestCases.AddOrUpdate(tc => tc.id, _test2_case2);
+
             //TestCases - Test3
             EFModels.TestCasesModel _test3_case1 = new EFModels.TestCasesModel()
             {
@@ -222,14 +241,6 @@
                 Test = _test3,
                 idTest = _test3.id
             };
-
-            context.TestCases.AddOrUpdate(tc => tc.id, _test1_case1);
-            context.TestCases.AddOrUpdate(tc => tc.id, _test1_case1WithErrors);
-            context.TestCases.AddOrUpdate(tc => tc.id, _test1_case2);
-            context.TestCases.AddOrUpdate(tc => tc.id, _test1_case3);
-
-            context.TestCases.AddOrUpdate(tc => tc.id, _test2_case1);
-            context.TestCases.AddOrUpdate(tc => tc.id, _test2_case2);
 
             context.TestCases.AddOrUpdate(tc => tc.id, _test3_case1);
             context.TestCases.AddOrUpdate(tc => tc.id, _test3_case2);

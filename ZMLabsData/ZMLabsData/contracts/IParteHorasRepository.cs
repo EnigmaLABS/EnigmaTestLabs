@@ -12,7 +12,6 @@ namespace ZMLabsData.contracts
     public interface IParteHorasRepository
     {
         bool InsertParteHorasAnualADO(DataTable _tblParteAnual);
-        bool InsertParteHorasAnual(List<ParteHorasDomain> _ParteAnual);
-
+        bool InsertParteHorasAnualEF(List<ParteHorasDomain> _ParteAnual);
     }
 }

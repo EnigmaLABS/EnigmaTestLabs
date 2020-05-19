@@ -5,15 +5,13 @@ using System.Collections.Generic;
 
 using ZmLabsObjects;
 using ZmLabsObjects.sqltests;
-
-using ZMLabsData;
-using ZMLabsData.repos;
-using ZMLabsData.ADO;
+using ZmLabsObjects.contracts;
 
 using ZmLabsBusiness.functions;
 using ZmLabsBusiness.data.contracts;
 
-using ZmLabsObjects.contracts;
+using ZMLabsData;
+using ZMLabsData.contracts;
 
 namespace ZmLabsBusiness.tests
 {
@@ -119,7 +117,7 @@ namespace ZmLabsBusiness.tests
 
                 //sqltest_repos_partehoras _testrepos = new sqltest_repos_partehoras(DataFunctions.GetLabsCnx());
                 //_testrepos.InsertParteHorasAnual(_ParteAnual);
-                _phfunctions.InsertParteAnualEF();
+                _phfunctions.InsertParteAnualEF(new ZMLabsData.repos.sqltest_repos_partehoras(DataFunctions.GetLabsCnx()));
 
                 //registra fin
                 _testcase.TestCaseExecution.dtEnd = DateTime.Now;
@@ -160,7 +158,7 @@ namespace ZmLabsBusiness.tests
                 //2. inicia grabación
 
                 //_data_test_sql.InsertParteHorasAnualADO(_dtParteHoras);
-                _phfunctions.InsertParteAnualADO(_dtParteHoras);
+                _phfunctions.InsertParteAnualADO(_dtParteHoras, new ZMLabsData.ADO.data_test_partehoras(DataFunctions.GetLabsCnx()));
 
                 //registra fin
                 _testcase.TestCaseExecution.dtEnd = DateTime.Now;

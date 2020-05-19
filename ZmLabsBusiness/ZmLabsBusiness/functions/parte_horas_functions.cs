@@ -22,30 +22,29 @@ namespace ZmLabsBusiness.functions
     public class parte_horas_functions 
     {
         private static List<ParteHorasDomain> _ParteAnual;
-        private IParteHorasRepository _Repository;
 
         public parte_horas_functions()
         {
             _ParteAnual = new List<ParteHorasDomain>();
         }
 
-        public parte_horas_functions(IParteHorasRepository p_Repository)
-        {
-            _ParteAnual = new List<ParteHorasDomain>();
+        //public parte_horas_functions(IParteHorasRepository p_Repository)
+        //{
+        //    _ParteAnual = new List<ParteHorasDomain>();
 
-            _Repository = p_Repository;
-        }
+        //    _Repository = p_Repository;
+        //}
 
         //Insert ADo y EF
-        public bool InsertParteAnualADO(DataTable _dtParteHoras)
+        public bool InsertParteAnualADO(DataTable _dtParteHoras, IParteHorasRepository Repository)
         {
-            bool res = _Repository.InsertParteHorasAnualADO(_dtParteHoras);
+            bool res = Repository.InsertParteHorasAnualADO(_dtParteHoras);
             return res;
         }
 
-        public bool InsertParteAnualEF()
+        public bool InsertParteAnualEF(IParteHorasRepository Repository)
         {
-            bool res = _Repository.InsertParteHorasAnualEF(_ParteAnual);
+            bool res = Repository.InsertParteHorasAnualEF(_ParteAnual);
             return res;
         }
 

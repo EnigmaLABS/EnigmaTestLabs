@@ -38,6 +38,11 @@ namespace ZmLabsObjects.sqltests
             }
         }
 
+        public int Anho
+        {
+            get => Fecha.Year;
+        }
+
         public enumTipoJornada TipoJornada { get; set; }
     }
 }

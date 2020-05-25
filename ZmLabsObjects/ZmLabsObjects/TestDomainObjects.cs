@@ -8,7 +8,8 @@ namespace ZmLabsObjects
     {
         test1_multithreading_vs_singlethreading,
         test2_basicos_concatstrings,
-        test3_sql_loaddata
+        test3_sql_loaddata,
+        test4_sql_querying
     }
 
     public class TestDomain

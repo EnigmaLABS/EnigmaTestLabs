@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ZmLabsObjects.DTO;
 using ZmLabsObjects.sqltests;
 
 namespace ZMLabsData.ADO
@@ -40,6 +41,39 @@ namespace ZMLabsData.ADO
             cnx.Close();
 
             return true;
+        }
+
+        public List<InformeAbsentismoDTO> GetInformeAbsentismoAnual(int anho)
+        {
+            List<InformeAbsentismoDTO> res = new List<InformeAbsentismoDTO>();
+
+            SqlConnection cnx = new SqlConnection(str_cnx);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = cnx;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "test.GetEstadisticasAbsentismo";
+
+            cmd.Parameters.AddWithValue("@anho", anho);
+
+            cnx.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                InformeAbsentismoDTO _infline = new InformeAbsentismoDTO()
+                {
+
+                    Trabajador = Guid.Parse(reader["Trabajador"].ToString()),
+                    conteo_registros = int.Parse(reader["conteo_registros"].ToString()),
+                    suma_horas = int.Parse(reader["suma_horas"].ToString())
+                };
+
+                res.Add(_infline);
+            }
+            cnx.Close();
+
+            return res;
         }
     }
 }

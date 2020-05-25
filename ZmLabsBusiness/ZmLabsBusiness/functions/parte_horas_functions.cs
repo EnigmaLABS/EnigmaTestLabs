@@ -7,6 +7,7 @@ using System.Threading;
 
 using ZMLabsData.contracts;
 
+using ZmLabsObjects.DTO;
 using ZmLabsObjects.sqltests;
 
 namespace ZmLabsBusiness.functions
@@ -28,23 +29,45 @@ namespace ZmLabsBusiness.functions
             _ParteAnual = new List<ParteHorasDomain>();
         }
 
-        //public parte_horas_functions(IParteHorasRepository p_Repository)
-        //{
-        //    _ParteAnual = new List<ParteHorasDomain>();
-
-        //    _Repository = p_Repository;
-        //}
-
-        //Insert ADo y EF
+        //Insert ADO y EF
         public bool InsertParteAnualADO(DataTable _dtParteHoras, IParteHorasRepository Repository)
         {
             bool res = Repository.InsertParteHorasAnualADO(_dtParteHoras);
             return res;
         }
 
-        public bool InsertParteAnualEF(IParteHorasRepository Repository)
+        public bool InsertParteAnualEF(List<ParteHorasDomain> ParteHoras, IParteHorasRepository Repository)
         {
-            bool res = Repository.InsertParteHorasAnualEF(_ParteAnual);
+            bool res = Repository.InsertParteHorasAnualEF(ParteHoras);
+            return res;
+        }
+
+        //Informe de absentismo ADO y EF
+        public List<InformeAbsentismoDTO> GetInformeAbsentismoADO(List<int> anhos, IParteHorasRepository Repository)
+        {
+            List<InformeAbsentismoDTO> res = new List<InformeAbsentismoDTO>();
+            List<InformeAbsentismoDTO> parcial;
+
+            foreach (int _anho in anhos)
+            {
+                parcial = Repository.GetInformeAbsentismoAnual(_anho);
+                res.AddRange(parcial);
+            }
+
+            return res;
+        }
+
+        public List<InformeAbsentismoDTO> GetInformeAbsentismoEF(List<int> anhos, IParteHorasRepository Repository)
+        {
+            List<InformeAbsentismoDTO> res = new List<InformeAbsentismoDTO>();
+            List<InformeAbsentismoDTO> parcial;
+
+            foreach (int _anho in anhos)
+            {
+                parcial = Repository.GetInformeAbsentismoAnual(_anho);
+                res.AddRange(parcial);
+            }
+
             return res;
         }
 

@@ -17,5 +17,9 @@ namespace ZMLabsData.EFModels.testModels
 
         [Required]
         public Int16 Horas { get; set; }
+
+        [Required]
+        public int Anho { get; set; }
+
     }
 }

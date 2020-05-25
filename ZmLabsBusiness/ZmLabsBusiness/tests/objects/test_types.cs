@@ -48,6 +48,13 @@ namespace ZmLabsBusiness
                                                  new data.Business_Data_Functions());
                                                     
                     break;
+
+                case enumTestTypes.test4_sql_querying:
+
+                    res = new test4_sql_querying(Test,
+                                                 FunctionDomain,
+                                                 new data.Business_Data_Functions());
+                    break;
             }
 
             return res;

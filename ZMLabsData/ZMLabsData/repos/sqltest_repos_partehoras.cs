@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
+using ZmLabsObjects.DTO;
 using ZmLabsObjects.sqltests;
 using ZMLabsData.EFModels.testModels;
 
@@ -52,6 +53,27 @@ namespace ZMLabsData.repos
         public bool InsertParteHorasAnualADO(DataTable _tblParteAnual)
         {
             throw new NotImplementedException();
+        }
+
+        public List<InformeAbsentismoDTO> GetInformeAbsentismoAnual (int anho)
+        {
+            List<InformeAbsentismoDTO> res = new List<InformeAbsentismoDTO>();
+
+            using (var db = new context.LabsContext(_str_cnx))
+            {
+                res = db.ParteHoras
+                .Where(an => an.Anho == anho)
+                .GroupBy(ph => ph.Trabajador)
+                .Select(inf => new InformeAbsentismoDTO
+                {
+                    Trabajador = inf.FirstOrDefault().Trabajador,
+                    conteo_registros = inf.Count(),
+                    suma_horas = inf.Sum(h => h.Horas)
+
+                }).ToList();
+            }
+
+            return res;
         }
     }
 }

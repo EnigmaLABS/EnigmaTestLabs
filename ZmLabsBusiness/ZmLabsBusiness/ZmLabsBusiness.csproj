@@ -76,6 +76,7 @@
     <Compile Include="data\Business_Test_Functions_base.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tests\objects\test_types.cs" />
+    <Compile Include="tests\test4_sql_querying.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ZMLabsData\ZMLabsData\ZMLabsData.csproj">

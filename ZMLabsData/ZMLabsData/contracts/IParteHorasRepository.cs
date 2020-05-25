@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ZmLabsObjects.DTO;
 using ZmLabsObjects.sqltests;
 
 namespace ZMLabsData.contracts
@@ -13,5 +14,7 @@ namespace ZMLabsData.contracts
     {
         bool InsertParteHorasAnualADO(DataTable _tblParteAnual);
         bool InsertParteHorasAnualEF(List<ParteHorasDomain> _ParteAnual);
+
+        List<InformeAbsentismoDTO> GetInformeAbsentismoAnual(int anho);
     }
 }

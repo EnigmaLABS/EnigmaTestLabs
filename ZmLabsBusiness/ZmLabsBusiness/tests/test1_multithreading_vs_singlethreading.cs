@@ -26,61 +26,61 @@ namespace ZmLabsBusiness.tests
             Test = p_Test;
         }
 
-public override void Start()
-{
-    try
-    {
-        //inicia test
-        this.InitTest();
-
-        //recorre y ejecuta testcases
-        int cont = 0;
-
-        while (cont < Test.TestCases.Count)
+        public override void Start()
         {
-            TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont + 1).First();
-
-            switch (_testcase.Function)
+            try
             {
-                case "MultithreadingCase":
+                //inicia test
+                this.InitTest();
 
-                    MultithreadingCase(ref _testcase);
-                    break;
+                //recorre y ejecuta testcases
+                int cont = 0;
 
-                case "MultithreadingCaseWithErrors":
+                while (cont < Test.TestCases.Count)
+                {
+                    TestCasesDomain _testcase = Test.TestCases.Where(ord => ord.Orden == cont + 1).First();
 
-                    MultithreadingCaseWithErrors(ref _testcase);
-                    break;
+                    switch (_testcase.Function)
+                    {
+                        case "MultithreadingCase":
 
-                case "SinglethreadingCase":
+                            MultithreadingCase(ref _testcase);
+                            break;
 
-                    SinglethreadingCase(ref _testcase);
-                    break;
+                        case "MultithreadingCaseWithErrors":
 
-                case "HybridCase":
+                            MultithreadingCaseWithErrors(ref _testcase);
+                            break;
 
-                    HybridCase(ref _testcase);
-                    break;
+                        case "SinglethreadingCase":
 
-                case "SinglethreadingLinqCase":
+                            SinglethreadingCase(ref _testcase);
+                            break;
 
-                    SinglethreadingLinqCase(ref _testcase);
-                    break;
+                        case "HybridCase":
+
+                            HybridCase(ref _testcase);
+                            break;
+
+                        case "SinglethreadingLinqCase":
+
+                            SinglethreadingLinqCase(ref _testcase);
+                            break;
+                    }
+
+                    cont++;
+                    Thread.Sleep(1000);
+                }
+
+                //finaliza test
+                this.EndTest();
             }
-
-            cont++;
-            Thread.Sleep(1000);
+            catch (Exception ex)
+            {
+                _testexec.SetMsg("Error ejecutando test1_multithreading_vs_singlethreading - Start");
+                _logger.Error(ex, "Error ejecutando test1_multithreading_vs_singlethreading - Start");
+            }
         }
-
-        //finaliza test
-        this.EndTest();
-    }
-    catch (Exception ex)
-    {
-        _testexec.SetMsg("Error ejecutando test1_multithreading_vs_singlethreading - Start");
-        _logger.Error(ex, "Error ejecutando test1_multithreading_vs_singlethreading - Start");
-    }
-}
 
         #region Cases
 

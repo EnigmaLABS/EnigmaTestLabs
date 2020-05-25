@@ -123,8 +123,21 @@
                 id = 3,
                 Test = "Bulk Data - Store Procedure vs Entity Framework",
                 Classname = "test3_sql_loaddata",
-                Description = "Generación de 26.200 registros de información para posteriormente, consolidarla en base de datos mediante distintas técnicas ",
+                Description = "Generación de miles de registros de información para posteriormente, consolidarla en base de datos mediante distintas técnicas ",
                 Url_Blog = @"https://enigmasoftwarelabs.blogspot.com/2020/04/test-2-concatenacion-de-strings.html",
+                Url_Git = "",
+
+                Categorie = _cat_DataLayer,
+                idCategorie = _cat_DataLayer.id
+            };
+
+            EFModels.TestsModel _test4 = new EFModels.TestsModel()
+            {
+                id = 4,
+                Test = "Querying: Store Procedure vs Entity Framework",
+                Classname = "test4_sql_querying",
+                Description = "generación y obtención de un informe de absentismo ",
+                Url_Blog = @"",
                 Url_Git = "",
 
                 Categorie = _cat_DataLayer,
@@ -134,6 +147,7 @@
             context.Test.AddOrUpdate(t => t.id, _test1);
             context.Test.AddOrUpdate(t => t.id, _test2);
             context.Test.AddOrUpdate(t => t.id, _test3);
+            context.Test.AddOrUpdate(t => t.id, _test4);
 
             context.SaveChanges();
 
@@ -244,6 +258,33 @@
 
             context.TestCases.AddOrUpdate(tc => tc.id, _test3_case1);
             context.TestCases.AddOrUpdate(tc => tc.id, _test3_case2);
+
+            context.SaveChanges();
+
+            //TestCases - Test4
+            EFModels.TestCasesModel _test4_case1 = new EFModels.TestCasesModel()
+            {
+                id = 10,
+                Orden = 1,
+                Function = "InformeAbsentismo_ADO",
+                Description = "Informe generado con procedimiento almacenado",
+
+                Test = _test4,
+                idTest = _test4.id
+            };
+            EFModels.TestCasesModel _test4_case2 = new EFModels.TestCasesModel()
+            {
+                id = 11,
+                Orden = 2,
+                Function = "InformeAbsentismo_EF",
+                Description = @"Informe generado con Entity Framework",
+
+                Test = _test4,
+                idTest = _test4.id
+            };
+
+            context.TestCases.AddOrUpdate(tc => tc.id, _test4_case1);
+            context.TestCases.AddOrUpdate(tc => tc.id, _test4_case2);
 
             context.SaveChanges();
         }

@@ -14,10 +14,7 @@ namespace ZmLabsObjects.functions
         private contracts.ITestFunctionsDomain TestFunctions;
 
         public test_functions_ADO_ISOLATED(contracts.ITestFunctionsDomain p_TestFunctions) 
-        {
-            //data.data_functions _df = new data.data_functions();
-            //_datatestobj = new data_tests_info(_df.GetLabsCnx());        
-
+        { 
             TestFunctions = p_TestFunctions;
         }
 

@@ -3,9 +3,9 @@
 as
 begin
 	insert into [test].[ParteHoras]
-	([Trabajador], [Fecha], [Horas])
+	([Trabajador], [Fecha], [Horas], Anho)
 	select 
-	[Trabajador], [Fecha], [Horas]
+	[Trabajador], [Fecha], [Horas], YEAR([Fecha])
 	from
 	@ParteHoras
 end

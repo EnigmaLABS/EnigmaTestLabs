@@ -137,7 +137,7 @@
                 Test = "Querying: Store Procedure vs Entity Framework",
                 Classname = "test4_sql_querying",
                 Description = "generación y obtención de un informe de absentismo ",
-                Url_Blog = @"",
+                Url_Blog = @"https://enigmasoftwarelabs.blogspot.com/2020/05/test-4-son-eficientes-los-orm-segunda.html",
                 Url_Git = "",
 
                 Categorie = _cat_DataLayer,

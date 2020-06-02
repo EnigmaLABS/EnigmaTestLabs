@@ -52,6 +52,7 @@
     <Compile Include="contracts\ITest.cs" />
     <Compile Include="contracts\ITestFunctionsDomain.cs" />
     <Compile Include="DataDomainObject.cs" />
+    <Compile Include="DTO\ErrorContextDTO.cs" />
     <Compile Include="DTO\InformeAbsentismoDTO.cs" />
     <Compile Include="functions\Domain_Test_Functions_EF.cs" />
     <Compile Include="sqltests\ParteHorasDomain.cs" />

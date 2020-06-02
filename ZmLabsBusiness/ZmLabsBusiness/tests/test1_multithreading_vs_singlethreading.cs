@@ -14,7 +14,7 @@ namespace ZmLabsBusiness.tests
     public class test1_multithreading_vs_singlethreading : objects.test_base
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
-        public static List<objects.process_control> _lst_process_control = new List<objects.process_control>();
+        public static List<process_control> _lst_process_control = new List<process_control>();
 
         private static TestDomain Test;
         private static test_base _testexec;
@@ -223,7 +223,7 @@ namespace ZmLabsBusiness.tests
                     //error 1: 
                     object o2 = null; int i2 = (int)o2;
                 }
-                else
+                else if (index == 2)
                 {
                     //error 2: 
                     int a = 0; int b = 1 / a;
@@ -237,6 +237,10 @@ namespace ZmLabsBusiness.tests
             }
             catch (Exception ex)
             {
+                ex.Data.Add("test", "test1_multithreading_vs_singlethreading");
+                ex.Data.Add("case", "CalcFiboWithErrors");
+                ex.Data.Add("index", index.ToString());
+
                 _logger.Error(ex, " CalcFiboWithErrors - Index " + index.ToString());
 
                 _lst_process_control[index].Estado = objects.process_control.enumEstadoProceso.Erroneo;

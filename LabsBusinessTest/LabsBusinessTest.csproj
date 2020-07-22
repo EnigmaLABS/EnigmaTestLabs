@@ -46,19 +46,29 @@
       <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EFFunctionsTest.cs" />
+    <Compile Include="Business\EFFunctionsTest.cs" />
+    <Compile Include="Data\data_tests_info_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Business\DataFunctionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZmLabsBusiness\ZmLabsBusiness\ZmLabsBusiness.csproj">
       <Project>{ab776b5a-0ccd-4738-b1ca-ef9862831e3c}</Project>
       <Name>ZmLabsBusiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZMLabsData\ZMLabsData\ZMLabsData.csproj">
+      <Project>{bd59fe04-3408-40b8-b12c-a6587cf3631d}</Project>
+      <Name>ZMLabsData</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZmLabsObjects\ZmLabsObjects\ZmLabsObjects.csproj">
       <Project>{012c8f0f-9053-4f80-bb3b-166510b95329}</Project>

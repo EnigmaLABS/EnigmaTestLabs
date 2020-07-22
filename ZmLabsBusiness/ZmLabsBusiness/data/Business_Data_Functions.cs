@@ -63,12 +63,14 @@ namespace ZmLabsBusiness.data
         /// <returns></returns>
         public List<DataDomain> GetFilesPath(string Server)
         {
-            string cnx_str = "";
-            List <DataDomain> _files = data_labs.GetFilesPath(cnx_str);
+            string cnx_str = ""; 
+            List<DataDomain> _files = new List<DataDomain>();
 
             try
             {
                 cnx_str = GetCnx(Server, "master");
+
+                _files = data_labs.GetFilesPath(cnx_str);
 
                 foreach (DataDomain _do in _files)
                 {
